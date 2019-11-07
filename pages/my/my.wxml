@@ -1,0 +1,31 @@
+<view>
+  <view class="container">
+    <image class="container-bg" src="../../images/my-bg@2x.png"></image>
+
+    <view class="user-container">
+      <view class="userinfo">
+        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+        <block wx:else>
+          <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+          <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        </block>
+      </view>
+      <view class="usermotto">
+        <text class="user-motto">{{motto}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- <view class="menu-list">
+    <view class="menu-item" wx:for="{{menuList}}" wx:key="{{index}}" data-page="{{item.tap}}" bindtap="toPage">
+      <view class="item-left">
+        <image src="{{item.icon}}"></image>
+        <text>{{item.text}}</text>
+      </view>
+      <view class="item-right">
+        <image src="../../images/icon-arrow@2x.png"></image>
+      </view>
+    </view>
+  </view> -->
+  <menu-list list="{{menuList}}" isHasAcess="{{isHasAcess}}"></menu-list>
+</view>

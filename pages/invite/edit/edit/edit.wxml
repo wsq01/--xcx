@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="item" style="margin: 30rpx 22rpx 50rpx;">
+    <text>账号</text>
+    <input placeholder="请输入手机号" value="{{member.phone}}" disabled="true"></input>
+  </view>
+  <view class="item">
+    <text>昵称</text>
+    <input placeholder="请输入昵称" value="{{member.relation_name}}" bindinput="bindInput"></input>
+  </view>
+  <view class="btn-group">
+    <button class="submit" bindtap="editItem">保存</button>
+  </view>
+</view>

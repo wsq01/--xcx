@@ -1,0 +1,11 @@
+<view class="container">
+  <view class="item" style="margin: 30rpx 22rpx 50rpx;" bindtap="toAdd">
+    <text>添加成员</text>
+    <image src="../../images/icon-arrow@2x.png"></image>
+  </view>
+  <view wx:for="{{memberList}}" wx:key="{{index}}" class="item" style="margin: 30rpx 22rpx 50rpx;" data-member="{{item}}" bindtap="toEdit">
+    <text>{{item.relation_name}}</text>
+    <text>{{item.phone}}</text>
+    <image src="../../images/icon-arrow@2x.png"></image>
+  </view>
+</view>

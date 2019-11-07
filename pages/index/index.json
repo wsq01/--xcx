@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "share-component": "../../components/shareComponent/index",
+    "ec-canvas": "../../components/ec-canvas/ec-canvas"
+  }
+}

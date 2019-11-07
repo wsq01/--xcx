@@ -1,0 +1,23 @@
+<view class="container" wx:if="{{list.length !== 0 && isReqSuccess}}">
+  <view class="list-item fadeInLeft" bindtap="toPay" style="animation-delay: {{(index * 0.1) + 's'}}" wx:for="{{list}}" wx:key="{{index}}">
+    <view class="item-title">
+      <text>设备号：{{item.shebeibianhao}}</text>
+      <text>待支付</text>
+    </view>
+    <view class="item-content">
+      <text>昵称：{{item.beizhu}}</text>
+      <text>应缴日期：{{item.daoqishijian}}</text>
+    </view>
+    <view class="item-footer">
+      <text>待缴费用：<text>￥{{item.money}}</text></text>
+      <button>去支付</button>
+    </view>
+  </view>
+</view>
+<view wx:elif="{{list.length === 0 && isReqSuccess}}">
+  <view class="empty">
+    <image src="../../images/empty@2x.png"></image>
+    <text>暂无待缴账单</text>
+  </view>
+</view>
+<view wx:else></view>

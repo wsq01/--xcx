@@ -1,0 +1,78 @@
+<view class="container">
+  <view class="tab">
+    <view wx:for="{{tabList}}" wx:key="{{index}}" bindtap="bindtabChange" class="{{active[index]}}" data-id="{{index}}">
+      {{item.text}}
+    </view>
+  </view>
+  <swiper style="height: {{swiperItemHeight}}" class='swiper' bindchange='swiperChange' current='{{currentItem}}'>
+    <swiper-item>
+      <view class="tab-swiper tab-swiper1">
+        <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+        <view class="chart-btn">
+          <button bindtap='changeChart' data-id="1">今天</button>
+          <button bindtap='changeChart' data-id="2">近一周</button>
+          <button bindtap='changeChart' data-id="3">近一个月</button>
+        </view>
+      </view>
+      <!-- <view hidden="{{deviceDataList.length !== 0}}" style="text-align: center;padding: 20rpx;">暂无数据</view> -->
+    </swiper-item>
+    <swiper-item>
+      <view class="tab-swiper tab-swiper2">
+        <view class="data-container">
+          <view class="data-item data-title">
+            <text>时间</text>
+            <text>温度</text>
+            <text>湿度</text>
+          </view>
+          <view wx:if="{{deviceDataList.length !== 0}}">
+            <view class="data-item" wx:for="{{deviceDataList}}" wx:key="{{index}}">
+              <text>{{item.time}}</text>
+              <text>{{item.temperature01}}</text>
+              <text>{{item.humidity}}</text>
+            </view>
+          </view>
+          <view wx:else style="text-align: center;padding: 20rpx;">暂无数据</view>
+        </view>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="tab-swiper tab-swiper3">
+        <block wx:if="{{isRequested}}">
+          <view class="form-group" wx:for="{{paramsList}}" wx:key="{{index}}">
+            <view class="form-title">
+              {{item.title}}
+              <text wx:if="{{item.title === '定时推送信息'}}" bindtap="addFormItem">+</text>
+            </view>
+            <block  wx:for="{{item.content}}" wx:for-item="sItem" wx:for-index="sIndex" wx:key="{{sIndex}}">
+              <view class="form-item">
+                <text class="label">{{sItem.label}}</text>
+                <view class="form-input">
+                  <input wx:if="{{sItem.type === 'input'}}" disabled="{{sItem.disabled}}" bindchange="bindInputChange" data-key="{{sItem.value}}" value="{{paramsData[sItem.value]}}" placeholder="{{sItem.placeholder}}"></input>
+                  <switch bindchange="bindSwitchChange" checked="{{paramsData[sItem.value] == '1' ? true : false}}" data-key="{{sItem.value}}" wx:elif="{{sItem.type === 'switch'}}" color="#82C6D3"></switch>
+                </view>
+              </view>
+              <!-- <view wx:else>
+                <view class="form-item" wx:for="{{paramsData[sItem.value]}}" wx:if="{{sItem.type === 'picker'}}"  wx:for-item="ssItem" wx:for-index="ssIndex" wx:key="{{ssIndex}}">
+                  <block>
+                    <text class="label">{{sItem.label}} {{ssIndex + 1}}</text>
+                    <view class="form-input form-picker">
+                      <picker value="{{ssItem}}" mode="multiSelector" data-index="{{ssIndex}}"  data-key="{{sItem.value}}"  bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{multiSelectorList}}">
+                        <view class="picker"><input disabled="true" value="{{ssItem}}" placeholder='选择时间'/></view>
+                      </picker>
+                      <text bindtap="deleteFormItem" data-index="{{ssIndex}}">—</text>
+                    </view>
+                  </block>
+                </view>
+              </view> -->
+              
+            </block>
+          
+          </view>
+          <view class="form-submit">
+            <button bindtap="bindSaveParams">保存</button>
+          </view>
+        </block>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>

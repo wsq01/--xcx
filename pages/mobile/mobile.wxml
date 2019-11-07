@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="item" style="margin: 30rpx 22rpx 50rpx;" bindtap="toVerify" data-name="bind">
+    <text>绑定</text>
+    <image src="../../images/icon-arrow@2x.png"></image>
+  </view>
+  <view wx:if="{{mobile}}" class="item" style="margin: 30rpx 22rpx 50rpx;" bindtap="toVerify" data-name="unbind">
+    <text>解绑</text>
+    <view>
+      <text space="nbsp">{{mobile}}  </text>
+      <image src="../../images/icon-arrow@2x.png"></image>
+    </view>
+  </view>
+</view>

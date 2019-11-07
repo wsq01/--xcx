@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="item" style="margin: 30rpx 22rpx 50rpx;">
+    <text>输入账号</text>
+    <input placeholder="请输入手机号" bindinput="bindInputMobile"></input>
+  </view>
+  <view class="item">
+    <text>昵称</text>
+    <input placeholder="请输入昵称" bindinput="bindInputName"></input>
+  </view>
+  <view class="btn-group">
+    <button bindtap="submit">添加</button>
+  </view>
+</view>

@@ -1,0 +1,19 @@
+page {
+  background: #f2f2f2;
+  font-size: 30rpx;
+  color: #1B2021;
+}
+.item {
+  background: #fff;
+  display: flex;
+  height: 106rpx;
+  justify-content: space-between;
+  padding: 0 36rpx 0 48rpx;
+  align-items: center;
+  border-radius: 15rpx;
+}
+.item image {
+  width: 20rpx;
+  height: 32rpx;
+  vertical-align: middle;
+}

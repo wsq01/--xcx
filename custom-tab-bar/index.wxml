@@ -1,0 +1,10 @@
+<view class="tabBar">
+  <view class="cu-bar bg-white shadow">
+    <block wx:for="{{tabbar.list}}" wx:for-item="item" wx:key="tabbar">
+      <view class="action {{item.isSpecial ? 'add-action' : ''}} {{selected === index ? 'text-green' : ''}}"  data-url="{{item.pagePath}}" data-index="{{index}}" data-special="{{item.isSpecial}}" bindtap="switchTab">
+        <image class="iconf {{item.isSpecial ? 'cu-btn icon-add' : ''}}" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
+        {{item.text}}
+      </view>
+    </block>
+  </view>
+</view>

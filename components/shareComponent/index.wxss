@@ -1,0 +1,71 @@
+.moment-root{
+  width: 100%;
+  z-index: 11;
+}
+
+.canvas {
+  width: 100%;
+  position: fixed;
+  top: 9999rpx;
+  left: 0;
+}
+
+/* components/dialog/bpb-dialog.wxss */
+
+/*弹窗*/
+
+.share-model .mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+
+.share-conetent{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 150rpx;
+  padding-bottom: 160rpx;
+  left: 15%;
+  z-index: 100;
+  top: 0;
+}
+
+.share-image{
+  border-radius: 10rpx;
+  margin: 0 auto;
+}
+
+.btn-save-local{
+  background: linear-gradient(45deg, #FB653D, #ff555c);
+  width: 80%;
+  border-radius: 44rpx;
+  padding: 10rpx 0;
+  margin: 30rpx auto 10rpx;
+  color: #ffffff;
+  font-size: 32rpx;
+  text-align: center;
+}
+
+.close-wrppper{
+  position: absolute;
+  right: 4%;
+  top: 120rpx;
+  padding: 20rpx;
+  z-index: 101;
+}
+
+.close-image{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  -moz-box-shadow: 0px 0px 5px #999;
+  -webkit-box-shadow: 0px 0px 5px #999;
+  box-shadow: 0px 0px 5px #999;
+}

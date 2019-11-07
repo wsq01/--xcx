@@ -1,0 +1,35 @@
+page {
+  background: #f2f2f2;
+  font-size: 30rpx;
+  color: #1B2021;
+}
+.item {
+  background: #fff;
+  display: flex;
+  height: 106rpx;
+  justify-content: space-between;
+  padding: 0 36rpx 0 48rpx;
+  align-items: center;
+  border-radius: 15rpx;
+  margin: 22rpx 22rpx;
+}
+.item image {
+  width: 20rpx;
+  height: 32rpx;
+}
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.btn-group button {
+  width: 213rpx;
+  height: 82rpx;
+  text-align: center;
+  line-height: 82rpx;
+  border-radius: 50rpx;
+  background: #82C6D3;
+  color: #fff;
+  font-size: 30rpx;
+  margin: 20rpx 18rpx;
+}

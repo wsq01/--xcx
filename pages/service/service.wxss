@@ -1,0 +1,49 @@
+page {
+  background: #f2f2f2;
+  font-size: 30rpx;
+  padding: 20rpx 22rpx 0;
+  box-sizing: border-box;
+}
+.phone {
+  margin: 0  auto 12rpx;
+  background: #fff;
+  border-radius: 15rpx;
+  display: flex;
+  flex-direction: row;
+  padding: 35rpx 40rpx;
+  align-items: center;
+}
+.phone image {
+  width: 36rpx;
+  height: 36rpx;
+  margin: 0 30rpx 0 0;
+  vertical-align: middle;
+}
+.qrcode {
+  background: #fff;
+  border-radius: 15rpx;
+  margin: 0 auto 12rpx;
+}
+.qrcode .phone {
+  margin: 0;
+}
+.qrcode-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60rpx 0 70rpx;
+}
+.qrcode-content image {
+  width: 248rpx;
+  height: 248rpx;
+  margin: 0 0 46rpx;
+}
+.split {
+  margin: 0 36rpx;
+  height: 1rpx;
+  background: #eee;
+}
+.text-blue {
+  color: #5BB6C7;
+}

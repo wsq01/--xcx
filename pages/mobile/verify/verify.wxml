@@ -1,0 +1,16 @@
+<view class='form'>
+  <view class='form-item'>
+    <!-- <label for='mobile'>{{mobileData.title}}</label> -->
+    <input id='mobile' type='number' bindinput='inputMobile' value="{{mobile}}" disabled="{{isDisabled}}" maxlength='11' placeholder='{{mobileData.placeholder}}'></input>
+  </view>
+  <view class="sms-group">
+    <view class='form-item form-sms'>
+      <!-- <label for='smsCode'>{{smsData.title}}</label> -->
+      <input id='smsCode' focus='true' type='number' bindinput='inputSms' maxlength='4' placeholder='{{smsData.placeholder}}'></input>
+    </view>
+    <button class='sms-btn' disabled='{{isSend}}' bindtap='getSmsCode'>{{smsText}}</button>
+  </view>
+  <view class='form-submit' bindtap='submitForm'>
+    <button class='submit {{!(mobile && smsCode) ? "submit-disabled" : ""}}' disabled='{{!(mobile && smsCode)}}'>确定</button>
+  </view>
+</view>

@@ -1,0 +1,212 @@
+page {
+  background: #f2f2f2;
+}
+.swiper {
+  height: 80%;
+}
+.tab {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height: 86rpx;
+  background: #fff;
+  position: relative;
+}
+.tab view {
+  border-bottom: 4rpx solid transparent;
+  transition: .2s all linear;
+  flex: 1;
+  text-align: center;
+}
+.tab .active {
+  color:#64BACB;
+  border-bottom: 4rpx solid #64BACB;
+}
+.tab-swiper {
+  background: #fff;
+  font-size: 24rpx;
+  padding: 0;
+  margin-top: 20rpx;
+}
+.tab-swiper .lists-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  color:rgba(153,153,153,1);
+  text-align: center;
+  line-height: 88rpx;
+}
+.tab-swiper .lists-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  color:rgba(34,34,34,1);
+  text-align: center;
+  line-height: 80rpx;
+}
+.tab-swiper .lists-content:nth-child(2n) {
+  background: rgba(246,246,246,1);
+}
+.tab-swiper .lists-content view,
+.tab-swiper .lists-title view {
+  flex: 0 0 20%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tab-swiper .lists-content view:nth-child(3),
+.tab-swiper .lists-title view:nth-child(3) {
+  flex: 0 0 25%;
+}
+.tab-swiper .lists-content view:nth-child(4),
+.tab-swiper .lists-title view:nth-child(4) {
+  flex: 0 0 15%;
+}
+.tab-swiper1 {
+  position: relative;
+  height: 800rpx;
+}
+.tab-swiper3 {
+  background: transparent;
+  padding: 0;
+}
+
+ec-canvas {
+  position: absolute;
+  top: 20rpx;
+  bottom: 100rpx;
+  left: 0;
+  right: 0;
+}
+.chart-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  bottom: 20rpx;
+  width: 100%;
+}
+.chart-btn button {
+  color: #fff;
+  background: #54bfcb;
+  font-size: 30rpx;
+  border-radius: 30rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  text-align: center;
+}
+button {
+  /* background: #fff; */
+  /* line-height: 1; */
+  margin: 0;
+}
+button::after {
+  border: none;
+}
+/* 参数 */
+.form-group {
+  margin: 0 auto 22rpx;
+  background: #fff;
+}
+.form-title {
+  font-weight: bold;
+  color: #2B2C2C;
+  height: 85rpx;
+  line-height: 85rpx;
+  padding: 0 32rpx;
+  font-size: 28rpx;
+  border-bottom: 1rpx solid #F6F7F9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.form-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 28rpx;
+  padding: 0 32rpx;
+  height: 85rpx;
+  border-bottom: 1rpx solid #F6F7F9;
+}
+.form-item:last-child {
+  border-bottom: none;
+}
+.form-item .label {
+  width: 200rpx;
+  text-align: center;
+  line-height: 1;
+  color: #888888;
+}
+.form-item .form-input {
+  height: 100%;
+  flex: 1;
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+}
+.form-item .form-input input {
+  height: 100%;
+}
+
+.wx-switch-input{width:42px !important;height:20px !important;}
+.wx-switch-input::before{width:41px !important;height: 20px !important;}
+.wx-switch-input::after{width: 18px !important;height: 18px !important;}
+
+.form-submit button{
+  width: 480rpx;
+  height: 82rpx;
+  text-align: center;
+  line-height: 82rpx;
+  border-radius: 50rpx;
+  background: #82C6D3;
+  color: #fff;
+  font-size: 30rpx;
+  margin: 50rpx auto;
+}
+
+.data-container {
+  font-size: 28rpx;
+}
+.data-container .data-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1rpx solid #DFDFDF;
+  padding: 20rpx 0;
+  text-align: center;
+}
+.data-container .data-item text:nth-child(2) {
+  color: #FD7F61;
+}
+.data-container .data-item text:nth-child(3) {
+  color: #55BECA;
+}
+.data-container .data-item text:nth-child(1) {
+  flex: 0 0 300rpx;
+}
+.data-container .data-title {
+  background: #f2f2f2;
+}
+.data-container .data-title text {
+  color: #A7A7A7 !important;
+}
+.picker {
+  width: 100%;
+  height: 84rpx;
+  line-height: 84rpx;
+}
+.form-picker {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

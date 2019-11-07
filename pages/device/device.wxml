@@ -1,0 +1,48 @@
+<view class="container" wx:if="{{isReqSuccess && devList.length !== 0}}">
+  <view class="list-num">
+    共{{count}}台设备
+  </view>
+  <view class="list-item fadeInLeft" style="animation-delay: {{(index * 0.1) + 's'}}" wx:for="{{devList}}" wx:key="{{index}}" data-devid="{{item.shebeibianhao}}" bindtap="toDetail" data-master="{{item.is_master}}">
+    <view class="item-title">
+      <text>设备号：{{item.shebeibianhao}}{{item.is_master === 1 ? '(主)' : '(副)'}}</text>
+      <text>昵称：{{item.beizhu}}</text>
+      <text catchtap="unbind" data-devid="{{item.shebeibianhao}}">解绑</text>
+    </view>
+    <view class="item-content">
+      <view>
+        <text>温度：{{item.last_temperature01}}℃</text>
+        <text>湿度：{{item.last_humidity}}%RH</text>
+        <text>电量：{{item.last_power}}%</text>
+      </view>
+      <text>采集时间：{{item.last_time}}</text>
+      <text space="nbsp">地址：{{item.address || '暂无数据'}}</text>
+    </view>
+    <!-- <view class="item-footer">
+      <text>待缴费用：<text>￥{{item.money}}</text></text>
+      <button>去支付</button>
+    </view> -->
+  </view>
+</view>
+<view wx:elif="{{isReqSuccess && devList.length === 0}}">
+  <view class="empty">
+    <image src="../../images/empty@2x.png"></image>
+    <text>您还没有绑定设备哦</text>
+  </view>
+</view>
+<view wx:else></view>
+<view class="add-btn" bindtap="bindDev">
+  <image src="../../images/icon-add@2x.png"></image>
+</view>
+
+<view class="modal zoomIn" bindtap="bindCloseModal" hidden="{{!isShowModal}}">
+  <view class='form'>
+  <view class='form-item' catchtap="stopProp">
+    <label for='mobile'>设备号</label>
+    <input id='mobile' type='number' bindinput='inputDev' value="{{inputDevId}}" focus='true' placeholder='请输入设备号'></input>
+    <button bindtap="bindScanCode">扫码</button>
+  </view>
+  <view class='form-submit' catchtap='addDev'>
+    <button class='submit'>确定</button>
+  </view>
+</view>
+</view>

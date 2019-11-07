@@ -1,0 +1,29 @@
+.menu-list {
+  position: relative;
+  margin: 22rpx;
+}
+.menu-item {
+  margin: 0  auto 12rpx;
+  background: #fff;
+  border-radius: 15rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 35rpx 40rpx;
+  align-items: center;
+  box-shadow: 0 0 20rpx 1rpx rgba(0, 0, 0, 0.1);
+}
+.item-left {
+
+}
+.item-left image {
+  width: 36rpx;
+  height: 36rpx;
+  margin: 0 30rpx 0 0;
+  vertical-align: middle;
+}
+.item-right image {
+  width: 20rpx;
+  height: 32rpx;
+  vertical-align: middle;
+}

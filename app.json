@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/my/my",
+    "pages/bill/bill",
+    "pages/device/device",
+    "pages/invite/invite",
+    "pages/issue/issue",
+    "pages/service/service",
+    "pages/device/detail/detail",
+    "pages/invite/add/add",
+    "pages/invite/edit/edit",
+    "pages/invite/edit/edit/edit",
+    "pages/mobile/mobile",
+    "pages/mobile/verify/verify",
+    "pages/mobile/pwd/pwd",
+    "pages/webview/webview"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black",
+    "backgroundColorTop": "#f2f2f2",
+    "backgroundColorBottom": "#f2f2f2"
+  },
+  "tabBar": {
+    "custom": true,
+    "selectedColor": "#83c7D4",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/icon-home@2x.png",
+        "selectedIconPath": "images/icon-home-active@2x.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/icon-scnner@2x.png",
+        "selectedIconPath": "images/icon-scnner@2x.png",
+        "text": "添加设备"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "images/icon-my@2x.png",
+        "selectedIconPath": "images/icon-my@2x.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}
