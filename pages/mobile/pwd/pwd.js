@@ -3,7 +3,7 @@ Page({
   data: {
     mobileData: {
       title: '手机号',
-      placeholder: '请输入密码，英文字母、数字和符号组成，30位以内'
+      placeholder: '请输入密码，30位以内'
     },
     smsData: {
       title: '验证码',

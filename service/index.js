@@ -20,5 +20,6 @@ export default {
   reqDevParams: 'https://www.zjcoldcloud.com/xiandun/api/06_00_tb_device_chanshu.php',
   reqSetParams: httpUrl + '/index/device/update_device',
   reqDevCharts: 'https://www.zjcoldcloud.com/xiandun/api/09_00_tb_draw_line.php',
-  reqCheckSmsCode: httpUrl + '/index/register/yanzheng_code'
+  reqCheckSmsCode: httpUrl + '/index/register/yanzheng_code',
+  reqJudgeBinded: httpUrl + '/index/device/remove_scend_device'
 }

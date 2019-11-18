@@ -47,6 +47,25 @@ export const reqOpenid = () => {
     })
   })
 }
+// 解绑副设备
+export const reqJudgeBinded = (mainname, devicenumber) => {
+  return new Promise((resolve, reject) => {
+    wx.login({
+      success: res => {
+        wx.request({
+          url: API.reqJudgeBinded,
+          data: {
+            mainname,
+            devicenumber
+          },
+          success(data) {
+            resolve(data);
+          }
+        })
+      }
+    })
+  })
+}
 
 export const reqVerifyRegister= (openid) => {
   return new Promise((resolve, reject) => {
@@ -184,7 +203,7 @@ export const reqDevCharts = (mobile, devid, endTime, startTime = '2000-08-26 00:
       data: {
         admin_permit: 'zjly8888',
         UserP: 'W',
-        admin_user: mobile,
+        admin_user: 'c',
         admin_pass: '123456',
         StartTime: startTime,
         StartNo: 0,
@@ -231,6 +250,48 @@ export const reqCheckSmsCode = (phone, code) => {
       data: {
         phone,
         code
+      },
+      success: res => {
+        resolve(res);
+      }
+    })
+  })
+}
+
+export const reqDevParams = (mobile, devid) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: API.reqDevParams,
+      data: {
+        admin_permit: 'zjly8888',
+        UserP: 'W',
+        admin_pass: '123456',
+        admin_user: mobile,
+        SheBeiBianHao: devid
+      },
+      method: 'post',
+      success: res => {
+        resolve(res);
+      }
+    })
+  })
+}
+
+export const reqDevData = (mobile, devid, startNo, endTime) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: API.reqDevData,
+      method: 'post',
+      data: {
+        admin_permit: 'zjly8888',
+        UserP: 'W',
+        admin_user: mobile,
+        admin_pass: '123456',
+        StartTime: '2000-08-26 00:00:00',
+        StartNo: startNo,
+        Length: 20,
+        EndTime: endTime,
+        SheBeiBianHao: devid
       },
       success: res => {
         resolve(res);

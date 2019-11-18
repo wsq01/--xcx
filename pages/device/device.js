@@ -1,4 +1,4 @@
-import { reqBindDev, reqDevList, reqUnBindDev } from '../../service/service.js';
+import { reqBindDev, reqDevList, reqUnBindDev, reqJudgeBinded } from '../../service/service.js';
 Page({
   data: {
     devList: [],
@@ -108,31 +108,55 @@ Page({
     const mobile = wx.getStorageSync('mobile');
     const devid = e.currentTarget.dataset.devid;
     const openid = wx.getStorageSync('openid');
+    console.log(e.currentTarget)
     wx.showModal({
       content: '确定要解绑 ' + devid + ' 该设备吗？',
       success: res => {
         if(res.confirm) {
-          reqUnBindDev(mobile, devid).then(res => {
-            if(res.data.code === 0) {
-              reqDevList(openid).then(res => {
-                console.log(res);
-                this.setData({
-                  devList: res.data.data.data
+          if(e.currentTarget.dataset.type === 1) {
+            reqUnBindDev(mobile, devid).then(res => {
+              if (res.data.code === 0) {
+                reqDevList(openid).then(res => {
+                  console.log(res);
+                  this.setData({
+                    devList: res.data.data.data
+                  });
                 });
-              });
-              wx.removeStorageSync('devid');
-              wx.showToast({
-                title: '解绑成功',
-                duration: 1500
-              })
-            } else {
-              wx.showToast({
-                title: res.data.message,
-                icon: 'none',
-                duration: 2000
-              })
-            }
-          })
+                wx.removeStorageSync('devid');
+                wx.showToast({
+                  title: '解绑成功',
+                  duration: 1500
+                })
+              } else {
+                wx.showToast({
+                  title: res.data.message,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+            })
+          } else {
+            reqJudgeBinded(mobile, devid).then(res => {
+              if (res.data.code === 0) {
+                reqDevList(openid).then(res => {
+                  this.setData({
+                    devList: res.data.data.data
+                  });
+                });
+                wx.removeStorageSync('devid');
+                wx.showToast({
+                  title: '解绑成功',
+                  duration: 1500
+                })
+              } else {
+                wx.showToast({
+                  title: res.data.message,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+            })
+          }
         }
       }
     })

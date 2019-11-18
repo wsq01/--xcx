@@ -1,4 +1,4 @@
-import API from '../service/index.js'
+import { reqLookDev } from '../service/service.js';
 Component({
   properties: {
     tabbar: {
@@ -34,7 +34,7 @@ Component({
   },
   methods: {
     switchTab(e) {
-      const data = e.currentTarget.dataset
+      const data = e.currentTarget.dataset;
       if(data.special) {
         this.scanCode();
       } else {
@@ -51,7 +51,7 @@ Component({
           const code = res.path.match(/\?id=(.*)/)[1];
           wx.setStorageSync('devid', code);
           const openid = wx.getStorageSync('openid');
-          this.reqLookDev(code).then(res => {
+          reqLookDev(code).then(res => {
             if (res.data.code === 0) {
               wx.reLaunch({
                 url: '/pages/index/index',
@@ -65,21 +65,6 @@ Component({
             icon: 'none'
           })
         }
-      })
-    },
-    reqLookDev(devicenumber) {
-      return new Promise((resolve, reject) => {
-        wx.request({
-          url: API.reqLookDev,
-          data: {
-            exclusive: 'zjzl8888',
-            devicenumber
-          },
-          success: res => {
-            console.log(res);
-            resolve(res);
-          }
-        })
       })
     }
   }

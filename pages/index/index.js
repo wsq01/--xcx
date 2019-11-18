@@ -1,4 +1,4 @@
-import { reqDevList, reqLookDev, reqOpenid, reqDevCharts } from '../../service/service.js';
+import { reqDevList, reqLookDev, reqOpenid, reqDevCharts, reqBindDev } from '../../service/service.js';
 import { getDateStr, formatTime, setOption } from '../../utils/util.js';
 import * as echarts from '../../utils/echarts.min.js';
 //获取应用实例
@@ -19,7 +19,7 @@ Page({
     ec: {
       lazyLoad: true
     },
-    
+    isShowChart: false
   },
   onShow: function () {
     const devid = wx.getStorageSync('devid');
@@ -45,9 +45,11 @@ Page({
       wx.setStorageSync('devid', launchOptions.query.id);
     }
     const devid = wx.getStorageSync('devid');
+    // 请求openid
     reqOpenid().then(res => {
       const data = JSON.parse(res.data.data);
       wx.setStorageSync('openid', data.openid);
+      // 请求设备列表
       return reqDevList(data.openid);
     }).then(res => {
       if(devid) {
@@ -71,16 +73,54 @@ Page({
       })
       if(res) {
         reqLookDev(res).then(data => {
-          this.setData({
-            indexData: data.data.data
-          })
+          if (data.data.code === 0) {
+            if(data.data.data.is_bind === 0) {
+              wx.showModal({
+                content: '设备未绑定，是否绑定当前设备',
+                success(res1) {
+                  if(res1.confirm) {
+                    const mobile = wx.getStorageSync('mobile');
+                    if(mobile) {
+                      reqBindDev(mobile, res).then(res => {
+                        if (res.data.code === 0) {
+                          wx.showToast({
+                            title: '绑定成功！',
+                            icon: 'none'
+                          })
+                        }
+                      })
+                    } else {
+                      wx.showModal({
+                        content: '账号未登录，是否前往登录?',
+                        success(res) {
+                          if (res.confirm) {
+                            wx.navigateTo({
+                              url: '../mobile/verify/verify?handle=bind',
+                            })
+                          }
+                        }
+                      })
+                    }
+                  }
+                }
+              })
+            }
+            this.setData({
+              indexData: data.data.data
+            })
+          } else {
+            wx.showToast({
+              title: data.data.message,
+              icon: 'none'
+            })
+          }
         })
       }
       setTimeout(() => {
         const devid = wx.getStorageSync('devid');
         // 获取图表
         const mobile = wx.getStorageSync('mobile');
-        if (mobile && devid) {
+        if (devid) {
           const endTime = formatTime(new Date(), '-');
           this.ecComponent = this.selectComponent('#mychart-dom-bar');
           reqDevCharts(mobile, devid, endTime).then(res => {
@@ -89,6 +129,7 @@ Page({
               let yArr1 = [];
               let yArr2 = [];
               const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
+              
               list.forEach((item) => {
                 xArr.push(item.time.substr(0, 10));
                 yArr1.push(item.temperature01);
@@ -99,6 +140,8 @@ Page({
           })
 
         }
+
+
       })
     })
   },

@@ -6,7 +6,7 @@
     <view class="item-title">
       <text>设备号：{{item.shebeibianhao}}{{item.is_master === 1 ? '(主)' : '(副)'}}</text>
       <text>昵称：{{item.beizhu}}</text>
-      <text catchtap="unbind" data-devid="{{item.shebeibianhao}}">解绑</text>
+      <text catchtap="unbind" data-type="{{item.is_master}}" data-devid="{{item.shebeibianhao}}">解绑</text>
     </view>
     <view class="item-content">
       <view>

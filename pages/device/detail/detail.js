@@ -1,6 +1,6 @@
 import API from '../../../service/index.js';
 import { getDateStr, formatTime, multiSelectorList, setOption } from '../../../utils/util.js';
-import { reqDevCharts, reqSetParams } from '../../../service/service.js';
+import { reqDevCharts, reqSetParams, reqDevParams, reqDevData } from '../../../service/service.js';
 import * as echarts from '../../../utils/echarts.min.js';
 
 Page({
@@ -43,28 +43,12 @@ Page({
           { label: '超温上传间隔', value: 'chaowenshangchuanshijianjiange', type: 'input', placeholder: '请输入' }
         ]
       },
-      // {
-      //   title: '告警信息',
-      //   content: [
-      //     { label: '超高温度告警', value: 'baojingwendu_shangxian', type: 'input', placeholder: '请输入' },
-      //     { label: '超低温度告警', value: 'baojingwendu_xiaxian', type: 'input', placeholder: '请输入' },
-      //     { label: '超高湿度告警', value: 'chaogaoshidubaojing', type: 'input', placeholder: '请输入' },
-      //     { label: '超低湿度告警', value: 'chaodishidubaojing', type: 'input', placeholder: '请输入' },
-      //   ]
-      // },
       {
         title: '参数信息',
         content: [
-          // { label: '电量下线预警', value: 'dianliang_xiaxian_baojing', type: 'switch' },
           { label: '夜间上传开关', value: 'yejianshangchuankaiguan', type: 'switch' }
         ]
-      },
-      // {
-      //   title: '定时推送信息',
-      //   content: [
-      //     { label: '时间', value: 'dingshifasong', type: 'picker' }
-      //   ]
-      // }
+      }
     ],
     paramsData: {},
     isRequested: false,
@@ -72,20 +56,26 @@ Page({
     startNo: 0,
     devid: '',
     multiSelectorList: [],
-    choose_year: 2019
+    choose_year: 2019,
+    isShowDownload: false
   },
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中...'
+    })
     // 获取组件
     this.ecComponent = this.selectComponent('#mychart-dom-bar');
     const devid = options.devid;
     const isMaster = options.is_master;
-    if(isMaster === "0") {
+    // 主副设备参数设置
+    if (isMaster === "0") {
+      console.log(this.data.paramsList)
       this.setData({
-        [paramsList[0].content[3].disabled]: true,
-        [paramsList[1].content[0].disabled]: true,
-        [paramsList[1].content[1].disabled]: true,
-        [paramsList[1].content[2].disabled]: true,
-        [paramsList[1].content[3].disabled]: true
+        'paramsList[0].content[3].disabled': true,
+        'paramsList[1].content[0].disabled': true,
+        'paramsList[1].content[1].disabled': true,
+        'paramsList[1].content[2].disabled': true,
+        'paramsList[1].content[3].disabled': true
       })
     }
     this.setData({
@@ -95,21 +85,9 @@ Page({
     const mobile = wx.getStorageSync('mobile');
     const endTime = formatTime(new Date(), '-');
     // 获取图表
-    reqDevCharts(mobile, devid, endTime).then(res => {
-      if(res.data.code === 10000) {
-        let xArr = [];
-        let yArr1 = [];
-        let yArr2 = [];
-        const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
-        list.forEach((item) => {
-          xArr.push(item.time.substr(0, 10));
-          yArr1.push(item.temperature01);
-          yArr2.push(item.humidity);
-        })
-        this.initCharts(xArr, yArr1, yArr2);
-        this.setSwiperHeight('.tab-swiper1');
-      }
-    })
+    this.initChart(mobile, devid);
+    this.setSwiperHeight('.tab-swiper1');
+    wx.hideLoading();
   },
   onReachBottom: function () {
     // 页面触底时执行
@@ -121,7 +99,8 @@ Page({
     this.setData({
       startNo: this.data.startNo + 20
     })
-    this.reqDevData(mobile, devid, this.data.startNo).then(res => {
+    const endTime = formatTime(new Date(), '-');
+    reqDevData(mobile, devid, this.data.startNo, endTime).then(res => {
       if (res.data.code === 10000) {
         let list = this.data.deviceDataList;
         list = list.concat(res.data.resultCode);
@@ -129,6 +108,34 @@ Page({
           deviceDataList: list
         })
         this.setSwiperHeight('.tab-swiper2');
+      }
+    })
+  },
+  initChart(mobile, devid, fromTime) {
+    const endTime = formatTime(new Date(), '-');
+    reqDevCharts(mobile, devid, endTime, fromTime).then(res => {
+      if (res.data.code === 10000) {
+        let xArr = [];
+        let yArr1 = [];
+        let yArr2 = [];
+        const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
+        if(list.length === 0) {
+          this.setData({
+            hasChartList: false
+          })
+          return
+        } else {
+          this.setData({
+            hasChartList: true
+          })
+        }
+        list.forEach((item) => {
+          xArr.push(item.time.substr(0, 10));
+          yArr1.push(item.temperature01);
+          yArr2.push(item.humidity);
+        })
+        this.initCharts(xArr, yArr1, yArr2);
+        this.setSwiperHeight('.tab-swiper1');
       }
     })
   },
@@ -148,25 +155,6 @@ Page({
       // 注意这里一定要返回 chart 实例，否则会影响事件处理等
       return chart;
     });
-  },
-  reqDevParams(mobile, devid) {
-    return new Promise((resolve, reject) => {
-      wx.request({
-        url: API.reqDevParams,
-        data: {
-          admin_permit: 'zjly8888',
-          UserP: 'W',
-          admin_pass: '123456',
-          admin_user: mobile,
-          SheBeiBianHao: devid
-        },
-        method: 'post',
-        success: res => {
-          console.log(res);
-          resolve(res);
-        }
-      })
-    })
   },
   bindInputChange(e) {
     console.log(e)
@@ -214,26 +202,19 @@ Page({
     const mobile = wx.getStorageSync('mobile');
     const devid = this.data.devid;
     if(e.currentTarget.dataset.id === 0) {
-      // 获取图表
-      const endTime = formatTime(new Date(), '-');
-      reqDevCharts(mobile, devid, endTime).then(res => {
-        if (res.data.code === 10000) {
-          let xArr = [];
-          let yArr1 = [];
-          let yArr2 = [];
-          const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
-          list.forEach((item) => {
-            xArr.push(item.time.substr(0, 10));
-            yArr1.push(item.temperature01);
-            yArr2.push(item.humidity);
-          })
-          this.initCharts(xArr, yArr1, yArr2);
-          this.setSwiperHeight('.tab-swiper1');
-        }
+      this.setData({
+        isShowDownload: false
       })
+      // 获取图表
+      this.initChart(mobile, devid);
+      this.setSwiperHeight('.tab-swiper1');
     } else if (e.currentTarget.dataset.id === 1) {
+      this.setData({
+        isShowDownload: true
+      })
       // 数据
-      this.reqDevData(mobile, devid, this.data.startNo).then(res => {
+      const endTime = formatTime(new Date(), '-');
+      reqDevData(mobile, devid, this.data.startNo, endTime).then(res => {
         if (res.data.code === 10000) {
           this.setData({
             deviceDataList: res.data.resultCode === 'null' ? [] : res.data.resultCode
@@ -242,8 +223,11 @@ Page({
         }
       })
     } else if (e.currentTarget.dataset.id === 2) {
+      this.setData({
+        isShowDownload: false
+      })
       // 获取参数
-      this.reqDevParams(mobile, devid).then(res => {
+      reqDevParams(mobile, devid).then(res => {
         if (res.data.code === 10000) {
           this.setData({
             isRequested: true,
@@ -255,7 +239,6 @@ Page({
     }
   },
   swiperChange(e) {
-    console.log(e)
     let active = ['', '', ''];
     active[e.detail.current] = 'active'
     this.setData({
@@ -280,186 +263,24 @@ Page({
     if (val == 1) {
       // 点击  今天
       const fromTime = getDateStr(new Date(), -1);
-      const endTime = formatTime(new Date(), '-');
       // 获取图表
-      reqDevCharts(mobile, devid, endTime, fromTime).then(res => {
-        if (res.data.code === 10000) {
-          let xArr = [];
-          let yArr1 = [];
-          let yArr2 = [];
-          const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
-          list.forEach((item) => {
-            xArr.push(item.time.substr(0, 10));
-            yArr1.push(item.temperature01);
-            yArr2.push(item.humidity);
-          })
-          this.initCharts(xArr, yArr1, yArr2);
-          this.setSwiperHeight('.tab-swiper1');
-        }
-      })
+      this.initChart(mobile, devid,fromTime);
     } else if (val == 2) {
       // 点击一周
       const fromTime = getDateStr(new Date(), -7);
-      const endTime = formatTime(new Date(), '-');
       // 获取图表
-      reqDevCharts(mobile, devid, endTime, fromTime).then(res => {
-        if (res.data.code === 10000) {
-          let xArr = [];
-          let yArr1 = [];
-          let yArr2 = [];
-          const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
-          list.forEach((item) => {
-            xArr.push(item.time.substr(0, 10));
-            yArr1.push(item.temperature01);
-            yArr2.push(item.humidity);
-          })
-          this.initCharts(xArr, yArr1, yArr2);
-          this.setSwiperHeight('.tab-swiper1');
-        }
-      })
+      this.initChart(mobile, devid, fromTime);
     } else {
       // 点击 一个月
-      let fromTime = getDateStr(new Date(), -30);
-      const endTime = formatTime(new Date(), '-');
+      const fromTime = getDateStr(new Date(), -30);
       // 获取图表
-      reqDevCharts(mobile, devid, endTime, fromTime).then(res => {
-        if (res.data.code === 10000) {
-          let xArr = [];
-          let yArr1 = [];
-          let yArr2 = [];
-          const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
-          list.forEach((item) => {
-            xArr.push(item.time.substr(0, 10));
-            yArr1.push(item.temperature01);
-            yArr2.push(item.humidity);
-          })
-          this.initCharts(xArr, yArr1, yArr2);
-          this.setSwiperHeight('.tab-swiper1');
-        }
-      })
+      this.initChart(mobile, devid, fromTime);
     }
   },
-  reqDevData(mobile, devid, startNo) {
-    const endTime = formatTime(new Date(), '-');
-    return new Promise((resolve, reject) => {
-      wx.request({
-        url: API.reqDevData,
-        method: 'post',
-        data: {
-          admin_permit: 'zjly8888',
-          UserP: 'W',
-          admin_user: mobile,
-          admin_pass: '123456',
-          StartTime: '2000-08-26 00:00:00',
-          StartNo: startNo,
-          Length: 20,
-          EndTime: endTime,
-          SheBeiBianHao: devid
-        },
-        success: res => {
-          resolve(res);
-        }
-      })
+  bindDownload() {
+    wx.showModal({
+      content: '下载PDF文件需跳转至（中集智冷科技）公众号',
+      showCancel: false
     })
-  },
-  addFormItem() {
-    let obj = [];
-    if (this.data.paramsData.dingshifasong) {
-      obj = [].concat(this.data.paramsData.dingshifasong);
-    }
-    obj.push(formatTime(new Date()));
-    this.setData({
-      'paramsData.dingshifasong': obj
-    })
-    this.setSwiperHeight('.tab-swiper3');
-  },
-  deleteFormItem(e) {
-    let obj = this.data.paramsData.dingshifasong;
-    obj.splice(e.currentTarget.dataset.index, 1);
-    this.setData({
-      'paramsData.dingshifasong': obj
-    })
-  },
-  //获取时间日期
-  bindMultiPickerChange: function (e) {
-    // console.log('picker发送选择改变，携带值为', e.detail.value)
-    // this.setData({
-    //   multiIndex: e.detail.value
-    // })
-    const index = e.detail.value;
-    const year = this.data.multiSelectorList[0][index[0]];
-    const month = this.data.multiSelectorList[1][index[1]];
-    const day = this.data.multiSelectorList[2][index[2]];
-    const hour = this.data.multiSelectorList[3][index[3]];
-    const minute = this.data.multiSelectorList[4][index[4]];
-    const second = this.data.multiSelectorList[5][index[5]];
-    // console.log(`${year}-${month}-${day}-${hour}-${minute}`);
-    this.setData({
-      ['paramsData.dingshifasong['+e.currentTarget.dataset.index+']']: year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':'+ second
-    })
-    // console.log(this.data.time);
-  },
-  //监听picker的滚动事件
-  bindMultiPickerColumnChange: function (e) {
-    //获取年份
-    if (e.detail.column == 0) {
-      this.setData({
-        choose_year: this.data.multiSelectorList[e.detail.column][e.detail.value]
-      })
-    }
-    if (e.detail.column == 1) {
-      let num = parseInt(this.data.multiSelectorList[e.detail.column][e.detail.value]);
-      let temp = [];
-      if (num == 1 || num == 3 || num == 5 || num == 7 || num == 8 || num == 10 || num == 12) { //判断31天的月份
-        for (let i = 1; i <= 31; i++) {
-          if (i < 10) {
-            i = "0" + i;
-          }
-          temp.push("" + i);
-        }
-        this.setData({
-          ['multiSelectorList[2]']: temp
-        });
-      } else if (num == 4 || num == 6 || num == 9 || num == 11) { //判断30天的月份
-        for (let i = 1; i <= 30; i++) {
-          if (i < 10) {
-            i = "0" + i;
-          }
-          temp.push("" + i);
-        }
-        this.setData({
-          ['multiSelectorList[2]']: temp
-        });
-      } else if (num == 2) { //判断2月份天数
-        let year = parseInt(this.data.choose_year);
-        if (((year % 400 == 0) || (year % 100 != 0)) && (year % 4 == 0)) {
-          for (let i = 1; i <= 29; i++) {
-            if (i < 10) {
-              i = "0" + i;
-            }
-            temp.push("" + i);
-          }
-          this.setData({
-            ['multiSelectorList[2]']: temp
-          });
-        } else {
-          for (let i = 1; i <= 28; i++) {
-            if (i < 10) {
-              i = "0" + i;
-            }
-            temp.push("" + i);
-          }
-          this.setData({
-            ['multiSelectorList[2]']: temp
-          });
-        }
-      }
-    }
-    var data = {
-      multiSelectorList: this.data.multiSelectorList,
-      // multiIndex: this.data.multiIndex
-    };
-    // data.multiIndex[e.detail.column] = e.detail.value;
-    this.setData(data);
   }
 })

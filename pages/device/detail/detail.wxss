@@ -32,6 +32,7 @@ page {
   font-size: 24rpx;
   padding: 0;
   margin-top: 20rpx;
+  position: relative;
 }
 .tab-swiper .lists-title {
   display: flex;
@@ -209,4 +210,25 @@ button::after {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.more-setting {
+  margin: 50rpx auto;
+  font-size: 28rpx;
+  text-align: center;
+}
+.more-setting text {
+  color: #55BECA;
+}
+
+.add-btn {
+  position: fixed;
+  bottom: 200rpx;
+  right: 60rpx;
+  height: 64rpx;
+  width: 64rpx;
+  z-index: 10;
+}
+.add-btn image {
+  width: 64rpx;
+  height: 64rpx;
 }

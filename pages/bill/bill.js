@@ -17,13 +17,10 @@ Page({
     })
   },
   toPay() {
-    wx.navigateTo({
-      url: '../webview/webview'
+    wx.showModal({
+      title: '',
+      content: '请前往（中集智冷科技）公众号进行缴费',
+      showCancel: false
     })
-    // wx.showModal({
-    //   title: '',
-    //   content: '暂未实现该功能，敬请期待！',
-    //   showCancel: false
-    // })
   },  
 })
