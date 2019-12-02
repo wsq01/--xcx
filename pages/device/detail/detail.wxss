@@ -232,3 +232,15 @@ button::after {
   width: 64rpx;
   height: 64rpx;
 }
+.end {
+  text-align: center;
+  padding: 20rpx 0;
+}
+
+.tips {
+  padding: 0 32rpx;
+  height: 85rpx;
+  line-height: 85rpx;
+  font-size: 22rpx;
+  color: red;
+}

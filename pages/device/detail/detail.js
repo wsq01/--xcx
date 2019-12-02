@@ -46,7 +46,7 @@ Page({
       {
         title: '参数信息',
         content: [
-          { label: '夜间上传开关', value: 'yejianshangchuankaiguan', type: 'switch' }
+          { label: '夜间数据', value: 'yejianshangchuankaiguan', type: 'switch' }
         ]
       }
     ],
@@ -94,20 +94,24 @@ Page({
     if(this.data.currentItem !== 1) {
       return 
     }
-    const devid = wx.getStorageSync('devid');
+    const devid = this.data.devid;
     const mobile = wx.getStorageSync('mobile');
     this.setData({
       startNo: this.data.startNo + 20
     })
     const endTime = formatTime(new Date(), '-');
     reqDevData(mobile, devid, this.data.startNo, endTime).then(res => {
-      if (res.data.code === 10000) {
+      if (res.data.code === 10000 && res.data.resultCode != 'null') {
         let list = this.data.deviceDataList;
         list = list.concat(res.data.resultCode);
         this.setData({
           deviceDataList: list
         })
         this.setSwiperHeight('.tab-swiper2');
+      } else if (res.data.code === 10000 && res.data.resultCode == 'null') {
+        this.setData({
+          isEnd: true
+        })
       }
     })
   },

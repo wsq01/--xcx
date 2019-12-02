@@ -30,6 +30,7 @@
               <text>{{item.temperature01}}</text>
               <text>{{item.humidity}}</text>
             </view>
+            <view wx:if="{{isEnd}}" class="end">已经到底了~</view>
           </view>
         </view>
         <view wx:else style="text-align: center;padding: 20rpx;">暂无数据</view>
@@ -52,6 +53,7 @@
                 </view>
               </view>
             </block>
+            <text class="tips" wx:if="{{index === 1}}">提示：上传间隔低于两分钟会消耗大量流量</text>
           </view>
           <view class="form-submit">
             <view class="more-setting">更多设置请前往（中集智冷科技）公众号</view>
