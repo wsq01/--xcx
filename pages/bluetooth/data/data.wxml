@@ -1,0 +1,86 @@
+
+<!-- <view>
+  <view>  isFirstShow: {{isFirstShow}}</view>
+  <view>  connectionEquipment: {{connectionEquipment}}</view>
+  <view>  remaiderString: {{remaiderString}}</view>
+  <view>  servicesUUID: {{servicesUUID}}</view>
+  <view>  deviceId: {{deviceId}}</view>
+  <view>  isBluetoothOpen:{{isBluetoothOpen}}</view>
+  <view>  devices: {{devices.length}}</view>
+  <view>  characteristicId: {{characteristicId}}</view>
+  <view>time:{{time}}</view>
+  <view>isConnected: {{isConnected}}</view>
+  <view><input bindinput="inputMsg"></input></view>
+  <view><button type="primary" bindtap="sendMsg">发送</button></view>
+</view> -->
+<view class="container" wx:if="{{showPage === 'default'}}">
+  <view class="title">设备历史数据参数配置</view>
+  <view class="item">
+    <text>ID</text>
+    <text>{{deviceId}}</text>
+  </view>
+  <view class="item">
+    <text>当前温度</text>
+    <text>{{deviceParams[7]/10}}°C</text>
+  </view>
+  <!-- <view class="title">时间范围选择</view> -->
+  <view class="item">
+    <text>开始时间</text>
+    <picker mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+    <view class="tui-picker-detail">
+      {{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}
+    </view>
+   </picker>
+  </view>
+  <view class="item">
+    <text>结束时间</text>
+    <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+    <view class="tui-picker-detail">
+      {{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}
+    </view>
+   </picker>
+  </view>
+  <view class="btn"><button type="primary" bindtap="submit">确定</button></view>
+</view>
+
+<view class="container" wx:elif="{{showPage === 'setting'}}">
+  <view class="title">设备参数设置</view>
+  <view class="item">
+    <text>间隔</text>
+    <input type="number" placeholder="单位：分钟  1~60" disabled="{{isIntervalDisabled}}" bindinput="bindinputInterval"></input>
+  </view>
+  <view class="item">
+    <text>延时启动</text>
+    <input type="number" placeholder="单位：分钟 1~60" disabled="{{isDelayDisabled}}" bindinput="bindinputDelay"></input>
+  </view>
+  <view class="btn"><button type="primary" bindtap="submitSetting">确定</button></view>
+</view>
+
+<view class="result" wx:elif="{{showPage === 'result'}}">
+  <view class="title">设备历史数据结果</view>
+  <view class="item">
+    <text>ID</text>
+    <text>{{deviceId}}</text>
+  </view>
+  <view class="item">
+    <text>开始时间</text>
+    <text>{{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}</text>
+  </view>
+  <view class="item">
+    <text>结束时间</text>
+    <text>{{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}</text>
+  </view>
+  <view class="item">
+    <text>当前温度</text>
+    <text>{{deviceParams[7]/10}}°C</text>
+  </view>
+  <view class="item">
+    <text>温度数据</text>
+    <progress percent="{{percent}}" active />
+  </view>
+  <view class="btn">
+    <button type="primary" bindtap="showLine" disabled="{{isDisabledChartBtn}}">显示曲线</button>
+    <button bindtap="back">返回</button>
+  </view>
+</view>
+<view wx:else></view>

@@ -21,5 +21,6 @@ export default {
   reqSetParams: httpUrl + '/index/device/update_device',
   reqDevCharts: 'https://www.zjcoldcloud.com/xiandun/api/09_00_tb_draw_line.php',
   reqCheckSmsCode: httpUrl + '/index/register/yanzheng_code',
-  reqJudgeBinded: httpUrl + '/index/device/remove_scend_device'
+  reqJudgeBinded: httpUrl + '/index/device/remove_scend_device',
+  reqUpdateMobile: httpUrl + '/index/register/xiaochengxu_update_phone'
 }

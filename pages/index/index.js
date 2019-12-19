@@ -40,9 +40,8 @@ Page({
       title: '加载中...'
     });
     this.setUserInfo();
-    const launchOptions = wx.getLaunchOptionsSync();
-    if (launchOptions.query.id) {
-      wx.setStorageSync('devid', launchOptions.query.id);
+    if (options.id) {
+      wx.setStorageSync('devid', options.id);
     }
     const devid = wx.getStorageSync('devid');
     // 请求openid
@@ -138,10 +137,7 @@ Page({
               this.initCharts(xArr, yArr1, yArr2);
             }
           })
-
         }
-
-
       })
     })
   },
@@ -277,10 +273,8 @@ Page({
         height: height
       });
       setOption(chart, xData, seriesData1, seriesData2, ['温度', '湿度']);
-
       // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
       this.chart = chart;
-
       // 注意这里一定要返回 chart 实例，否则会影响事件处理等
       return chart;
     });

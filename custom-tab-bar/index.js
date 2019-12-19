@@ -1,4 +1,3 @@
-import { reqLookDev } from '../service/service.js';
 Component({
   properties: {
     tabbar: {
@@ -51,13 +50,9 @@ Component({
           const code = res.path.match(/\?id=(.*)/)[1];
           wx.setStorageSync('devid', code);
           const openid = wx.getStorageSync('openid');
-          reqLookDev(code).then(res => {
-            if (res.data.code === 0) {
-              wx.reLaunch({
-                url: '/pages/index/index',
-              })
-            }
-          });
+          wx.reLaunch({
+            url: '/pages/index/index?id=' + code,
+          })
         },
         fail: res => {
           wx.showToast({

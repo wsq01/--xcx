@@ -1,4 +1,3 @@
-import API from '../../../service/index.js';
 import { getDateStr, formatTime, multiSelectorList, setOption } from '../../../utils/util.js';
 import { reqDevCharts, reqSetParams, reqDevParams, reqDevData } from '../../../service/service.js';
 import * as echarts from '../../../utils/echarts.min.js';
@@ -30,7 +29,6 @@ Page({
           { label: '设备编号', value: 'shebeibianhao', type: 'input', disabled: true },
           { label: '设备类型', value: 'device_name', type: 'input', disabled: true },
           { label: '设备昵称', value: 'beizhu', type: 'input', placeholder: '请输入' },
-          { label: '激活日期', value: 'jihuoshijian', type: 'input', disabled: true },
           { label: '到期日期预警', value: 'daoqishijian', type: 'input', disabled: true }
         ]
       },

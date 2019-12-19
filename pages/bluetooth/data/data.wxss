@@ -1,0 +1,40 @@
+page {
+  color: #232323;
+  background: #f2f2f2;
+  font-size: 30rpx;
+}
+.container .item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  margin: 0 0 20rpx;
+  line-height: 100rpx;
+  background: #fff;
+  align-items: center;
+}
+.title {
+  line-height: 100rpx;
+  padding: 0 30rpx;
+}
+.container .btn {
+  margin: 100rpx 30rpx;
+}
+.result .item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  margin: 0 0 20rpx;
+  line-height: 100rpx;
+  background: #fff;
+}
+.result .btn {
+  margin: 100rpx 30rpx;
+}
+.result .btn button:nth-child(1) {
+  margin: 0 0 30rpx;
+}
+progress {
+  width: 450rpx;
+}

@@ -1,0 +1,20 @@
+<!-- <view>
+  <view>  isFirstShow: {{isFirstShow}}</view>
+  <view>  connectionEquipment: {{connectionEquipment}}</view>
+  <view>  remaiderString: {{remaiderString}}</view>
+  <view>  servicesUUID: {{servicesUUID}}</view>
+  <view>  deviceId: {{deviceId}}</view>
+  <view>  isBluetoothOpen:{{isBluetoothOpen}}</view>
+  <view>  devices: {{devices.length}}</view>
+  <view>  characteristicId: {{characteristicId}}</view>
+  <view>time:{{time}}</view>
+  <view>isConnected: {{isConnected}}</view>
+</view> -->
+<view>
+  <view class="banner">
+    <image src="/images/banner@2x.png" style="width: 100%;"></image>
+  </view>
+  <view class="btn">
+    <button type="primary" bindtap="bindScanCode">扫描设备ID</button>
+  </view>
+</view>

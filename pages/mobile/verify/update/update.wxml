@@ -1,0 +1,11 @@
+<view class='form'>
+  <view class='form-item'>
+    <input type='number' bindinput='inputPwd1' maxlength="30" value="{{pwd1}}" focus='true' placeholder='{{mobileData.placeholder}}'></input>
+  </view>
+  <!-- <view class='form-item'>
+    <input type='password' bindinput='inputPwd2' maxlength="30" value="{{pwd2}}" placeholder='{{mobileData.placeholder}}'></input>
+  </view> -->
+  <view class='form-submit' bindtap='submitForm'>
+    <button class='submit'>确定</button>
+  </view>
+</view>

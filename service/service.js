@@ -299,3 +299,18 @@ export const reqDevData = (mobile, devid, startNo, endTime) => {
     })
   })
 }
+export const reqUpdateMobile = (old_phone, new_phone) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: API.reqUpdateMobile,
+      method: 'post',
+      data: {
+        old_phone,
+        new_phone
+      },
+      success: res => {
+        resolve(res);
+      }
+    })
+  })
+}
