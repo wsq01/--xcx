@@ -38,3 +38,56 @@ page {
 progress {
   width: 450rpx;
 }
+
+
+/* 默认背景样式*/
+radio .wx-radio-input{
+  width: 40rpx;
+  height: 40rpx;
+  display: none;
+}
+
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked{
+  width: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  border: none;
+  background: #E1C371;
+}
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked::before{
+  border-radius: 50%;/* 圆角 */
+  width: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  line-height: 40rpx;
+  text-align: center;
+  font-size:30rpx; /* 对勾大小 30rpx */
+  color:#fff; /* 对勾颜色 白色 */
+  border: 1rpx solid #E1C371;
+  background: #E1C371;
+  transform:translate(-50%, -50%) scale(1);
+  -webkit-transform:translate(-50%, -50%) scale(1);
+}
+
+.radio {
+  display: none;
+}
+.radio-group label {
+  padding: 6rpx 16rpx;
+  margin: 0 5rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+}
+.label_active {
+  color: #fff;
+  background: rgb(7, 193, 96);
+}
+.templete {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.templete input {
+  width: 150rpx;
+  text-align: center;
+}

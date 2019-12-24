@@ -9,4 +9,5 @@ ec-canvas {
   position: relative;
   width: 90%;
   height: 800rpx;
+  margin: 0 auto;
 }

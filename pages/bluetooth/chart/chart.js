@@ -21,13 +21,13 @@ Page({
     console.log(historyList);
     this.initChart(historyList, delay, starttime);
   },
-  initX(startTime, needNum, delay) {
-    var result = [];
-    for(let i = 0; i < needNum; i++) {
-      result.push(formatTime(new Date(startTime + delay * 1000 * 60 * (i + 1))));
-    }
-    return result;
-  },
+  // initX(startTime, needNum, delay) {
+  //   var result = [];
+  //   for(let i = 0; i < needNum; i++) {
+  //     result.push(formatTime(new Date(startTime + delay * 1000 * 60 * (i + 1))));
+  //   }
+  //   return result;
+  // },
   initChart(historyList, delay, startTime) {
       let yArr = [];
       let xArr = [];
@@ -37,11 +37,14 @@ Page({
           if(sIndex === 0 || sIndex === 1 || sIndex === item.length-1) {
             return;
           }
-          xArr.push(formatTime(new Date(startTime + delay * 1000 * 60 * (i + 1))));
-          yArr.push(sItem);
+          console.log(startTime + delay * 1000 * 60 * (i + 1))
+          xArr.push(formatTime(new Date(parseInt(startTime) + delay * 1000 * 60 * (i + 1))));
+          yArr.push(sItem / 10);
           i++;
         })
       })
+      console.log(xArr);
+      console.log(yArr);
       this.initCharts(xArr, yArr);
       wx.hideLoading();
   },
@@ -66,38 +69,54 @@ Page({
   }, 
   setOption(chart, xAxis, seriesData) {
     var option = {
-      animation: false,
-      grid: {
-        containLabel: true
+      title: {
+        text: ''
       },
       tooltip: {
-        show: true,
         trigger: 'axis'
       },
-      legend: {
-        data: ['温度']
-      },
       xAxis: {
-        type: 'category',
-        boundaryGap: false,
         data: xAxis
       },
       yAxis: {
-        x: 'center',
-        type: 'value',
         splitLine: {
-          lineStyle: {
-            type: 'dashed'
-          }
+          show: false
         }
       },
-      series: [{
+      dataZoom: [{
+        startValue: xAxis[0]
+      }, {
+        type: 'inside'
+      }],
+      visualMap: {
+        top: 10,
+        right: 10,
+        pieces: [{
+          gt: 0,
+          lte: 10,
+          color: '#096'
+        }, {
+          gt: 30,
+          color: '#7e0023'
+        }],
+        outOfRange: {
+          color: '#999'
+        }
+      },
+      series: {
         name: '温度',
         type: 'line',
-        smooth: true,
-        data: seriesData
-      }]
-    };
+        data: seriesData,
+        markLine: {
+          silent: true,
+          data: [{
+            yAxis: 10
+          }, {
+            yAxis: 30
+          }]
+        }
+      }
+    }
     chart.setOption(option);
   }
 })

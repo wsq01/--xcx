@@ -132,10 +132,38 @@ const setOption = (chart, xData, seriesData1, seriesData2, legendData) => {
   };
   chart.setOption(option);
 }
+// 字符串转buffer
+const string2buffer = (str) => {
+  let val = "";
+  if(!str) return;
+  let length = str.length;
+  let index = 0;
+  let array = [];
+  while(index <length) {
+    array.push(str.substring(index, index + 2));
+    index = index + 2;
+  }
+  val = array.join(",");
+  // 将16进制转化为ArrayBuffer
+  return new Uint8Array(val.match(/[\da-f]{2}/gi).map(function (h) {
+    return parseInt(h, 16)
+  })).buffer
+}
+
+// 将ArrayBuffer转换成字符串
+const ab2hex = (buffer) => {
+  var hexArr = Array.prototype.map.call(new Uint8Array(buffer), function (bit) {
+    return ('00' + bit.toString(16)).slice(-2);
+  }
+  )
+  return hexArr.join('');
+}
 
 module.exports = {
-  formatTime: formatTime,
-  getDateStr: getDateStr,
-  multiSelectorList: multiSelectorList,
-  setOption: setOption
+  string2buffer,
+  ab2hex,
+  formatTime,
+  getDateStr,
+  multiSelectorList,
+  setOption
 }

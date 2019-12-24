@@ -1,18 +1,4 @@
 
-<!-- <view>
-  <view>  isFirstShow: {{isFirstShow}}</view>
-  <view>  connectionEquipment: {{connectionEquipment}}</view>
-  <view>  remaiderString: {{remaiderString}}</view>
-  <view>  servicesUUID: {{servicesUUID}}</view>
-  <view>  deviceId: {{deviceId}}</view>
-  <view>  isBluetoothOpen:{{isBluetoothOpen}}</view>
-  <view>  devices: {{devices.length}}</view>
-  <view>  characteristicId: {{characteristicId}}</view>
-  <view>time:{{time}}</view>
-  <view>isConnected: {{isConnected}}</view>
-  <view><input bindinput="inputMsg"></input></view>
-  <view><button type="primary" bindtap="sendMsg">发送</button></view>
-</view> -->
 <view class="container" wx:if="{{showPage === 'default'}}">
   <view class="title">设备历史数据参数配置</view>
   <view class="item">
@@ -39,6 +25,32 @@
       {{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}
     </view>
    </picker>
+  </view>
+  <view class="item">
+    <text>报警高温</text>
+    <view class="templete">
+      <radio-group class="radio-group" bindchange="radioChange1">
+        <label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems}}" wx:key="name">
+          <text>{{item.value}}</text>
+          <radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
+        </label>
+      </radio-group>
+      <input value="30"></input>
+      <text> °C</text>
+    </view>
+  </view>
+  <view class="item">
+    <text>报警低温</text>
+    <view class="templete">
+      <radio-group class="radio-group" bindchange="radioChange2">
+        <label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems2}}" wx:key="name">
+          <text>{{item.value}}</text>
+          <radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
+        </label>
+      </radio-group>
+      <input value="2"></input>
+      <text> °C</text>
+    </view>
   </view>
   <view class="btn"><button type="primary" bindtap="submit">确定</button></view>
 </view>
@@ -76,7 +88,8 @@
   </view>
   <view class="item">
     <text>温度数据</text>
-    <progress percent="{{percent}}" active />
+    <view wx:if="{{!isShowPercent}}">暂无数据</view>
+    <progress wx:else percent="{{percent}}" active />
   </view>
   <view class="btn">
     <button type="primary" bindtap="showLine" disabled="{{isDisabledChartBtn}}">显示曲线</button>

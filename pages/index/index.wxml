@@ -47,6 +47,15 @@
     </view>
   </view>
 
+  <view class="advice" wx:if="{{weatherData}}">
+    <view class="advice-item">
+      <image src="../../images/icon-temp@2x.png"></image>
+      <view class="weather">
+        <view>城市：{{weatherData.currentCity}} 温度：{{weatherData.temperature}} 天气：{{weatherData.weatherDesc}}</view>
+      </view>
+    </view>
+  </view>
+
   <view class="chart-container" hidden="{{isShowChart}}">
     <ec-canvas isShowImg="true" id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
     <!-- <view class="chart-btn">
@@ -54,12 +63,6 @@
       <button bindtap='changeChart' data-id="2">近一周</button>
       <button bindtap='changeChart' data-id="3">近一个月</button>
     </view> -->
-  </view>
-  <view class="advice">
-    <view class="advice-item">
-      <image src="../../images/icon-temp@2x.png"></image>
-      <text>{{advice}}</text>
-    </view>
   </view>
 
   <view class="suspend-container">

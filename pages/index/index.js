@@ -1,6 +1,7 @@
 import { reqDevList, reqLookDev, reqOpenid, reqDevCharts, reqBindDev } from '../../service/service.js';
 import { getDateStr, formatTime, setOption } from '../../utils/util.js';
 import * as echarts from '../../utils/echarts.min.js';
+var bmap = require('../../utils/bmap-wx.min.js');
 //获取应用实例
 const app = getApp()
 
@@ -15,7 +16,7 @@ Page({
     shareData: {},
     devList: [],
     isHasDev: false,
-    advice: '秋季舒适温度为15℃-20℃，湿度为30%RH-60%RH！',
+    weatherData: null,
     ec: {
       lazyLoad: true
     },
@@ -114,6 +115,7 @@ Page({
             })
           }
         })
+        this.initBMap();
       }
       setTimeout(() => {
         const devid = wx.getStorageSync('devid');
@@ -140,6 +142,34 @@ Page({
         }
       })
     })
+  },
+  initBMap() {
+    wx.getLocation({
+      type: 'gcj02', //返回可以用于wx.openLocation的经纬度
+      success(res) {
+        console.log(res)
+        const latitude = res.latitude
+        const longitude = res.longitude
+      }
+    })
+    const that = this;
+    var BMap = new bmap.BMapWX({
+      ak: 'GycumshGoqNRmB5D1ZqjinUpFsI7G2fA'
+    });
+    var fail = function (data) {
+      console.log(data)
+    };
+    var success = function (data) {
+      console.log(data)
+      that.setData({
+        weatherData: data.currentWeather[0]
+      });
+    }
+    // 发起weather请求 
+    BMap.weather({
+      fail: fail,
+      success: success
+    }); 
   },
   chooseImg() {
     return new Promise((resolve, reject) => {

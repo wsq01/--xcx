@@ -72,21 +72,23 @@ page {
 .advice {
   margin: 0 22rpx 17rpx;
   background: #fff;
-  padding: 63rpx 53rpx;
+  padding: 40rpx 50rpx;
   border-radius: 15rpx;
 }
 .advice-item {
   display: flex;
   flex-direction: row;
-  font-size: 30rpx;
-  line-height: 60rpx;
-
+  font-size: 28rpx;
+  line-height: 50rpx;
 }
 .advice-item image {
   flex: 0 0 40rpx;
   height: 40rpx;
   margin: 0 21rpx 0 0;
   vertical-align: top;
+}
+.advice-item .weather {
+  flex: 1;
 }
 
 
