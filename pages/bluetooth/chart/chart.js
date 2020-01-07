@@ -134,7 +134,6 @@ Page({
           color: '#cc0033'
         }
       },
-      
       series: {
         name: '温度',
         type: 'line',
