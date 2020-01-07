@@ -1,3 +1,28 @@
 <view class="container">
   <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
 </view>
+<view class="tab-container" wx:if="{{tableList[0].length !== 0 || tableList[1].length != 0}}">
+  <view class='tab'>
+    <view bindtap='tabChange' class='{{active[0]}}' data-id='0'>超温记录</view>
+    <view bindtap='tabChange' class='{{active[1]}}' data-id='1'>低温记录</view>
+  </view>
+  <swiper style='height: {{swiperItemHeight}};' class='swiper' bindchange='swiperChange' current='{{currentItem}}'>
+    <block>
+      <swiper-item wx:for="{{tableList}}">
+        <view class='tab-swiper tab-swiper1'>
+          <view class='lists-title'>
+            <view wx:for='{{listsTitle}}' wx:for-index="idx" wx:for-item="itemName" wx:key='*this'>{{itemName}}</view>
+          </view>
+          <view class='lists-content' wx:for='{{item}}' wx:key='{{index}}'>
+            <view>{{item.time}}</view>
+            <view>{{item.value}}</view>
+          </view>
+        </view>
+        <view class='bottom-split' wx:if='{{splitText}}'>
+          <text></text> {{splitText}}
+          <text></text>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

@@ -1,11 +1,19 @@
 import * as echarts from '../../../utils/echarts.min.js';
-import { formatTime } from '../../../utils/util.js';
+import {
+  formatTime
+} from '../../../utils/util.js';
 
 Page({
   data: {
     ec: {
       lazyLoad: true
-    }
+    },
+    tableList: [[],[]],
+    active: ['active', ''],
+    swiperItemHeight: 0,
+    isRequested: false,
+    currentItem: 0,
+    listsTitle: ['时间', '温度'],
   },
   onLoad: function (options) {
     wx.showLoading({
@@ -13,42 +21,62 @@ Page({
     })
     this.ecComponent = this.selectComponent('#mychart-dom-bar');
     console.log(options)
-    let { delay, starttime, neednum } = options;
+    let {
+      delay,
+      starttime,
+      neednum,
+      heightemp,
+      lowtemp
+    } = options;
+    this.setData({
+      delay,
+      starttime,
+      neednum: parseInt(neednum),
+      heightemp,
+      lowtemp
+    })
     let historyList = wx.getStorageSync('historyList');
-    // const xArr = this.initX(parseInt(starttime), parseInt(neednum), parseInt(delay));
-    // console.log(xArr)
     historyList = JSON.parse(historyList);
     console.log(historyList);
-    this.initChart(historyList, delay, starttime);
+    this.initChart(historyList, delay, starttime, parseInt(heightemp), parseInt(lowtemp));
   },
-  // initX(startTime, needNum, delay) {
-  //   var result = [];
-  //   for(let i = 0; i < needNum; i++) {
-  //     result.push(formatTime(new Date(startTime + delay * 1000 * 60 * (i + 1))));
-  //   }
-  //   return result;
-  // },
-  initChart(historyList, delay, startTime) {
-      let yArr = [];
-      let xArr = [];
-      var i = 0;
-      historyList.forEach((item, index) => {
-        item.forEach((sItem, sIndex) => {
-          if(sIndex === 0 || sIndex === 1 || sIndex === item.length-1) {
-            return;
-          }
-          console.log(startTime + delay * 1000 * 60 * (i + 1))
-          xArr.push(formatTime(new Date(parseInt(startTime) + delay * 1000 * 60 * (i + 1))));
-          yArr.push(sItem / 10);
-          i++;
-        })
+  initTable(tempList) {
+
+  },
+  initChart(historyList, delay, startTime, heightemp, lowtemp) {
+    let yArr = [];
+    let xArr = [];
+    let tableList = [[], []];
+    var i = 0;
+    historyList.forEach((item, index) => {
+      item.forEach((sItem, sIndex) => {
+        if (sIndex === 0 || sIndex === item.length - 1 || sIndex === item.length -2 || i >= this.data.neednum) {
+          return;
+        }
+        let time = formatTime(new Date(parseInt(startTime) + delay * 1000 * 60 * (i + 1))).slice(0, -3).slice(5)
+        xArr.push(time);
+        yArr.push(sItem / 10);
+        i++;
+        if(sItem > heightemp) {
+          tableList[0].push({time: time, value: sItem / 10})
+        }
+        if(sItem < lowtemp) {
+          tableList[1].push({ time: time, value: sItem / 10 })
+        }
       })
-      console.log(xArr);
-      console.log(yArr);
-      this.initCharts(xArr, yArr);
-      wx.hideLoading();
+    })
+    console.log(this.data.neednum)
+    console.log(xArr);
+    console.log(yArr);
+    this.setData({
+      tableList: tableList,
+      isRequested: true
+    })
+    console.log(tableList)
+    this.setSwiperHeight('.tab-swiper1');
+    this.initCharts(xArr, yArr, heightemp, lowtemp);
   },
-  initCharts(xAxis, seriesData) {
+  initCharts(xAxis, seriesData, heightemp, lowtemp) {
     const that = this;
     this.ecComponent.init((canvas, width, height) => {
       // 获取组件的 canvas、width、height 后的回调函数
@@ -57,8 +85,8 @@ Page({
         width: width,
         height: height
       });
-      
-      that.setOption(chart, xAxis, seriesData);
+
+      that.setOption(chart, xAxis, seriesData, heightemp, lowtemp);
 
       // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
       this.chart = chart;
@@ -66,8 +94,8 @@ Page({
       // 注意这里一定要返回 chart 实例，否则会影响事件处理等
       return chart;
     });
-  }, 
-  setOption(chart, xAxis, seriesData) {
+  },
+  setOption(chart, xAxis, seriesData, heightemp, lowtemp) {
     var option = {
       title: {
         text: ''
@@ -75,8 +103,14 @@ Page({
       tooltip: {
         trigger: 'axis'
       },
+      grid: {
+        bottom: 100
+      },
       xAxis: {
-        data: xAxis
+        data: xAxis,
+        axisLabel: {
+          rotate: -30
+        }
       },
       yAxis: {
         splitLine: {
@@ -86,21 +120,18 @@ Page({
       dataZoom: [{
         startValue: xAxis[0]
       }, {
-        type: 'inside'
+        type: 'slider'
       }],
       visualMap: {
         top: 10,
         right: 10,
         pieces: [{
-          gt: 0,
-          lte: 10,
-          color: '#096'
-        }, {
-          gt: 30,
-          color: '#7e0023'
+          gt: lowtemp,
+          lte: heightemp,
+          color: '#999'
         }],
         outOfRange: {
-          color: '#999'
+          color: '#cc0033'
         }
       },
       series: {
@@ -110,13 +141,41 @@ Page({
         markLine: {
           silent: true,
           data: [{
-            yAxis: 10
+            yAxis: lowtemp
           }, {
-            yAxis: 30
+            yAxis: heightemp
           }]
         }
       }
     }
+    console.log(option)
+    wx.hideLoading();
     chart.setOption(option);
-  }
+  },
+  setSwiperHeight: function (selector) {
+    const that = this;
+    const query = wx.createSelectorQuery();
+    query.select(selector).boundingClientRect(function (rect) {
+      that.setData({
+        swiperItemHeight: rect.height + 50 + 'px'
+      })
+    }).exec()
+  },
+  swiperChange: function (e) {
+    let active = ['', ''];
+    active[e.detail.current] = 'active'
+    this.setData({
+      active: active
+    })
+    let selector = '.tab-swiper' + (e.detail.current + 1);
+    this.setSwiperHeight(selector);
+  },
+  tabChange: function (e) {
+    let active = ['', ''];
+    active[e.currentTarget.dataset.id] = 'active'
+    this.setData({
+      currentItem: e.currentTarget.dataset.id,
+      active: active
+    })
+  },
 })

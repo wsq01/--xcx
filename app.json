@@ -18,7 +18,8 @@
     "pages/bluetooth/bluetooth",
     "pages/mobile/verify/update/update",
     "pages/bluetooth/data/data",
-    "pages/bluetooth/chart/chart"
+    "pages/bluetooth/chart/chart",
+    "pages/bluetooth/table/table"
   ],
   "window": {
     "backgroundTextStyle": "light",

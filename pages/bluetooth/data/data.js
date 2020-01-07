@@ -2,7 +2,7 @@ var dateTimePicker = require('../../../utils/datetimepicker.js');
 import {
   string2buffer,
   ab2hex,
-  formatTime
+  formatTime,
 } from '../../../utils/util.js';
 import {
   findBluetooth,
@@ -57,24 +57,66 @@ Page({
     isShowPercent: false,
     isDisabledChartBtn: true,
     startTime: '',
+    heighTemp: 0,
+    lowTemp: 0,
     totalNum: 0, // 总数据条数
     historyList: [], // 历史数据
     deviceParams: [], // 设备参数
     showPage: '', // 当前展示页
     writeId: '0000FFF2-0000-1000-8000-00805F9B34FB', // write uuid
-    bluetoothDeviceName: '777001' // 蓝牙设备名 HJ-580XP_EE
+    bluetoothDeviceName: '777001', // 蓝牙设备名 HJ-580XP_EE
+    timer: null
   },
   onLoad: function(options) {
     console.log(options);
     if (options.id) {
       this.setData({
-        bluetoothDeviceName
+        bluetoothDeviceName: options.id
       })
     }
     this.initBluetooth();
     // this.initDateTimePicker();
   },
+  onShow() {
+    this.setData({
+      timer: null
+    })
+  },
+  // onHide() {
+  //   const timer = setTimeout(() => {
+  //     wx.closeBluetoothAdapter({
+  //       success: function (res) {
+  //         wx.openBluetoothAdapter({
+  //           success: function (res) {
+  //             console.log('xxxxx')
+  //             wx.stopBluetoothDevicesDiscovery({
+  //               success: function(res) {
+  //                 wx.hideLoading();
+  //               },
+  //             })
+  //             wx.showModal({
+  //               title: '提示框',
+  //               content: '蓝牙已断开，请重新连接',
+  //               showCancel: false,
+  //               success(res) {
+  //                 if (res.confirm) {
+  //                   wx.redirectTo({
+  //                     url: '../bluetooth',
+  //                   })
+  //                 }
+  //               }
+  //             })
+  //           }
+  //         })
+  //       },
+  //     })
+  //   }, 5000)
+  //   this.setData({
+  //     timer
+  //   })
+  // },
   onUnload() {
+    wx.hideLoading();
     wx.closeBluetoothAdapter({
       success: function(res) {
         wx.openBluetoothAdapter({
@@ -83,6 +125,28 @@ Page({
           }
         })
       },
+    })
+  },
+  bindHigh(e) {
+    let sy = 1;
+    this.data.alarmItems.forEach((item, index) => {
+      if(item.checked) {
+        sy = item.name;
+      }
+    })
+    this.setData({
+      heighTemp: e.detail.value * sy
+    })
+  },
+  bindLow(e) {
+    let sy = 1;
+    this.data.alarmItems2.forEach((item, index) => {
+      if (item.checked) {
+        sy = item.name;
+      }
+    })
+    this.setData({
+      lowTemp: e.detail.value * sy
     })
   },
   radioChange1(e) {
@@ -115,48 +179,59 @@ Page({
   },
   submit() {
     const that = this;
+    // 选择的开始时间
     const startTime = that.data.dateTimeArray[0][that.data.dateTime[0]] + '-' + that.data.dateTimeArray[1][that.data.dateTime[1]] + '-' + that.data.dateTimeArray[2][that.data.dateTime[2]] + ' ' + that.data.dateTimeArray[3][that.data.dateTime[3]] + ':' + that.data.dateTimeArray[4][that.data.dateTime[4]];
+    // 选择的结束时间
     const endTime = that.data.dateTimeArray1[0][that.data.dateTime1[0]] + '-' + that.data.dateTimeArray1[1][that.data.dateTime1[1]] + '-' + that.data.dateTimeArray1[2][that.data.dateTime1[2]] + ' ' + that.data.dateTimeArray1[3][that.data.dateTime1[3]] + ':' + that.data.dateTimeArray1[4][that.data.dateTime1[4]];
+    // 设备开始时间
     const deviceStartTime = that.data.startDate[0] + '-' + that.data.startDate[1] + '-' + that.data.startDate[2] + ' ' + that.data.startDate[3] + ':' + that.data.startDate[4];
     let s1 = new Date(startTime);
     let s2 = new Date(deviceStartTime);
     let s3 = new Date(endTime);
-    console.log('totalNum: ' + that.data.totalNum);
-    const deviceEndTime = new Date(that.data.deviceParams[9] * that.data.totalNum * 1000 * 60 + s2.getTime());
-    console.log(deviceEndTime)
-    if (s1 < s2) {
-      wx.showModal({
-        title: '提示',
-        content: '开始时间不得小于' + deviceStartTime,
-        showCancel: false
-      })
-      return
-    }
-    if (s3 < s1) {
-      wx.showModal({
-        title: '提示',
-        content: '结束时间不得小于开始时间',
-        showCancel: false
-      })
-      return
-    }
-    if (deviceEndTime - s3 < 0) {
-      wx.showModal({
-        title: '提示',
-        content: '结束时间不得超过' + formatTime(deviceEndTime),
-        showCancel: false
-      })
-      return
-    }
-    let startNum = parseInt((s1.getTime() - s2.getTime()) / 1000 / 60 / that.data.deviceParams[8]);
+    // 设备结束时间
+    const deviceEndTime = that.data.deviceParams[9] * that.data.totalNum * 1000 * 60 + s2.getTime();
+    // 设备当前的开始时间
+    console.log(that.data.totalNum < 2000)
+    const reqStartTime = that.data.totalNum < 2000 ? new Date(deviceStartTime).getTime() : deviceEndTime - 1000 * 7 * 24 * 60 * 60;
+    console.log('设备开始时间：' + deviceStartTime);
+    console.log('设备结束时间：' + new Date(deviceEndTime));
+    console.log('设备当前开始时间:' + new Date(reqStartTime));
+    // if (s1 < reqStartTime) {
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: '开始时间不得小于' + reqStartTime,
+    //     showCancel: false
+    //   })
+    //   return
+    // }
+    // if (s3 < s1) {
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: '结束时间不得小于开始时间',
+    //     showCancel: false
+    //   })
+    //   return
+    // }
+    // if (deviceEndTime - s3 > 0) {
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: '结束时间不得超过' + formatTime(deviceEndTime),
+    //     showCancel: false
+    //   })
+    //   return
+    // }
+    let startNum = parseInt((s1.getTime() - reqStartTime) / 1000 / 60 / that.data.deviceParams[8]);
     let endNum = parseInt((s3.getTime() - s1.getTime()) / 1000 / 60 / that.data.deviceParams[8]);
-    console.log(startNum, endNum);
+
+    console.log('总条数: ' + that.data.totalNum);
+    console.log('开始条数：' + startNum);
+    console.log('所需条数：' + endNum);
 
     startNum = startNum.toString(16).padStart(8, '0');
     endNum = endNum.toString(16).padStart(8, '0');
     let verify = (parseInt('FE', 16) + parseInt('FD', 16) + parseInt(startNum, 16) + parseInt(endNum, 16)).toString().padStart(2, '0').slice(-2);
     const code = 'FEFD' + startNum + endNum + verify;
-    console.log(code);
+    console.log('发送指令：' + code);
     this.sendMy(string2buffer(code));
     this.setData({
       needNum: endNum,
@@ -194,25 +269,17 @@ Page({
       return false;
     }
     const now = new Date();
-    let year = parseInt(now.getFullYear().toString().slice(2));
-    let month = now.getMonth() + 1;
-    let day = now.getDate();
-    let h = now.getHours();
-    let m = now.getMinutes();
-    let s = now.getSeconds();
-    let interval = parseFloat(this.data.interval);
-    let delay = parseFloat(this.data.delay);
-    let verify = (parseInt('fe', 16) + parseInt('fb', 16) + year + month + day + h + m + s + interval + delay).toString(16).padStart(2, '0');
+    let year = (now.getFullYear().toString().slice(2)).toString(16).padStart(2, '0');
+    let month = (now.getMonth() + 1).toString(16).padStart(2, '0');
+    let day = now.getDate().toString(16).padStart(2, '0');
+    let h = now.getHours().toString(16).padStart(2, '0');
+    let m = now.getMinutes().toString(16).padStart(2, '0');
+    let s = now.getSeconds().toString(16).padStart(2, '0');
+    let interval = this.data.interval.toString(16).padStart(2, '0');
+    let delay = this.data.delay.toString(16).padStart(2, '0');
+    let verify = (parseInt('fe', 16) + parseInt('fb', 16) + parseInt(year, 16) + parseInt(month, 16) + parseInt(day, 16) + parseInt(h, 16) + parseInt(m, 16) + parseInt(s, 16) + parseInt(interval, 16) + parseInt(delay, 16)).toString(16).padStart(2, '0');
     verify = verify[verify.length - 2] + verify[verify.length - 1];
     console.log(year, month, day, h, m, s, interval, delay, verify)
-    year = year.toString(16).padStart(2, '0');
-    month = month.toString(16).padStart(2, '0');
-    day = day.toString(16).padStart(2, '0');
-    h = h.toString(16).padStart(2, '0');
-    m = m.toString(16).padStart(2, '0');
-    s = s.toString(16).padStart(2, '0');
-    interval = interval.toString(16).padStart(2, '0');
-    delay = delay.toString(16).padStart(2, '0');
     const code = 'FEFB' + year + month + day + h + m + s + interval + delay + verify;
     console.log(code);
     const msg = string2buffer(code);
@@ -249,8 +316,7 @@ Page({
                     // 设备返回的方法
                     wx.onBLECharacteristicValueChange(function(res) {
                       console.log("蓝牙测试返回的数据");
-                      console.log(res)
-                      var nonceId = ab2hex(res.value);
+                      const nonceId = ab2hex(res.value);
                       console.log(nonceId)
                       that.handleBLEValue(nonceId);
                     })
@@ -310,6 +376,7 @@ Page({
     if (nonceId.startsWith('fefa')) { // fefa 
       const code = that.transformCode(nonceId, [2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1]);
       console.log(code);
+      code[3] === '0' ? code[3] = '1' : code[3];
       that.setData({
         deviceParams: code,
         delay: code[8],
@@ -321,7 +388,8 @@ Page({
       if (nonceId.length === 8) {
         wx.showModal({
           title: '提示',
-          content: '无数据',
+          content: '暂无数据',
+          showCancel: false
         })
         that.setData({
           isDisabledChartBtn: true
@@ -330,13 +398,14 @@ Page({
         const code = that.transformCode(nonceId, [2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1]);
         let obj = that.data.historyList;
         obj.push(code);
-        console.log(obj)
+        console.log(obj);
+        var sum = 0;
         that.setData({
           isShowPercent: true,
           historyList: obj,
-          isDisabledChartBtn: false,
-          percent: obj.length * 8 / that.data.totalNum * 100
+          percent: obj.length * 8 / parseInt(that.data.needNum, 16).toString() * 100
         })
+        console.log(parseInt(that.data.needNum, 16).toString().toString())
         console.log(that.data.percent);
       }
     } else if (nonceId.startsWith('fefe')) { // fefe 
@@ -355,6 +424,11 @@ Page({
         icon: 'none'
       })
     }
+  },
+  finish() {
+    this.setData({
+      isDisabledChartBtn: false
+    })
   },
   judgeIsFirstConnectDevice(code) {
     if (code[9] === "0") { // 首次设置
@@ -416,16 +490,18 @@ Page({
   },
   back() {
     this.setData({
-      showPage: 'default'
+      showPage: 'default',
+      isDisabledChartBtn: true
     })
   },
   showLine() {
     wx.setStorageSync('historyList', JSON.stringify(this.data.historyList));
     this.setData({
-      historyList: []
+      historyList: [],
+      showPage: 'default'
     })
     wx.navigateTo({
-      url: '../chart/chart?delay=' + this.data.delay + '&starttime=' + this.data.startTime + '&neednum=' + this.data.needNum,
+      url: '../chart/chart?delay=' + this.data.delay + '&starttime=' + this.data.startTime + '&neednum=' + parseInt(this.data.needNum, 16) + '&heightemp=' + this.data.heighTemp + '&lowtemp=' + this.data.lowTemp,
     })
   },
   initDateTimePicker() {

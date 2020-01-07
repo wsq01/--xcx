@@ -35,7 +35,7 @@
           <radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
         </label>
       </radio-group>
-      <input value="30"></input>
+      <input value="30" bindinput="bindHigh"></input>
       <text> °C</text>
     </view>
   </view>
@@ -48,7 +48,7 @@
           <radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
         </label>
       </radio-group>
-      <input value="2"></input>
+      <input value="2" bindinput="bindLow"></input>
       <text> °C</text>
     </view>
   </view>
@@ -89,7 +89,7 @@
   <view class="item">
     <text>温度数据</text>
     <view wx:if="{{!isShowPercent}}">暂无数据</view>
-    <progress wx:else percent="{{percent}}" active />
+    <progress wx:else percent="{{percent}}" bindactiveend="finish" active-mode="forwards" active />
   </view>
   <view class="btn">
     <button type="primary" bindtap="showLine" disabled="{{isDisabledChartBtn}}">显示曲线</button>

@@ -41,12 +41,12 @@ Page({
           { label: '超温上传间隔', value: 'chaowenshangchuanshijianjiange', type: 'input', placeholder: '请输入' }
         ]
       },
-      {
-        title: '参数信息',
-        content: [
-          { label: '夜间数据', value: 'yejianshangchuankaiguan', type: 'switch' }
-        ]
-      }
+      // {
+      //   title: '参数信息',
+      //   content: [
+      //     { label: '夜间数据', value: 'yejianshangchuankaiguan', type: 'switch' }
+      //   ]
+      // }
     ],
     paramsData: {},
     isRequested: false,
@@ -85,7 +85,6 @@ Page({
     // 获取图表
     this.initChart(mobile, devid);
     this.setSwiperHeight('.tab-swiper1');
-    wx.hideLoading();
   },
   onReachBottom: function () {
     // 页面触底时执行
@@ -153,6 +152,7 @@ Page({
 
       // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
       this.chart = chart;
+      wx.hideLoading();
 
       // 注意这里一定要返回 chart 实例，否则会影响事件处理等
       return chart;

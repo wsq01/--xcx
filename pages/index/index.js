@@ -37,6 +37,7 @@ Page({
     }
   },
   onLoad: function(options) {
+    console.log(options)
     wx.showLoading({
       title: '加载中...'
     });
@@ -115,9 +116,9 @@ Page({
             })
           }
         })
-        this.initBMap();
       }
       setTimeout(() => {
+        this.initBMap();
         const devid = wx.getStorageSync('devid');
         // 获取图表
         const mobile = wx.getStorageSync('mobile');
