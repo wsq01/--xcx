@@ -35,10 +35,10 @@ Page({
       {
         title: '指令信息',
         content: [
-          { label: '正常采集间隔', value: 'caiji_jiange_minute', type: 'input', placeholder: '请输入' },
-          { label: '正常上传间隔', value: 'fasong_jiange_minute', type: 'input', placeholder: '请输入' },
-          { label: '超温采集间隔', value: 'chaowenchucunshijianjiange', type: 'input', placeholder: '请输入' },
-          { label: '超温上传间隔', value: 'chaowenshangchuanshijianjiange', type: 'input', placeholder: '请输入' }
+          { label: '采集时间间隔', value: 'caiji_jiange_minute', type: 'input', placeholder: '单位：分钟' },
+          { label: '上传时间间隔', value: 'fasong_jiange_minute', type: 'input', placeholder: '单位：分钟' },
+          // { label: '超温采集间隔', value: 'chaowenchucunshijianjiange', type: 'input', placeholder: '单位：分钟' },
+          // { label: '超温上传间隔', value: 'chaowenshangchuanshijianjiange', type: 'input', placeholder: '单位：分钟' }
         ]
       },
       // {

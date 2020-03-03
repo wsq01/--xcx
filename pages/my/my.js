@@ -7,11 +7,11 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     menuList: [
-      {
-        icon: '../../images/icon-device@2x.png',
-        text: '我的设备',
-        tap: 'device'
-      },
+      // {
+      //   icon: '../../images/icon-device@2x.png',
+      //   text: '我的设备',
+      //   tap: 'device'
+      // },
       {
         icon: '../../images/icon-invite@2x.png',
         text: '邀请家人',
@@ -36,7 +36,12 @@ Page({
         icon: '../../images/icon-service@2x.png',
         text: '联系客服',
         tap: 'service'
-      }
+      },
+      // {
+      //   icon: '../../images/icon-device@2x.png',
+      //   text: '操作教程',
+      //   tap: 'video'
+      // }
     ],
     isHasAcess: false
   },

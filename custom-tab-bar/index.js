@@ -1,3 +1,4 @@
+
 Component({
   properties: {
     tabbar: {
@@ -6,16 +7,16 @@ Component({
         "selectedColor": "#83c7D4",
         "list": [
           {
-            "pagePath": "/pages/index/index",
+            "pagePath": "/pages/device/device",
             "iconPath": "/images/icon-home@2x.png",
             "selectedIconPath": "/images/icon-home-active@2x.png",
             "text": "首页"
           },
           {
-            "pagePath": "pages/index/index",
+            "pagePath": "/pages/temporary/temporary",
             "iconPath": "/images/icon-scnner@2x.png",
             "selectedIconPath": "/images/icon-scnner@2x.png",
-            "text": "查看设备",
+            "text": "添加设备",
             "isSpecial": true
           },
           {
@@ -34,15 +35,15 @@ Component({
   methods: {
     switchTab(e) {
       const data = e.currentTarget.dataset;
-      if(data.special) {
-        this.scanCode();
-      } else {
-        const url = data.url
-        wx.switchTab({ url })
-        this.setData({
-          selected: data.index
-        })
-      }
+      // if(data.special) {
+      //   this.scanCode();
+      // } else {
+      const url = data.url
+      this.setData({
+        selected: data.index
+      })
+      wx.switchTab({ url })
+      // }
     },
     scanCode() {
       wx.scanCode({
@@ -51,7 +52,7 @@ Component({
           wx.setStorageSync('devid', code);
           const openid = wx.getStorageSync('openid');
           wx.reLaunch({
-            url: '/pages/index/index?id=' + code,
+            url: '/pages/device/device?id=' + code,
           })
         },
         fail: res => {

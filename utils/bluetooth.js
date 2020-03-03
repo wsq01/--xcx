@@ -60,6 +60,7 @@ const getServiceId = (deviceId, callback) => {
     // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
     deviceId: deviceId,
     success: function (res) {
+      console.log(res)
       typeof callback === 'function' && callback(res);
     }
   })
@@ -68,6 +69,7 @@ const getServiceId = (deviceId, callback) => {
 const getBlue = (bluetoothDeviceName, successCallback) => {
   wx.getBluetoothDevices({
     success: function (res) {
+      console.log(res)
       var index = false;
       var deviceId = '';
       for (var i = 0; i < res.devices.length; i++) {

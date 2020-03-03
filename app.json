@@ -1,9 +1,8 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/device/device",
     "pages/my/my",
     "pages/bill/bill",
-    "pages/device/device",
     "pages/invite/invite",
     "pages/issue/issue",
     "pages/service/service",
@@ -19,7 +18,10 @@
     "pages/mobile/verify/update/update",
     "pages/bluetooth/data/data",
     "pages/bluetooth/chart/chart",
-    "pages/bluetooth/table/table"
+    "pages/index/index",
+    "pages/bluetooth/table/table",
+    "pages/video/video",
+    "pages/temporary/temporary"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -39,13 +41,13 @@
     "selectedColor": "#83c7D4",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/device/device",
         "iconPath": "images/icon-home@2x.png",
         "selectedIconPath": "images/icon-home-active@2x.png",
         "text": "首页"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/temporary/temporary",
         "iconPath": "images/icon-scnner@2x.png",
         "selectedIconPath": "images/icon-scnner@2x.png",
         "text": "添加设备"

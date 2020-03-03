@@ -19,7 +19,7 @@ Component({
   methods: {
     toPage(e) {
       const pagePath = e.currentTarget.dataset.page
-      if (this.data.isHasAcess || (!this.data.isHasAcess && (pagePath === 'issue' || pagePath === 'service' || pagePath === 'mobile'))) {
+      if (this.data.isHasAcess || (!this.data.isHasAcess && (pagePath === 'issue' || pagePath === 'service' || pagePath === 'mobile' || pagePath === 'video'))) {
         wx.navigateTo({
           url: '../' + pagePath + '/' + pagePath,
         })

@@ -2,16 +2,6 @@
 <view class="container" wx:if="{{isReqSuccess && isHasDev}}">
   <view class="banner">
     <image src="/images/banner@2x.png" mode="aspectFit"></image>
-
-    <!-- <image class='more' src="{{showview === true? '../../images/icon-more@2x.png': '../../images/icon-close@2x.png'}}" bindtap='getDevList'></image>
-    <view class='mydevices {{showview ? "hide" : "show"}}'>
-      <view class='inner-device' wx:for="{{devList}}" wx:key='key' wx-for-item="item" bindtap="placeChoose" data-location="{{item.devid}}">
-        <image src='../../images/icon-book@2x.png' class='devices-list-img'></image>
-        <text class='list-devicenums'>{{item.devid}}</text>
-        <image src='../../images/icon-start@2x.png' class='hover-nums'></image>
-      </view>
-    </view> -->
-
   </view>
 
   <view class="prodect">
@@ -58,11 +48,6 @@
 
   <view class="chart-container" hidden="{{isShowChart}}">
     <ec-canvas isShowImg="true" id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-    <!-- <view class="chart-btn">
-      <button bindtap='changeChart' data-id="1">今天</button>
-      <button bindtap='changeChart' data-id="2">近一周</button>
-      <button bindtap='changeChart' data-id="3">近一个月</button>
-    </view> -->
   </view>
 
   <view class="suspend-container">

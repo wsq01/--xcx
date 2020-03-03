@@ -5,7 +5,7 @@
   <view class="list-item fadeInLeft" style="animation-delay: {{(index * 0.1) + 's'}}" wx:for="{{devList}}" wx:key="{{index}}" data-devid="{{item.shebeibianhao}}" bindtap="toDetail" data-master="{{item.is_master}}">
     <view class="item-title">
       <text>设备号：{{item.shebeibianhao}}{{item.is_master === 1 ? '(主)' : '(副)'}}</text>
-      <text>昵称：{{item.beizhu}}</text>
+      <text catchtap="bindSetName" data-devid="{{item.shebeibianhao}}" data-name="{{item.beizhu}}">昵称：{{item.beizhu}}</text>
       <text catchtap="unbind" data-type="{{item.is_master}}" data-devid="{{item.shebeibianhao}}">解绑</text>
     </view>
     <view class="item-content">
@@ -30,19 +30,31 @@
   </view>
 </view>
 <view wx:else></view>
-<view class="add-btn" bindtap="bindDev">
+<!-- <view class="add-btn" bindtap="bindDev">
   <image src="../../images/icon-add@2x.png"></image>
-</view>
+</view> -->
 
 <view class="modal zoomIn" bindtap="bindCloseModal" hidden="{{!isShowModal}}">
   <view class='form'>
-  <view class='form-item' catchtap="stopProp">
-    <label for='mobile'>设备号</label>
-    <input id='mobile' type='number' bindinput='inputDev' value="{{inputDevId}}" focus='true' placeholder='请输入设备号'></input>
-    <button bindtap="bindScanCode">扫码</button>
-  </view>
-  <view class='form-submit' catchtap='addDev'>
-    <button class='submit'>确定</button>
+    <view class='form-item' catchtap="stopProp">
+      <label for='mobile'>设备号</label>
+      <input id='mobile' type='number' bindinput='inputDev' value="{{setname}}" focus='true' placeholder='请输入设备号'></input>
+      <button bindtap="bindScanCode">扫码</button>
+    </view>
+    <view class='form-submit' catchtap='addDev'>
+      <button class='submit'>确定</button>
+    </view>
   </view>
 </view>
+
+<view class="modal zoomIn" bindtap="bindCloseSetNameModal" hidden="{{!isShowSetNameModal}}">
+  <view class='form'>
+    <view class='form-item' catchtap="stopProp">
+      <label for='mobile'>昵称</label>
+      <input id='mobile' type='number' bindinput='inputName' value="{{setname}}" focus='true' placeholder='请输入昵称'></input>
+    </view>
+    <view class='form-submit' catchtap='changeName'>
+      <button class='submit'>确定</button>
+    </view>
+  </view>
 </view>

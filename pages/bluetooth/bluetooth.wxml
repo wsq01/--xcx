@@ -3,6 +3,6 @@
     <image src="/images/banner@2x.png" style="width: 100%;"></image>
   </view>
   <view class="btn">
-    <button type="primary" bindtap="bindScanCode">扫描设备ID</button>
+    <button type="primary" bindtap="bindScanCode">扫描设备</button>
   </view>
 </view>

@@ -2,6 +2,7 @@ page {
   color: #232323;
   background: #f2f2f2;
   font-size: 30rpx;
+  margin: 0 0 150rpx 0;
 }
 
 .list-item {
@@ -24,6 +25,12 @@ page {
 .item-title text:nth-of-type(1) {
   color: #222222;
 
+}
+.item-title text:nth-of-type(2) {
+  flex: 0 0 240rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .item-title text:nth-of-type(3) {
   color: #F95262;

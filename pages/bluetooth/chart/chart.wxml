@@ -15,7 +15,7 @@
           </view>
           <view class='lists-content' wx:for='{{item}}' wx:key='{{index}}'>
             <view>{{item.time}}</view>
-            <view>{{item.value}}</view>
+            <view>{{item.value}}°C</view>
           </view>
         </view>
         <view class='bottom-split' wx:if='{{splitText}}'>

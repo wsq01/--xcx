@@ -98,10 +98,11 @@ Page({
   setOption(chart, xAxis, seriesData, heightemp, lowtemp) {
     var option = {
       title: {
-        text: ''
+        text: '温度曲线'
       },
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        formatter: "温度: {c}°C \n时间:{b}"
       },
       grid: {
         bottom: 100
@@ -113,15 +114,23 @@ Page({
         }
       },
       yAxis: {
+        axisLabel: {
+          formatter: '{value}°C'
+        },
         splitLine: {
           show: false
         }
       },
       dataZoom: [{
-        startValue: xAxis[0]
-      }, {
-        type: 'slider'
+        show: true,
+        realtime: true,
+        startValue: xAxis[0],
       }],
+      // dataZoom: [{
+      //   startValue: xAxis[0]
+      // }, {
+      //   type: 'slider'
+      // }],
       visualMap: {
         top: 10,
         right: 10,
@@ -148,7 +157,6 @@ Page({
         }
       }
     }
-    console.log(option)
     wx.hideLoading();
     chart.setOption(option);
   },

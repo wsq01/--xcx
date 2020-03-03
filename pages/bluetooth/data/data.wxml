@@ -1,9 +1,9 @@
 
 <view class="container" wx:if="{{showPage === 'default'}}">
-  <view class="title">设备历史数据参数配置</view>
+  <view class="title">设备参数配置</view>
   <view class="item">
-    <text>ID</text>
-    <text>{{deviceId}}</text>
+    <text>设备名称</text>
+    <text>{{bluetoothDeviceName}}</text>
   </view>
   <view class="item">
     <text>当前温度</text>
@@ -58,21 +58,21 @@
 <view class="container" wx:elif="{{showPage === 'setting'}}">
   <view class="title">设备参数设置</view>
   <view class="item">
-    <text>间隔</text>
+    <text>间隔时间</text>
     <input type="number" placeholder="单位：分钟  1~60" disabled="{{isIntervalDisabled}}" bindinput="bindinputInterval"></input>
   </view>
   <view class="item">
-    <text>延时启动</text>
+    <text>延时时间</text>
     <input type="number" placeholder="单位：分钟 1~60" disabled="{{isDelayDisabled}}" bindinput="bindinputDelay"></input>
   </view>
   <view class="btn"><button type="primary" bindtap="submitSetting">确定</button></view>
 </view>
 
 <view class="result" wx:elif="{{showPage === 'result'}}">
-  <view class="title">设备历史数据结果</view>
+  <view class="title">参数设置结果</view>
   <view class="item">
-    <text>ID</text>
-    <text>{{deviceId}}</text>
+    <text>设备名称</text>
+    <text>{{bluetoothDeviceName}}</text>
   </view>
   <view class="item">
     <text>开始时间</text>

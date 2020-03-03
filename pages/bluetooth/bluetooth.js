@@ -16,6 +16,18 @@ Page({
       this.initBluetooth();
     }
   },
+  onShow() {
+    wx.hideLoading();
+    wx.closeBluetoothAdapter({
+      success: function (res) {
+        wx.openBluetoothAdapter({
+          success: function (res) {
+            console.log('resetBluetooth')
+          }
+        })
+      },
+    })
+  },
   bindScanCode() {
     if (this.data.isOpenBluetooth) {
       // wx.navigateTo({
@@ -26,7 +38,7 @@ Page({
         success(res) {
           console.log(res)
           wx.navigateTo({
-            url: './data/data?id=' + res.path.split('=')[2],
+            url: './data/data?id=' + decodeURIComponent(res.path).split('=')[2],
           })
         }
       })

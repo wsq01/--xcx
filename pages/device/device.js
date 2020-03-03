@@ -1,4 +1,4 @@
-import { reqBindDev, reqDevList, reqUnBindDev, reqJudgeBinded } from '../../service/service.js';
+import { reqBindDev, reqDevList, reqUnBindDev, reqJudgeBinded, reqOpenid, reqSetParams } from '../../service/service.js';
 Page({
   data: {
     devList: [],
@@ -6,17 +6,50 @@ Page({
     isShowModal: false,
     inputDevId: '',
     offset: 5,
-    count: 0
+    count: 0,
+    setname: '',
+    isShowSetNameModal: false,
+    paramsData: {},
+    devid: ''
+  },
+  onHide() {
+    this.setData({
+      offset: 5
+    })
   },
   onLoad: function (options) {
-    const openid = wx.getStorageSync('openid');
-    reqDevList(openid).then(res => {
-      this.setData({
-        isReqSuccess: true,
-        devList: res.data.data.data,
-        count: res.data.data.count
-      });
-    });
+    if (options.id) {
+      wx.setStorageSync('devid', options.id);
+    }
+    const devid = wx.getStorageSync('devid');
+    // 请求openid
+    reqOpenid().then(res => {
+      const data = JSON.parse(res.data.data);
+      wx.setStorageSync('openid', data.openid);
+    }).then(() => {
+      const openid = wx.getStorageSync('openid');
+      if (openid) {
+        reqDevList(openid).then(res => {
+          this.setData({
+            isReqSuccess: true,
+            devList: res.data.data.data,
+            count: res.data.data.count
+          });
+        });
+      } else {
+        wx.showModal({
+          content: '账号未登录，是否前往登录？',
+          success(res) {
+            if (res.confirm) {
+              wx.reLaunch({
+                url: '../mobile/verify/verify?handle=bind',
+              })
+            }
+          }
+        })
+      }
+
+    })
   },
   onReachBottom: function () {
     const that = this;
@@ -35,6 +68,30 @@ Page({
       }
     });
   },
+  bindSetName(e) {
+    this.setData({
+      setname: e.currentTarget.dataset.name,
+      devid: e.currentTarget.dataset.devid,
+      isShowSetNameModal: true
+    })
+  },
+  onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 0
+      })
+    }
+    const openid = wx.getStorageSync('openid');
+    if (openid) {
+      reqDevList(openid).then(res => {
+        this.setData({
+          isReqSuccess: true,
+          devList: res.data.data.data,
+          count: res.data.data.count
+        });
+      });
+    }
+  },
   onPullDownRefresh: function () {
     // 触发下拉刷新时执行
     const openid = wx.getStorageSync('openid');
@@ -50,9 +107,19 @@ Page({
       url: './detail/detail?devid=' + e.currentTarget.dataset.devid + '&is_master=' + e.currentTarget.dataset.master,
     })
   },
+  bindCloseSetNameModal() {
+    this.setData({
+      isShowSetNameModal: false
+    })
+  },
   bindDev() {
     this.setData({
       isShowModal: true
+    })
+  },
+  inputName(e) {
+    this.setData({
+      setname: e.detail.value
     })
   },
   inputDev(e) {
@@ -60,11 +127,45 @@ Page({
       inputDevId: e.detail.value
     })
   },
+  bindSaveParams() {
+    const openid = wx.getStorageSync('openid');
+    this.setData({
+      'paramsData.openid': openid,
+      'paramsData.devid': this.data.devid,
+      'paramsData.beizhu': this.data.setname
+    })
+    reqSetParams(this.data.paramsData).then(res => {
+      if (res.data.code === 0) {
+        wx.showToast({
+          title: '修改成功!',
+          icon: 'success',
+          duration: 2000
+        })
+        this.setData({
+          isShowSetNameModal: false
+        })
+        reqDevList(openid).then(res => {
+          this.setData({
+            isReqSuccess: true,
+            devList: res.data.data.data,
+            count: res.data.data.count
+          });
+        });
+      } else {
+        wx.showToast({
+          title: res.data.message,
+          icon: 'none'
+        })
+      }
+    })
+  },
+  changeName() {
+    this.bindSaveParams()
+  },
   bindScanCode() {
     const that = this;
     wx.scanCode({
       success(res) {
-        console.log(res);
         that.setData({
           inputDevId: res.path.split('=')[1]
         })
@@ -97,12 +198,12 @@ Page({
       }
     })
   },
-  stopProp() {
-  },
   bindCloseModal () {
     this.setData({
       isShowModal: false
     })
+  },
+  stopProp() {
   },
   unbind(e) {
     const mobile = wx.getStorageSync('mobile');
