@@ -212,12 +212,13 @@ Page({
       return
     }
     if (deviceEndTime < s3) {
-      wx.showModal({
-        title: '提示',
-        content: '结束时间不得超过' + formatTime(new Date(deviceEndTime)),
-        showCancel: false
-      })
-      return
+      s3 = new Date(deviceEndTime)
+      // wx.showModal({
+      //   title: '提示',
+      //   content: '结束时间不得超过' + formatTime(new Date(deviceEndTime)),
+      //   showCancel: false
+      // })
+      // return
     }
     let startNum = parseInt((s1.getTime() - reqStartTime) / 1000 / 60 / that.data.deviceParams[8]);
     let endNum = parseInt((s3.getTime() - s1.getTime()) / 1000 / 60 / that.data.deviceParams[8]);
