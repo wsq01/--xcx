@@ -13,9 +13,6 @@
   align-items: center;
   box-shadow: 0 0 20rpx 1rpx rgba(0, 0, 0, 0.1);
 }
-.item-left {
-
-}
 .item-left image {
   width: 36rpx;
   height: 36rpx;

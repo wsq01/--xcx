@@ -6,15 +6,17 @@
   </view>
   <swiper style="height: {{swiperItemHeight}}" class='swiper' bindchange='swiperChange' current='{{currentItem}}'>
     <swiper-item>
-      <view class="tab-swiper tab-swiper1" hidden="{{!hasChartList}}">
-        <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+      <view class="tab-swiper tab-swiper1">
+        <view hidden="{{!hasChartList}}">
+          <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+        </view>
+        <view hidden="{{hasChartList}}" style="text-align: center;padding: 40rpx;font-size: 30rpx">暂无数据</view>
         <view class="chart-btn">
           <button bindtap='changeChart' data-id="1">今天</button>
           <button bindtap='changeChart' data-id="2">近一周</button>
           <button bindtap='changeChart' data-id="3">近一个月</button>
         </view>
       </view>
-      <view hidden="{{hasChartList}}" style="text-align: center;padding: 20rpx;">暂无数据</view>
     </swiper-item>
     <swiper-item>
       <view class="tab-swiper tab-swiper2">
@@ -53,7 +55,6 @@
                 </view>
               </view>
             </block>
-            <text class="tips" wx:if="{{index === 1}}">提示：上传间隔低于两分钟会消耗大量流量</text>
           </view>
           <view class="form-submit">
             <view class="more-setting">更多设置请前往（中集智冷科技）公众号</view>

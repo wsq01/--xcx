@@ -15,19 +15,18 @@ Page({
       url: './edit/edit?member=' + JSON.stringify(this.data.member),
     })
   },
-  deleteItem() {
+  async deleteItem() {
     const mobile = wx.getStorageSync('mobile');
-    reqDeleteMember(mobile, this.data.member.phone).then(res => {
-      wx.showToast({
-        title: '删除成功',
-        success: () => {
-          setTimeout(() => {
-            wx.navigateBack({
-              delta: 1
-            })
-          }, 2000)
-        }
-      })
+    const res = await reqDeleteMember(mobile, this.data.member.phone);
+    wx.showToast({
+      title: '删除成功',
+      success: () => {
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 2000)
+      }
     })
-  },
+  }
 })

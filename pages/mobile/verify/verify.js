@@ -91,7 +91,6 @@ Page({
     this.checkForm();
   },
   getSmsCode() {
-    console.log('xxxx')
     reqSmsCode(this.data.mobile).then(res => {
       if(res.data.code === 0) {
         count_down(this, 60 * 1000);

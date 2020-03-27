@@ -1,86 +1,20 @@
-
-<view class="container" wx:if="{{showPage === 'default'}}">
-  <view class="title">设备参数配置</view>
-  <view class="item">
-    <text>设备名称</text>
-    <text>{{bluetoothDeviceName}}</text>
-  </view>
-  <view class="item">
-    <text>当前温度</text>
-    <text>{{deviceParams[7]/10}}°C</text>
-  </view>
-  <!-- <view class="title">时间范围选择</view> -->
-  <view class="item">
-    <text>开始时间</text>
-    <picker mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
-    <view class="tui-picker-detail">
-      {{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}
-    </view>
-   </picker>
-  </view>
-  <view class="item">
-    <text>结束时间</text>
-    <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
-    <view class="tui-picker-detail">
-      {{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}
-    </view>
-   </picker>
-  </view>
-  <view class="item">
-    <text>报警高温</text>
-    <view class="templete">
-      <radio-group class="radio-group" bindchange="radioChange1">
-        <label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems}}" wx:key="name">
-          <text>{{item.value}}</text>
-          <radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
-        </label>
-      </radio-group>
-      <input value="30" bindinput="bindHigh"></input>
-      <text> °C</text>
-    </view>
-  </view>
-  <view class="item">
-    <text>报警低温</text>
-    <view class="templete">
-      <radio-group class="radio-group" bindchange="radioChange2">
-        <label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems2}}" wx:key="name">
-          <text>{{item.value}}</text>
-          <radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
-        </label>
-      </radio-group>
-      <input value="2" bindinput="bindLow"></input>
-      <text> °C</text>
-    </view>
-  </view>
-  <view class="btn"><button type="primary" bindtap="submit">确定</button></view>
-</view>
-
-<view class="container" wx:elif="{{showPage === 'setting'}}">
+<view class="container" wx:if="{{showPage === 'setting'}}">
   <view class="title">设备参数设置</view>
   <view class="item">
     <text>间隔时间</text>
-    <input type="number" placeholder="单位：分钟  1~60" disabled="{{isIntervalDisabled}}" bindinput="bindinputInterval"></input>
+    <input type="number" placeholder="单位：分钟  1~60" disabled="{{isIntervalDisabled}}" data-tag="interval" bindinput="bindInput"></input>
   </view>
   <view class="item">
     <text>延时时间</text>
-    <input type="number" placeholder="单位：分钟 1~60" disabled="{{isDelayDisabled}}" bindinput="bindinputDelay"></input>
+    <input type="number" placeholder="单位：分钟 1~60" disabled="{{isDelayDisabled}}" data-tag="delay" bindinput="bindInput"></input>
   </view>
   <view class="btn"><button type="primary" bindtap="submitSetting">确定</button></view>
 </view>
 
-<view class="result" wx:elif="{{showPage === 'result'}}">
-  <view class="title">参数设置结果</view>
+<view class="result" wx:elif="{{showPage === 'default'}}">
   <view class="item">
     <text>设备名称</text>
     <text>{{bluetoothDeviceName}}</text>
-  </view>
-  <view class="item">
-    <text>开始时间</text>
-    <text>{{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}</text>
-  </view>
-  <view class="item">
-    <text>结束时间</text>
-    <text>{{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}</text>
   </view>
   <view class="item">
     <text>当前温度</text>
@@ -89,11 +23,20 @@
   <view class="item">
     <text>温度数据</text>
     <view wx:if="{{!isShowPercent}}">暂无数据</view>
-    <progress wx:else percent="{{percent}}" bindactiveend="finish" active-mode="forwards" active />
+    <progress wx:else activeColor="rgba(85, 190, 202, 1)" percent="{{percent}}" bindactiveend="finish" active-mode="forwards" active />
   </view>
-  <view class="btn">
-    <button type="primary" bindtap="showLine" disabled="{{isDisabledChartBtn}}">显示曲线</button>
-    <button bindtap="back">返回</button>
+  <view class="echarts-container" hidden="{{isFinished}}">
+    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+    <view class="echarts-btn" hidden="{{isFinished}}">
+      <button class="{{active[0] ? 'active' : ''}}" bindtap="bindSelectDate" disabled="{{isPercent100}}" data-index="0">近一天</button>
+      <button class="{{active[1] ? 'active' : ''}}" bindtap="bindSelectDate" disabled="{{isPercent100}}" data-index="1">近三天</button>
+      <button class="{{active[2] ? 'active' : ''}}" bindtap="bindSelectDate" disabled="{{isPercent100}}" data-index="2">近七天</button>
+    </view>
+  </view>
+  <view class="bind">
+    <button class="btn" bindtap="judgeIsLogin">绑定设备</button>
+    <button class="btn" hidden="{{isFinished}}" bindtap="upload">上传云端</button>
+    <!-- <button type="primary" bindtap="firmwareUpdate ">设备升级</button> -->
   </view>
 </view>
 <view wx:else></view>

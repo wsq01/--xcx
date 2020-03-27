@@ -1,29 +1,57 @@
-<view class="container" wx:if="{{isReqSuccess && devList.length !== 0}}">
-  <view class="list-num">
-    共{{count}}台设备
-  </view>
-  <view class="list-item fadeInLeft" style="animation-delay: {{(index * 0.1) + 's'}}" wx:for="{{devList}}" wx:key="{{index}}" data-devid="{{item.shebeibianhao}}" bindtap="toDetail" data-master="{{item.is_master}}">
-    <view class="item-title">
-      <text>设备号：{{item.shebeibianhao}}{{item.is_master === 1 ? '(主)' : '(副)'}}</text>
-      <text catchtap="bindSetName" data-devid="{{item.shebeibianhao}}" data-name="{{item.beizhu}}">昵称：{{item.beizhu}}</text>
-      <text catchtap="unbind" data-type="{{item.is_master}}" data-devid="{{item.shebeibianhao}}">解绑</text>
+<view class="container" wx:if="{{isReqSuccess && count != 0}}">
+  <view class="tab">
+    <view wx:for="{{tabList}}" wx:key="{{index}}" bindtap="bindtabChange" class="{{active[index]}}" data-id="{{index}}">
+      {{item.text}}
     </view>
-    <view class="item-content">
-      <view>
-        <text>温度：{{item.last_temperature01}}℃</text>
-        <text>湿度：{{item.last_humidity}}%RH</text>
-        <text>电量：{{item.last_power}}%</text>
+  </view>
+  <swiper style="height: {{swiperItemHeight}}" class='swiper' bindchange='swiperChange' current='{{currentItem}}'>
+    <swiper-item>
+      <view class="tab-swiper tab-swiper1">
+        <view class="list-num">
+          共{{count1}}台设备
+        </view>
+        <view class="list-item fadeInLeft" style="animation-delay: {{(index * 0.1) + 's'}}" wx:for="{{deviceList}}" wx:key="{{index}}" data-devid="{{item.shebeibianhao}}" bindtap="toDetail" data-master="{{item.is_master}}">
+          <view class="item-title">
+            <text>设备号：{{item.shebeibianhao}}{{item.is_master === 1 ? '(主)' : '(副)'}}</text>
+            <text catchtap="bindSetName" data-devid="{{item.shebeibianhao}}" data-name="{{item.beizhu}}">昵称：{{item.beizhu}}</text>
+            <text catchtap="unbind" data-type="{{item.is_master}}" data-devid="{{item.shebeibianhao}}">解绑</text>
+          </view>
+          <view class="item-content">
+            <view>
+              <text>温度：{{item.last_temperature01}}℃</text>
+              <text>湿度：{{item.last_humidity}}%RH</text>
+              <text>电量：{{item.last_power}}%</text>
+            </view>
+            <text>采集时间：{{item.last_time}}</text>
+            <text>到期时间：{{item.daoqishijian}}</text>
+            <text space="nbsp">地址：{{item.address || '暂无数据'}}</text>
+          </view>
+        </view>
       </view>
-      <text>采集时间：{{item.last_time}}</text>
-      <text space="nbsp">地址：{{item.address || '暂无数据'}}</text>
-    </view>
-    <!-- <view class="item-footer">
-      <text>待缴费用：<text>￥{{item.money}}</text></text>
-      <button>去支付</button>
-    </view> -->
-  </view>
+      <load-more id="loadMoreView1" bindloadMoreListener='loadMoreListener' bindclickLoadMore='clickLoadMore'></load-more>
+    </swiper-item>
+    <swiper-item>
+      <view class="tab-swiper tab-swiper2">
+        <view class="list-num">
+          共{{count2}}台设备
+        </view>
+        <view class="list-item fadeInLeft" style="animation-delay: {{(index * 0.1) + 's'}}" wx:for="{{bluetoothList}}" wx:key="{{index}}" data-devid="{{item.shebeibianhao}}" bindtap="toBluetooth" data-master="{{item.is_master}}">
+          <view class="item-title">
+            <text>设备号：{{item.shebeibianhao}}</text>
+            <text catchtap="bindSetName" data-devid="{{item.shebeibianhao}}" data-name="{{item.beizhu}}">昵称：{{item.beizhu}}</text>
+            <text catchtap="unbind" data-type="{{item.is_master}}" data-devid="{{item.shebeibianhao}}">解绑</text>
+          </view>
+          <view class="item-content">
+            <text>采集时间：{{item.last_time}}</text>
+            <text space="nbsp">地址：{{item.address || '暂无数据'}}</text>
+          </view>
+        </view>
+      </view>
+      <load-more id="loadMoreView2" bindloadMoreListener='loadMoreListener' bindclickLoadMore='clickLoadMore'></load-more>
+    </swiper-item>
+    </swiper>
 </view>
-<view wx:elif="{{isReqSuccess && devList.length === 0}}">
+<view wx:elif="{{isReqSuccess && count==0}}">
   <view class="empty">
     <image src="../../images/empty@2x.png"></image>
     <text>您还没有绑定设备哦</text>
@@ -34,7 +62,7 @@
   <image src="../../images/icon-add@2x.png"></image>
 </view> -->
 
-<view class="modal zoomIn" bindtap="bindCloseModal" hidden="{{!isShowModal}}">
+<!-- <view class="modal zoomIn" bindtap="bindCloseModal" hidden="{{!isShowModal}}">
   <view class='form'>
     <view class='form-item' catchtap="stopProp">
       <label for='mobile'>设备号</label>
@@ -45,7 +73,7 @@
       <button class='submit'>确定</button>
     </view>
   </view>
-</view>
+</view> -->
 
 <view class="modal zoomIn" bindtap="bindCloseSetNameModal" hidden="{{!isShowSetNameModal}}">
   <view class='form'>

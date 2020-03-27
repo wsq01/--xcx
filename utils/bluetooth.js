@@ -6,7 +6,6 @@ const findBluetooth = (callback) => {
     title: '正在搜索设备'
   })
   wx.startBluetoothDevicesDiscovery({
-    allowDuplicatesKey: false,
     interval: 0,
     success: function (res) {
       console.log('startBluetoothDevicesDiscovery success')
@@ -39,7 +38,6 @@ const connetBlue = (deviceId, callback) => {
       typeof callback === 'function' && callback();
     },
     fail: function (res) {
-      console.log(res);
       wx.hideLoading();
       wx.showModal({
         title: '提示',
@@ -82,15 +80,17 @@ const getBlue = (bluetoothDeviceName, successCallback) => {
           }
         }
       }
-      if (!index) {
-        setTimeout(() => {
-          findBluetooth(() => {
-            getBlue(bluetoothDeviceName, successCallback);
-          })
-        }, 3000)
-      } else {
+      // if (!index) {
+      //   clearTimeout(timer2)
+      //   const timer2 = setTimeout(() => {
+      //     console.log('xxxxxxxxxxxxxxdddddd')
+      //     findBluetooth(() => {
+      //       getBlue(bluetoothDeviceName, successCallback);
+      //     })
+      //   }, 3000)
+      // } else {
         typeof successCallback === 'function' && successCallback(deviceId);
-      }
+      // }
     },
     fail: function () {
     },

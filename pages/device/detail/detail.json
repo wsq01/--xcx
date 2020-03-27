@@ -1,6 +1,6 @@
 {
-  "navigationBarTitleText": "设备详情",
+  "navigationBarTitleText": "我的设备",
   "usingComponents": {
-    "ec-canvas": "../../../components/ec-canvas/ec-canvas"
+    "ec-canvas": "../../components/ec-canvas/ec-canvas"
   }
 }

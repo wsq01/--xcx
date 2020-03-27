@@ -62,6 +62,20 @@
 					"pathName": "pages/bluetooth/bluetooth",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/index",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "秒秒测",
+					"pathName": "pages/mmc/mmc",
+					"query": "id=",
+					"scene": 1011
 				}
 			]
 		}

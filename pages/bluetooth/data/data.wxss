@@ -25,12 +25,12 @@ page {
   flex-direction: row;
   justify-content: space-between;
   padding: 0 30rpx;
-  margin: 0 0 20rpx;
+  margin: 0 0 10rpx;
   line-height: 100rpx;
   background: #fff;
 }
 .result .btn {
-  margin: 100rpx 30rpx;
+  margin: 20rpx 30rpx;
 }
 .result .btn button:nth-child(1) {
   margin: 0 0 30rpx;
@@ -38,49 +38,22 @@ page {
 progress {
   width: 450rpx;
 }
-
-
-/* 默认背景样式*/
-radio .wx-radio-input{
-  width: 40rpx;
-  height: 40rpx;
-  display: none;
-}
-
-/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
-radio .wx-radio-input.wx-radio-input-checked{
-  width: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
-  height: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
-  border: none;
-  background: #E1C371;
-}
-/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
-radio .wx-radio-input.wx-radio-input-checked::before{
-  border-radius: 50%;/* 圆角 */
-  width: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
-  height: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
-  line-height: 40rpx;
+.bind {
   text-align: center;
-  font-size:30rpx; /* 对勾大小 30rpx */
-  color:#fff; /* 对勾颜色 白色 */
-  border: 1rpx solid #E1C371;
-  background: #E1C371;
-  transform:translate(-50%, -50%) scale(1);
-  -webkit-transform:translate(-50%, -50%) scale(1);
+  margin: 50rpx 100rpx;
 }
-
-.radio {
-  display: none;
+.bind button {
+ margin: 0 0 10rpx;
+  background: rgba(85, 190, 202, 1);
+  color: #fff;
+  border-radius: 40rpx;
 }
-.radio-group label {
-  padding: 6rpx 16rpx;
-  margin: 0 5rpx;
-  border-radius: 20rpx;
-  font-size: 20rpx;
+.bind button::after {
+  border: none;
 }
 .label_active {
   color: #fff;
-  background: rgb(7, 193, 96);
+  background: rgba(85, 190, 202, 1);
 }
 .templete {
   display: flex;
@@ -90,4 +63,49 @@ radio .wx-radio-input.wx-radio-input-checked::before{
 .templete input {
   width: 150rpx;
   text-align: center;
+}
+
+ec-canvas {
+  position: absolute;
+  top: 20rpx;
+  bottom: 50rpx;
+  left: 10rpx;
+  right: 10rpx;
+}
+.echarts-container {
+  position: relative;
+  background: #fff;
+  height: 700rpx;
+  margin: 0 auto;
+}
+.echarts-btn {
+  display: flex;
+  justify-content: row;
+  align-content: space-around;
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+}
+.echarts-btn button {
+  font-size: 28rpx;
+  background: #fff;
+  color: #232323;
+}
+.echarts-btn .active {
+  border-bottom: 4rpx solid;
+  color: rgba(85, 190, 202, 1);
+}
+.echarts-btn button::after {
+  border: none;
+}
+.echarts-btn wx-button {
+  padding: 0 10rpx;
+  margin: 0 10rpx;
+  color: rgba(85, 190, 202, 0.6);
+  border-radius: 0;
+}
+.echarts-btn button[disabled] {
+  color: #ccc !important;
+  background: transparent !important;
+  border-color: transparent !important;
 }

@@ -98,8 +98,8 @@ const setOption = (chart, xData, seriesData1, seriesData2, legendData) => {
       containLabel: true
     },
     tooltip: {
-      show: true,
-      trigger: 'axis'
+      trigger: 'axis',
+      formatter: "温度：{c0}°C \n湿度：{c1}%RH \n时间：{b}"
     },
     legend: {
       data: legendData
@@ -158,6 +158,67 @@ const ab2hex = (buffer) => {
   )
   return hexArr.join('');
 }
+// 指令转换 
+const transformCode = (code, split) => {
+  let sum = 0;
+  return split.map((item, index) => {
+    let a;
+    if (index === 0 || index === split.length - 1) {
+      a = code.substr(sum * 2, item * 2)
+    } else {
+      a = parseInt(code.substr(sum * 2, item * 2), 16).toString();
+    }
+    sum += item;
+    return a;
+  })
+}
+// 校验和
+const checksum = (arr) => {
+  return arr.map(item => parseInt(item, 16)).reduce((sum, item) => sum + item).toString(16).padStart(2, '0').slice(-2);
+}
+// 转换为两位十六进制字符串
+const transToHexadecimal = (num, fixed = 2) => {
+  return num.toString(16).padStart(fixed, '0');
+}
+// 生成指令
+const generateCode = (params, fixed) => {
+  let arr = params.map((item, index) => {
+    if(index === 0 || index === 1) {
+      return item;
+    } else {
+      return transToHexadecimal(item, fixed);
+    }
+    
+  });
+  const verify = checksum(arr);
+  return arr.reduce((sum, item) => sum + item) + verify;
+}
+// 生成指令
+const generateCode2 = (params, fixed) => {
+  let arr = params.map((item, index) => {
+    if (index === 0 || index === 1) {
+      return item;
+    } else {
+      return transToHexadecimal(item, fixed);
+    }
+
+  });
+  const verify = checksum(arr);
+  return arr.reduce((sum, item) => sum + item) + verify + '0a0d';
+}
+// 生成指令
+const generateCode3 = (params, fixed) => {
+  let arr = params.map((item, index) => {
+    if (index === 0 || index === 1) {
+      return item;
+    } else {
+      return transToHexadecimal(item, fixed);
+    }
+
+  });
+  const verify = checksum(arr);
+  return arr.reduce((sum, item) => sum + item) + verify + '0a0d';
+}
 
 module.exports = {
   string2buffer,
@@ -165,5 +226,10 @@ module.exports = {
   formatTime,
   getDateStr,
   multiSelectorList,
-  setOption
+  setOption,
+  checksum,
+  transformCode,
+  generateCode,
+  generateCode2,
+  generateCode3
 }

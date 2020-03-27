@@ -7,11 +7,6 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     menuList: [
-      // {
-      //   icon: '../../images/icon-device@2x.png',
-      //   text: '我的设备',
-      //   tap: 'device'
-      // },
       {
         icon: '../../images/icon-invite@2x.png',
         text: '邀请家人',
@@ -36,30 +31,24 @@ Page({
         icon: '../../images/icon-service@2x.png',
         text: '联系客服',
         tap: 'service'
-      },
-      // {
-      //   icon: '../../images/icon-device@2x.png',
-      //   text: '操作教程',
-      //   tap: 'video'
-      // }
+      }
     ],
     isHasAcess: false
   },
-  onLoad: function (options) {
+  async onLoad(options) {
     const openid = wx.getStorageSync('openid');
     this.setUserInfo();
-    reqVerifyRegister(openid).then(res => {
-      if (res.data.code === 0 && res.data.data) {
-        if (res.data.data.phone) {
-          wx.setStorageSync('mobile', res.data.data.phone);
-          this.setData({
-            isHasAcess: true
-          })
-        } else {
-          wx.removeStorageSync('mobile');
-        }
+    const res = await reqVerifyRegister(openid);
+    if (res.data.code === 0 && res.data.data) {
+      if (res.data.data.phone) {
+        wx.setStorageSync('mobile', res.data.data.phone);
+        this.setData({
+          isHasAcess: true
+        })
+      } else {
+        wx.removeStorageSync('mobile');
       }
-    })
+    }
   },
   onShow: function () {
     const mobile = wx.getStorageSync('mobile');

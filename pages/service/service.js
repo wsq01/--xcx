@@ -1,8 +1,5 @@
 Page({
-  data: {
-  },
-  onLoad: function (options) {
-  },
+  data: {},
   makePhoneCall() {
     wx.makePhoneCall({
       phoneNumber: '010-83612390',

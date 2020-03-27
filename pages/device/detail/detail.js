@@ -36,17 +36,9 @@ Page({
         title: '指令信息',
         content: [
           { label: '采集时间间隔', value: 'caiji_jiange_minute', type: 'input', placeholder: '单位：分钟' },
-          { label: '上传时间间隔', value: 'fasong_jiange_minute', type: 'input', placeholder: '单位：分钟' },
-          // { label: '超温采集间隔', value: 'chaowenchucunshijianjiange', type: 'input', placeholder: '单位：分钟' },
-          // { label: '超温上传间隔', value: 'chaowenshangchuanshijianjiange', type: 'input', placeholder: '单位：分钟' }
+          { label: '上传时间间隔', value: 'fasong_jiange_minute', type: 'input', placeholder: '单位：分钟' }
         ]
-      },
-      // {
-      //   title: '参数信息',
-      //   content: [
-      //     { label: '夜间数据', value: 'yejianshangchuankaiguan', type: 'switch' }
-      //   ]
-      // }
+      }
     ],
     paramsData: {},
     isRequested: false,
@@ -58,16 +50,12 @@ Page({
     isShowDownload: false
   },
   onLoad: function (options) {
-    wx.showLoading({
-      title: '加载中...'
-    })
     // 获取组件
     this.ecComponent = this.selectComponent('#mychart-dom-bar');
     const devid = options.devid;
     const isMaster = options.is_master;
     // 主副设备参数设置
     if (isMaster === "0") {
-      console.log(this.data.paramsList)
       this.setData({
         'paramsList[0].content[3].disabled': true,
         'paramsList[1].content[0].disabled': true,
@@ -131,11 +119,11 @@ Page({
           })
         }
         list.forEach((item) => {
-          xArr.push(item.time.substr(0, 10));
+          xArr.push(item.time.substr(5, 11));
           yArr1.push(item.temperature01);
           yArr2.push(item.humidity);
         })
-        this.initCharts(xArr, yArr1, yArr2);
+        this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse());
         this.setSwiperHeight('.tab-swiper1');
       }
     })
@@ -149,11 +137,8 @@ Page({
         height: height
       });
       setOption(chart, xData, seriesData1, seriesData2, ['温度', '湿度']);
-
       // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
       this.chart = chart;
-      wx.hideLoading();
-
       // 注意这里一定要返回 chart 实例，否则会影响事件处理等
       return chart;
     });
@@ -174,6 +159,13 @@ Page({
     })
   },
   bindSaveParams() {
+    if (this.data.paramsData.flow_type === '1' && this.data.paramsData.fasong_jiange_minute < 5) {
+      wx.showToast({
+        title: '上传间隔不能小于5分钟',
+        icon: 'none'
+      })
+      return false;
+    }
     const openid = wx.getStorageSync('openid');
     this.setData({
       'paramsData.openid': openid,
@@ -203,28 +195,71 @@ Page({
     })
     const mobile = wx.getStorageSync('mobile');
     const devid = this.data.devid;
-    if(e.currentTarget.dataset.id === 0) {
+    console.log(e.currentTarget.dataset.id)
+    // if(e.currentTarget.dataset.id === 0) {
+    //   this.setData({
+    //     isShowDownload: false
+    //   })
+    //   // 获取图表
+    //   this.initChart(mobile, devid);
+    //   this.setSwiperHeight('.tab-swiper1');
+    // } else if (e.currentTarget.dataset.id === 1) {
+    //   // 数据
+    //   const endTime = formatTime(new Date(), '-');
+    //   reqDevData(mobile, devid, this.data.startNo, endTime).then(res => {
+    //     if (res.data.code === 10000) {
+    //       this.setData({
+    //         deviceDataList: res.data.resultCode === 'null' ? [] : res.data.resultCode,
+    //         isShowDownload: true
+    //       })
+    //       this.setSwiperHeight('.tab-swiper2');
+    //     }
+    //   })
+    // } else if (e.currentTarget.dataset.id === 2) {
+    //   this.setData({
+    //     isShowDownload: false
+    //   })
+    //   // 获取参数
+    //   console.log('xxxxxxxxxxxx')
+    //   reqDevParams(mobile, devid).then(res => {
+    //     if (res.data.code === 10000) {
+    //       this.setData({
+    //         isRequested: true,
+    //         paramsData: res.data.resultCode
+    //       })
+    //       this.setSwiperHeight('.tab-swiper3');
+    //     }
+    //   })
+    // }
+  },
+  swiperChange(e) {
+    let active = ['', '', ''];
+    active[e.detail.current] = 'active'
+    this.setData({
+      active: active
+    })
+    const mobile = wx.getStorageSync('mobile');
+    const devid = this.data.devid;
+    if (e.detail.current === 0) {
       this.setData({
         isShowDownload: false
       })
       // 获取图表
       this.initChart(mobile, devid);
       this.setSwiperHeight('.tab-swiper1');
-    } else if (e.currentTarget.dataset.id === 1) {
-      this.setData({
-        isShowDownload: true
-      })
+    } else if (e.detail.current === 1) {
       // 数据
       const endTime = formatTime(new Date(), '-');
       reqDevData(mobile, devid, this.data.startNo, endTime).then(res => {
         if (res.data.code === 10000) {
           this.setData({
-            deviceDataList: res.data.resultCode === 'null' ? [] : res.data.resultCode
+            deviceDataList: res.data.resultCode === 'null' ? [] : res.data.resultCode,
+            isShowDownload: true
           })
           this.setSwiperHeight('.tab-swiper2');
         }
       })
-    } else if (e.currentTarget.dataset.id === 2) {
+    } else if (e.detail.current === 2) {
       this.setData({
         isShowDownload: false
       })
@@ -240,27 +275,16 @@ Page({
       })
     }
   },
-  swiperChange(e) {
-    let active = ['', '', ''];
-    active[e.detail.current] = 'active'
-    this.setData({
-      active: active
-    })
-    let selector = '.tab-swiper' + (e.detail.current + 1);
-    this.setSwiperHeight(selector);
-  },
   setSwiperHeight(selector) {
-    const that = this;
-    const query = wx.createSelectorQuery();
-    query.select(selector).boundingClientRect(function (rect) {
-      that.setData({
+    wx.createSelectorQuery().select(selector).boundingClientRect((rect) => {
+      this.setData({
         swiperItemHeight: rect.height + 50 + 'px'
       })
     }).exec()
   },
   changeChart(event) {
     let val = Number(event.currentTarget.dataset.id);
-    const devid = wx.getStorageSync('devid');
+    const devid = this.data.devid;
     const mobile = wx.getStorageSync('mobile');
     if (val == 1) {
       // 点击  今天

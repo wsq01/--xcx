@@ -13,15 +13,16 @@
     "pages/mobile/mobile",
     "pages/mobile/verify/verify",
     "pages/mobile/pwd/pwd",
-    "pages/webview/webview",
     "pages/bluetooth/bluetooth",
     "pages/mobile/verify/update/update",
     "pages/bluetooth/data/data",
     "pages/bluetooth/chart/chart",
     "pages/index/index",
     "pages/bluetooth/table/table",
-    "pages/video/video",
-    "pages/temporary/temporary"
+    "pages/temporary/temporary",
+    "pages/mmc/mmc",
+    "pages/mmc/data/data",
+    "pages/mmc/chart/chart"
   ],
   "window": {
     "backgroundTextStyle": "light",

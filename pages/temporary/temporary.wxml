@@ -1,6 +1,17 @@
-<view class="container">
+<!-- <view class="container">
   <button bindtap="scanCode" type="primary">扫码添加设备</button>
   <button bindtap="bindDev" type="primary">设备号添加设备</button>
+</view> -->
+<view class="menu-list">
+  <view class="menu-item" wx:for="{{menuList}}" wx:key="{{index}}" data-page="{{item.tap}}" bindtap="{{item.tap}}">
+    <view class="item-left">
+      <!-- <image src="{{item.icon}}"></image> -->
+      <text>{{item.text}}</text>
+    </view>
+    <view class="item-right">
+      <image src="../../images/icon-arrow@2x.png"></image>
+    </view>
+  </view>
 </view>
 
 <view class="modal zoomIn" bindtap="bindCloseModal" hidden="{{!isShowModal}}">

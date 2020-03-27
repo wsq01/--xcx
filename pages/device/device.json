@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "我的设备",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "load-more": "../../components/loadMore/loadMore"
+  }
 }

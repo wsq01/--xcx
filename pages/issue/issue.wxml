@@ -1,8 +1,6 @@
-
 <view class='problem'>
-    <!-- <view class='title'>{{problem.title}}</view> -->
-    <view class='section' wx:for='{{problem.section}}' wx:key='{{index}}'>
-      <view>{{item.title}}</view>
-      <text>{{item.content}}</text>
-    </view>
+  <view class='section' wx:for='{{problem.section}}' wx:key='{{index}}'>
+    <view>{{item.title}}</view>
+    <text>{{item.content}}</text>
   </view>
+</view>

@@ -22,126 +22,13 @@ Page({
     },
     isShowChart: false
   },
-  onShow: function () {
-    const devid = wx.getStorageSync('devid');
-    const openid = wx.getStorageSync('openid');
-    if(!devid && openid) {
-      this.setData({
-        isHasDev: false
-      })
-    }
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({
-        selected: 0
-      })
-    }
-  },
   onLoad: function(options) {
     console.log(options)
-    wx.showLoading({
-      title: '加载中...'
-    });
-    this.setUserInfo();
     if (options.id) {
       wx.setStorageSync('devid', options.id);
     }
-    const devid = wx.getStorageSync('devid');
-    // 请求openid
-    reqOpenid().then(res => {
-      const data = JSON.parse(res.data.data);
-      wx.setStorageSync('openid', data.openid);
-      // 请求设备列表
-      return reqDevList(data.openid);
-    }).then(res => {
-      if(devid) {
-        this.setData({
-          isHasDev: true
-        })
-        return devid;
-      }
-      if (res.data.code === 0 && res.data.data && res.data.data.data[0].shebeibianhao) {
-        this.setData({
-          isHasDev: true
-        })
-        wx.setStorageSync('devid', res.data.data.data[0].shebeibianhao);
-        return res.data.data.data[0].shebeibianhao;
-      }
-      return false;
-    }).then(res => {
-      wx.hideLoading();
-      this.setData({
-        isReqSuccess: true
-      })
-      if(res) {
-        reqLookDev(res).then(data => {
-          if (data.data.code === 0) {
-            if(data.data.data.is_bind === 0) {
-              wx.showModal({
-                content: '设备未绑定，是否绑定当前设备',
-                success(res1) {
-                  if(res1.confirm) {
-                    const mobile = wx.getStorageSync('mobile');
-                    if(mobile) {
-                      reqBindDev(mobile, res).then(res => {
-                        if (res.data.code === 0) {
-                          wx.showToast({
-                            title: '绑定成功！',
-                            icon: 'none'
-                          })
-                        }
-                      })
-                    } else {
-                      wx.showModal({
-                        content: '账号未登录，是否前往登录?',
-                        success(res) {
-                          if (res.confirm) {
-                            wx.navigateTo({
-                              url: '../mobile/verify/verify?handle=bind',
-                            })
-                          }
-                        }
-                      })
-                    }
-                  }
-                }
-              })
-            }
-            this.setData({
-              indexData: data.data.data
-            })
-          } else {
-            wx.showToast({
-              title: data.data.message,
-              icon: 'none'
-            })
-          }
-        })
-      }
-      setTimeout(() => {
-        this.initBMap();
-        const devid = wx.getStorageSync('devid');
-        // 获取图表
-        const mobile = wx.getStorageSync('mobile');
-        if (devid) {
-          const endTime = formatTime(new Date(), '-');
-          this.ecComponent = this.selectComponent('#mychart-dom-bar');
-          reqDevCharts(mobile, devid, endTime).then(res => {
-            if (res.data.code === 10000) {
-              let xArr = [];
-              let yArr1 = [];
-              let yArr2 = [];
-              const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
-              
-              list.forEach((item) => {
-                xArr.push(item.time.substr(0, 10));
-                yArr1.push(item.temperature01);
-                yArr2.push(item.humidity);
-              })
-              this.initCharts(xArr, yArr1, yArr2);
-            }
-          })
-        }
-      })
+    wx.reLaunch({
+      url: '../device/device',
     })
   },
   initBMap() {
@@ -248,7 +135,7 @@ Page({
           let yArr2 = [];
           const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
           list.forEach((item) => {
-            xArr.push(item.time.substr(0, 10));
+            xArr.push(item.time.substr(5, 16));
             yArr1.push(item.temperature01);
             yArr2.push(item.humidity);
           })
@@ -303,6 +190,7 @@ Page({
         width: width,
         height: height
       });
+
       setOption(chart, xData, seriesData1, seriesData2, ['温度', '湿度']);
       // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
       this.chart = chart;

@@ -1,7 +1,18 @@
 import { reqBindDev } from '../../service/service.js';
 Page({
   data: {
-
+    menuList: [
+      {
+        icon: '',
+        text: '扫码添加设备',
+        tap: 'scanCode'
+      },
+      {
+        icon: '',
+        text: '设备号添加设备',
+        tap: 'bindDev'
+      }
+    ]
   },
   onLoad: function (options) {
 
@@ -17,7 +28,13 @@ Page({
     const that = this;
     wx.scanCode({
       success: res => {
-        const code = res.path.match(/\?id=(.*)/)[1];
+        console.log(res)
+        let code = '';
+        if(res.path.includes('bluetooth')) {
+          code = decodeURIComponent(res.path).split('=')[2]
+        } else {
+          code = res.path.match(/\?id=(.*)/)[1];
+        }
         wx.setStorageSync('devid', code);
         wx.showModal({
           title: '提示',
@@ -63,15 +80,6 @@ Page({
           isShowModal: false,
           isReqSuccess: true
         })
-        // reqDevList(openid).then(res => {
-        //   if (res.data.code === 0) {
-        //     this.setData({
-        //       isShowModal: false,
-        //       isReqSuccess: true,
-        //       devList: res.data.data.data
-        //     });
-        //   }
-        // });
       } else {
         wx.showToast({
           title: res.data.message,

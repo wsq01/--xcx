@@ -1,3 +1,5 @@
 {
-  
+  "usingComponents": {
+    "menu-list": "../../components/listComponent/listComponent"
+  }
 }

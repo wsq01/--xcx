@@ -14,6 +14,20 @@ export const reqDevList = (openid, offset = 0) => {
     })
   })
 }
+export const reqBluetoothList = (openid, offset = 0) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: API.reqBluetoothList,
+      data: {
+        openid,
+        offset
+      },
+      success(res) {
+        resolve(res);
+      }
+    })
+  })
+}
 
 export const reqLookDev = (devicenumber) => {
   return new Promise((resolve, reject) => {
@@ -22,6 +36,21 @@ export const reqLookDev = (devicenumber) => {
       data: {
         exclusive: 'zjzl8888',
         devicenumber
+      },
+      success(res) {
+        resolve(res);
+      }
+    })
+  })
+}
+export const reqUpload = (deviceId, data) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: API.reqUpload,
+      method: 'POST',
+      data: {
+        data: data,
+        shebeibianhao: deviceId
       },
       success(res) {
         resolve(res);
@@ -207,7 +236,7 @@ export const reqDevCharts = (mobile, devid, endTime, startTime = '2000-08-26 00:
         admin_pass: '123456',
         StartTime: startTime,
         StartNo: 0,
-        Length: 20,
+        Length: 1000,
         EndTime: endTime,
         SheBeiBianHao: devid
       },
@@ -259,6 +288,7 @@ export const reqCheckSmsCode = (phone, code) => {
 }
 
 export const reqDevParams = (mobile, devid) => {
+  console.log('xzzzzzzzzzz')
   return new Promise((resolve, reject) => {
     wx.request({
       url: API.reqDevParams,

@@ -15,17 +15,5 @@
       </view>
     </view>
   </view>
-
-  <!-- <view class="menu-list">
-    <view class="menu-item" wx:for="{{menuList}}" wx:key="{{index}}" data-page="{{item.tap}}" bindtap="toPage">
-      <view class="item-left">
-        <image src="{{item.icon}}"></image>
-        <text>{{item.text}}</text>
-      </view>
-      <view class="item-right">
-        <image src="../../images/icon-arrow@2x.png"></image>
-      </view>
-    </view>
-  </view> -->
   <menu-list list="{{menuList}}" isHasAcess="{{isHasAcess}}"></menu-list>
 </view>

@@ -33,8 +33,5 @@ Page({
         }
       ]
     }
-  },
-  onLoad: function (options) {
-
   }
 })

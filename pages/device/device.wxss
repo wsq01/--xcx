@@ -1,6 +1,6 @@
 page {
   color: #232323;
-  background: #f2f2f2;
+  background: #fff;
   font-size: 30rpx;
   margin: 0 0 150rpx 0;
 }
@@ -78,7 +78,7 @@ page {
   font-size: 28rpx;
 } */
 .list-num {
-  margin: 30rpx auto 10rpx;
+  padding: 20rpx 0;
   color: #8F999B;
   font-size: 28rpx;
   text-align: center;
@@ -184,4 +184,78 @@ page {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.tab {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height: 86rpx;
+  background: #fff;
+  position: relative;
+}
+.tab view {
+  border-bottom: 4rpx solid transparent;
+  transition: .2s all linear;
+  flex: 1;
+  text-align: center;
+}
+.tab .active {
+  color:#64BACB;
+  border-bottom: 4rpx solid #64BACB;
+}
+.tab-swiper {
+  background: #fff;
+  font-size: 24rpx;
+  padding: 20rpx 0;
+  position: relative;
+  overflow: auto;
+}
+.tab-swiper .lists-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  color:rgba(153,153,153,1);
+  text-align: center;
+  line-height: 88rpx;
+}
+.tab-swiper .lists-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  color:rgba(34,34,34,1);
+  text-align: center;
+  line-height: 80rpx;
+}
+.tab-swiper .lists-content:nth-child(2n) {
+  background: rgba(246,246,246,1);
+}
+.tab-swiper .lists-content view,
+.tab-swiper .lists-title view {
+  flex: 0 0 20%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tab-swiper .lists-content view:nth-child(3),
+.tab-swiper .lists-title view:nth-child(3) {
+  flex: 0 0 25%;
+}
+.tab-swiper .lists-content view:nth-child(4),
+.tab-swiper .lists-title view:nth-child(4) {
+  flex: 0 0 15%;
+}
+.tab-swiper1 {
+  position: relative;
+}
+.tab-swiper3 {
+  background: transparent;
+  padding: 0;
 }

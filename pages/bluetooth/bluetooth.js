@@ -12,26 +12,21 @@ Page({
       wx.navigateTo({
         url: './data/data?id=' + this.data.id,
       })
+    } else if(options.from == 'index') {
+      this.setData({
+        id: options.devid
+      })
+      wx.navigateTo({
+        url: './data/data?id=' + this.data.id,
+      })
     } else {
       this.initBluetooth();
     }
   },
-  onShow() {
-    wx.hideLoading();
-    wx.closeBluetoothAdapter({
-      success: function (res) {
-        wx.openBluetoothAdapter({
-          success: function (res) {
-            console.log('resetBluetooth')
-          }
-        })
-      },
-    })
-  },
   bindScanCode() {
     if (this.data.isOpenBluetooth) {
       // wx.navigateTo({
-      //   url: './data/data?id=777002',
+      //   url: './data/data?id=1000001',
       // })
       
       wx.scanCode({
@@ -48,7 +43,7 @@ Page({
   },
   initBluetooth() {
     const that = this;
-    wx.openBluetoothAdapter({ // 初始化蓝牙模块
+    wx.openBluetoothAdapter({
       success: function (res) {
         that.setData({
           isOpenBluetooth: true
@@ -62,5 +57,5 @@ Page({
         })
       }
     })
-  },
+  }
 })

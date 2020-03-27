@@ -131,18 +131,18 @@ Page({
       // }, {
       //   type: 'slider'
       // }],
-      visualMap: {
-        top: 10,
-        right: 10,
-        pieces: [{
-          gt: lowtemp,
-          lte: heightemp,
-          color: '#999'
-        }],
-        outOfRange: {
-          color: '#cc0033'
-        }
-      },
+      // visualMap: {
+      //   top: 10,
+      //   right: 10,
+      //   pieces: [{
+      //     gt: lowtemp,
+      //     lte: heightemp,
+      //     color: '#999'
+      //   }],
+      //   outOfRange: {
+      //     color: '#cc0033'
+      //   }
+      // },
       series: {
         name: '温度',
         type: 'line',

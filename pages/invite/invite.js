@@ -1,19 +1,13 @@
 import { getMemberList } from '../../service/service.js';
 Page({
-  data: {
-
-  },
-  onShow() {
+  async onShow() {
     const mobile = wx.getStorageSync('mobile');
-    getMemberList(mobile).then(res => {
-      if (res.data.code === 0) {
-        this.setData({
-          memberList: res.data.data.content
-        })
-      }
-    })
-  },
-  onLoad: function (options) {
+    const res = await getMemberList(mobile);
+    if (res.data.code === 0) {
+      this.setData({
+        memberList: res.data.data.content
+      })
+    }
   },
   toAdd() {
     wx.navigateTo({

@@ -1,0 +1,13 @@
+/* pages/mmc/chart/chart.wxss */ec-canvas {
+  position: absolute;
+  top: 20rpx;
+  bottom: 100rpx;
+  left: 0;
+  right: 0;
+}
+.container {
+  position: relative;
+  width: 90%;
+  height: 800rpx;
+  margin: 0 auto;
+}
