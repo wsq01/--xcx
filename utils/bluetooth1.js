@@ -1,3 +1,11 @@
+const openBluetoothAdapter = () => {
+  return new Promise((resolve, reject) => {
+    wx.openBluetoothAdapter({
+      success(res) { resolve(true) },
+      fail() { resolve(false) }
+    })
+  })
+}
 // 搜索蓝牙设备
 const findBluetooth = (bluetoothDeviceName) => {
   return new Promise((resolve, reject) => {
@@ -5,11 +13,9 @@ const findBluetooth = (bluetoothDeviceName) => {
       title: '正在搜索设备...'
     })
     wx.startBluetoothDevicesDiscovery({
-      success: () => {
-        console.log('startBluetoothDevicesDiscovery SUCCESS')
+      success() {
         wx.getBluetoothDevices({
-          success: (res) => {
-            console.log(res)
+          success(res) {
             var deviceId = '';
             for (var i = 0; i < res.devices.length; i++) {
               if (res.devices[i].name && res.devices[i].localName && (res.devices[i].name == bluetoothDeviceName || res.devices[i].localName == bluetoothDeviceName)) {
@@ -26,11 +32,10 @@ const findBluetooth = (bluetoothDeviceName) => {
 
 // 连接设备
 const connetBlue = (deviceId) => {
-  console.log(deviceId)
   return new Promise((resolve, reject) => {
     wx.createBLEConnection({
       deviceId: deviceId,
-      success: (res) => {
+      success() {
         console.log('createBLEConnection success')
         wx.stopBluetoothDevicesDiscovery();
         wx.showToast({
@@ -38,9 +43,8 @@ const connetBlue = (deviceId) => {
           icon: 'success',
           duration: 1000
         })
-        resolve();
       },
-      fail: () => {
+      fail() {
         console.log('createBLEConnection fail')
         wx.hideLoading();
         wx.showModal({
@@ -53,6 +57,8 @@ const connetBlue = (deviceId) => {
             })
           }
         })
+      },
+      complete() {
         resolve();
       }
     })
@@ -126,5 +132,6 @@ export {
   getServiceId,
   connetBlue,
   findBluetooth,
-  getTheBlueDisConnectWithAccident
+  getTheBlueDisConnectWithAccident,
+  openBluetoothAdapter
 }

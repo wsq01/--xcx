@@ -37,7 +37,7 @@ Page({
       // wx.navigateTo({
       //   url: './data/data?id=1000001',
       // })
-      
+
       wx.scanCode({
         success(res) {
           console.log(res)
@@ -73,9 +73,9 @@ Page({
   monitorTheBlue() {
     wx.onBluetoothAdapterStateChange((res) => {
       if (res.available) {
-          this.setData({
-            isOpenBluetooth: true
-          })
+        this.setData({
+          isOpenBluetooth: true
+        })
       } else {
         this.setData({
           isOpenBluetooth: false

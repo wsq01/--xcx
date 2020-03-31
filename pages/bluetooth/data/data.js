@@ -725,5 +725,8 @@ Page({
         })
       }
     })
+    this.setData({
+      timer5
+    })
   }
 })

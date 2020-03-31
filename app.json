@@ -22,7 +22,9 @@
     "pages/temporary/temporary",
     "pages/mmc/mmc",
     "pages/mmc/data/data",
-    "pages/mmc/chart/chart"
+    "pages/mmc/chart/chart",
+    "pages/temperature/temperature",
+    "pages/temperature/data/data"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,0 +1,8 @@
+<view>
+  <view class="banner">
+    <image src="/images/banner@2x.png" style="width: 100%;"></image>
+  </view>
+  <view class="btn">
+    <button type="primary" hover-class="none" bindtap="bindScanCode">扫描设备</button>
+  </view>
+</view>

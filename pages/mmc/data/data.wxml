@@ -17,6 +17,7 @@
     </view>
    </picker>
   </view>
+
   <view class="item">
     <text>结束时间</text>
     <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
@@ -25,6 +26,7 @@
     </view>
    </picker>
   </view>
+
   <view class="item">
     <text>报警高温</text>
     <view class="templete">
@@ -51,8 +53,9 @@
       <text> °C</text>
     </view>
   </view>
+
   <view class="btn">
-  <button type="primary" bindtap="submit">确定</button>
+    <button type="primary" bindtap="submit">确定</button>
     <button type="primary" bindtap="firmwareUpdate">设备升级</button>
   </view>
 </view>

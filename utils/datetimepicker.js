@@ -58,16 +58,6 @@ function dateTimePicker(startYear, endYear, date) {
   var defaultDate = date ? date : getNewDateArry();
   // 处理联动列表数据
   /*年月日 时分秒*/
-  dateTimeArray[0] = getLoopArray(start, end);
-  dateTimeArray[1] = getLoopArray(1, 12);
-  dateTimeArray[2] = getMonthDay(defaultDate[0], defaultDate[1]);
-  dateTimeArray[3] = getLoopArray(0, 23);
-  dateTimeArray[4] = getLoopArray(0, 59);
-  dateTimeArray[5] = getLoopArray(0, 59);
-
-  dateTimeArray.forEach((current, index) => {
-    dateTime.push(current.indexOf(defaultDate[index]));
-  });
   dateTimeArray1[0] = getLoopArray(start, end);
   dateTimeArray1[1] = getLoopArray(1, 12);
   dateTimeArray1[2] = getMonthDay(defaultDate[0], defaultDate[1]);
@@ -78,15 +68,25 @@ function dateTimePicker(startYear, endYear, date) {
   dateTimeArray1.forEach((current, index) => {
     dateTime1.push(current.indexOf(defaultDate[index]));
   });
+  dateTimeArray2[0] = getLoopArray(start, end);
+  dateTimeArray2[1] = getLoopArray(1, 12);
+  dateTimeArray2[2] = getMonthDay(defaultDate[0], defaultDate[1]);
+  dateTimeArray2[3] = getLoopArray(0, 23);
+  dateTimeArray2[4] = getLoopArray(0, 59);
+  dateTimeArray2[5] = getLoopArray(0, 59);
+
+  dateTimeArray2.forEach((current, index) => {
+    dateTime2.push(current.indexOf(defaultDate[index]));
+  });
 
   return {
-    dateTimeArray: dateTimeArray,
-    dateTime: dateTime,
     dateTimeArray1: dateTimeArray1,
-    dateTime1: dateTime1
+    dateTime1: dateTime1,
+    dateTimeArray2: dateTimeArray2,
+    dateTime2: dateTime2
   }
 }
-module.exports = {
-  dateTimePicker: dateTimePicker,
-  getMonthDay: getMonthDay
+export {
+  dateTimePicker,
+  getMonthDay
 }
