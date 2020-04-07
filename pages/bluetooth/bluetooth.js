@@ -7,34 +7,17 @@ Page({
     console.log(options);
     let res = await this.initBluetooth();
     this.monitorTheBlue()
-    console.log(res)
     if (res) {
       if (options.scene) {
         this.setData({
           id: decodeURIComponent(options.scene).split('=')[1]
         })
-        let url = ''
-        if(this.data.id.length === 6) {
-          url: './data/data?id=' + this.data.id
-        } else {
-          url = '../temperature/data/data?id=' + this.data.id
-        }
-        wx.navigateTo({
-          url: url,
-        })
+        this.turnToPage()
       } else if (options.from == 'index') {
         this.setData({
           id: options.devid
         })
-        let url = ''
-        if(this.data.id.length === 6) {
-          url: './data/data?id=' + this.data.id
-        } else {
-          url = '../temperature/data/data?id=' + this.data.id
-        }
-        wx.navigateTo({
-          url: url,
-        })
+        this.turnToPage()
       } else {
         wx.showModal({
           content: '二维码无效',
@@ -44,29 +27,17 @@ Page({
     }
   },
   bindScanCode() {
+    const that = this
     if (this.data.isOpenBluetooth) {
-      // wx.navigateTo({
-      //   url: './data/data?id=1000001',
-      // })
 
       wx.scanCode({
         success(res) {
           console.log(res)
           let id = decodeURIComponent(res.path).split('=')[2];
-          let url = ''
-          // if(id.length === 6) {
-          //   url: './data/data?id='
-          // } else {
-          //   url = '../temperature/data/data?id='
-          // }
-          if (id === '700072') {
-            url: './data/data?id=700073'
-          } else {
-            url = '../temperature/data/data?id=1000002'
-          }
-          wx.navigateTo({
-            url: url
+          that.setData({
+            id
           })
+          that.turnToPage()
         }
       })
     } else {
@@ -109,6 +80,17 @@ Page({
           duration: 3000,
         })
       }
+    })
+  },
+  turnToPage() {
+    let url = ''
+    if(this.data.id === '700073') {
+      url = './data/data?id=' + this.data.id
+    } else {
+      url = '../temperature/data/data?id=' + '1000002'
+    }
+    wx.navigateTo({
+      url
     })
   }
 })

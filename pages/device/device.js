@@ -1,4 +1,4 @@
-import { reqBindDev, reqDevList, reqUnBindDev, reqJudgeBinded, reqOpenid, reqSetParams, reqVerifyRegister, reqBluetoothList } from '../service/service.js';
+import { reqBindDev, reqDevList, reqUnBindDev, reqJudgeBinded, reqOpenid, reqSetParams, reqVerifyRegister, reqBluetoothList } from '../../service/service.js';
 var loadMoreView;
 Page({
   data: {

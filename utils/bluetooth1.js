@@ -16,6 +16,7 @@ const findBluetooth = (bluetoothDeviceName) => {
       success() {
         wx.getBluetoothDevices({
           success(res) {
+            console.log(res)
             var deviceId = '';
             for (var i = 0; i < res.devices.length; i++) {
               if (res.devices[i].name && res.devices[i].localName && (res.devices[i].name == bluetoothDeviceName || res.devices[i].localName == bluetoothDeviceName)) {

@@ -1,5 +1,8 @@
 import * as bluetoothUtil from '../../../utils/bluetooth1.js';
 import {
+  formatTime
+} from '../../../utils/util.js';
+import {
   reqBindDev,
   reqOpenid,
   reqUpload
@@ -71,8 +74,17 @@ Page({
     wx.closeBluetoothAdapter()
   },
   onShow() {
+    const tempParams = {
+      tempReadInterval: "1",
+      tempAlarmHeigh: 0,
+      tempAlarmLow: 0,
+      tempStartTime: formatTime(new Date()),
+      tempEndTime: formatTime(new Date()),
+      tempDataLength: 0,
+      tempDataStartNum: 0
+    }
     this.setData({
-      tempParams: JSON.parse(wx.getStorageSync('tempParams'))
+      tempParams: JSON.parse(wx.getStorageSync('tempParams') || JSON.stringify(tempParams))
     })
     if(this.data.showPage === 'default') {
       wx.createSelectorQuery().select('#dashboard').fields({
@@ -80,7 +92,6 @@ Page({
         size: true
       }).exec(this.initCanvas.bind(this))
     }
-    console.log(this.data.tempParams)
   },
   onLoad(options) {
     console.log(options)
@@ -193,6 +204,7 @@ Page({
       });
       // 搜索蓝牙设备获取deviceid
       let deviceId = await bluetoothUtil.findBluetooth(this.data.bluetoothDeviceName);
+      console.log(deviceId)
       // 没找到设备
       if (!deviceId) {
         const findBluetoothTimer = setTimeout(() => {
