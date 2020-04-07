@@ -50,9 +50,9 @@ function getNewDateArry() {
 }
 function dateTimePicker(startYear, endYear, date) {
   // 返回默认显示的数组和联动数组的声明
-  var dateTime = [], dateTimeArray = [[], [], [], [], [], []];
   var dateTime1 = [], dateTimeArray1 = [[], [], [], [], [], []];
-  var start = startYear || 2019;
+  var dateTime2 = [], dateTimeArray2 = [[], [], [], [], [], []];
+  var start = startYear || 2020;
   var end = endYear || 2030;
   // 默认开始显示数据
   var defaultDate = date ? date : getNewDateArry();

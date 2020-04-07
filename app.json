@@ -24,7 +24,10 @@
     "pages/mmc/data/data",
     "pages/mmc/chart/chart",
     "pages/temperature/temperature",
-    "pages/temperature/data/data"
+    "pages/temperature/data/data",
+    "pages/temperature/chart/chart",
+    "pages/tests/tests",
+    "pages/temperature/params/params"
   ],
   "window": {
     "backgroundTextStyle": "light",

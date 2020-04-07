@@ -1,0 +1,1 @@
+<canvas id="dashboard" type="2d" style="width: {{canvasWidth }}px;height: {{canvasWidth * 5/8}}px;"></canvas>

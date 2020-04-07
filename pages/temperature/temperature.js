@@ -32,18 +32,25 @@ Page({
       }
     }
   },
+  onShow() {
+    wx.closeBluetoothAdapter()
+  },
   bindScanCode() {
     if (this.data.isOpenBluetooth) {
       // wx.navigateTo({
-      //   url: './data/data?id=1000001',
+      //   url: './data/data?id=100002',
       // })
 
       wx.scanCode({
         success(res) {
           console.log(res)
-          wx.navigateTo({
-            url: './data/data?id=' + decodeURIComponent(res.path).split('=')[2],
-          })
+          let id = decodeURIComponent(res.path).split('=')[2];
+          let url = ''
+          if(id.length === 6) {
+            url: './data/data?id='
+          } else {
+            url = '../temperature/data/data?id='
+          }
         }
       })
     } else {

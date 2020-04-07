@@ -1,0 +1,34 @@
+<view class="container">
+  <view class="tab">
+    <view wx:for="{{tabList}}" wx:key="{{index}}" bindtap="bindtabChange" class="{{active[index]}}" data-id="{{index}}">
+      {{item.text}}
+    </view>
+  </view>
+  <swiper style="height: {{swiperItemHeight}}" class='swiper' bindchange='swiperChange' current='{{currentItem}}'>
+    <swiper-item>
+      <view class="tab-swiper tab-swiper1">
+        <view>
+          <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+        </view>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="tab-swiper tab-swiper2">
+        <view class="data-container" wx:if="{{deviceDataList.length !== 0}}">
+          <view class="data-item data-title">
+            <text>时间</text>
+            <text>温度</text>
+          </view>
+          <view>
+            <view class="data-item" wx:for="{{deviceDataList}}" wx:key="{{index}}">
+              <text>{{item.time}}</text>
+              <text>{{item.temperature01}}</text>
+            </view>
+            <view wx:if="{{isEnd}}" class="end">已经到底了~</view>
+          </view>
+        </view>
+        <view wx:else style="text-align: center;padding: 20rpx;">暂无数据</view>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>

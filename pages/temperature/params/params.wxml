@@ -1,0 +1,57 @@
+<view class="result">
+  <view class="item">
+    <text>读取间隔</text>
+    <view class="templete">
+      <input bindinput="bindInputVal" type="number" data-type="readInterval" value="{{readInterval}}"></input>
+      <text> 分钟</text>
+    </view>
+  </view>
+	<view class="item">
+		<text>开始时间</text>
+		<picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+			<view class="tui-picker-detail">
+				{{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}
+			</view>
+		</picker>
+	</view>
+
+	<view class="item">
+		<text>结束时间</text>
+		<picker mode="multiSelector" value="{{dateTime2}}" bindchange="changeDateTime2" bindcolumnchange="changeDateTimeColumn2" range="{{dateTimeArray2}}">
+			<view class="tui-picker-detail">
+				{{dateTimeArray2[0][dateTime2[0]]}}-{{dateTimeArray2[1][dateTime2[1]]}}-{{dateTimeArray2[2][dateTime2[2]]}} {{dateTimeArray2[3][dateTime2[3]]}}:{{dateTimeArray2[4][dateTime2[4]]}}
+			</view>
+		</picker>
+	</view>
+
+	<view class="item">
+		<text>报警高温</text>
+		<view class="templete">
+			<radio-group class="radio-group" bindchange="radioChange1">
+				<label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems1}}" wx:key="name">
+					<text>{{item.value}}</text>
+					<radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
+				</label>
+			</radio-group>
+			<input value="{{alarmHeigh}}" maxlength="5" type="digit" bindinput="bindInputVal" data-type="alarmHeigh"></input>
+			<text> °C</text>
+		</view>
+	</view>
+	<view class="item">
+		<text>报警低温</text>
+		<view class="templete">
+			<radio-group class="radio-group" bindchange="radioChange2">
+				<label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems2}}" wx:key="name">
+					<text>{{item.value}}</text>
+					<radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
+				</label>
+			</radio-group>
+			<input value="{{alarmLow}}" maxlength="5" type="digit" bindinput="bindInputVal" data-type="alarmLow"></input>
+			<text> °C</text>
+		</view>
+	</view>
+
+  <view class="bind">
+		<button class="btn" type="primary" bindtap="submit">确定</button>
+	</view>
+</view>

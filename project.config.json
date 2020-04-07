@@ -57,10 +57,10 @@
 			"current": -1,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "蓝牙",
 					"pathName": "pages/bluetooth/bluetooth",
-					"query": "",
+					"query": "scene=id=700073",
 					"scene": null
 				},
 				{
@@ -71,11 +71,18 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "秒秒测",
-					"pathName": "pages/mmc/mmc",
-					"query": "id=",
+					"id": 3,
+					"name": "温度计",
+					"pathName": "pages/temperature/temperature",
+					"query": "scene=id=700073",
 					"scene": 1011
+				},
+				{
+					"id": -1,
+					"name": "canvas",
+					"pathName": "pages/tests/tests",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

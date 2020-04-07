@@ -1,69 +1,34 @@
 <view class="result" wx:if="{{showPage === 'default'}}">
-  <view class="item">
-    <text>设备名称</text>
-    <text>{{bluetoothDeviceName}}</text>
-  </view>
-  <view class="item">
-    <text>开始记录时间</text>
-    <text>{{startDate}}</text>
-  </view>
-  <view class="item">
-    <text>当前温度</text>
-    <text>{{deviceParams[7]/10}}°C</text>
-  </view>
-  <view class="item">
-    <text>采集间隔</text>
-    <text>{{deviceParams[8]}}分钟</text>
-  </view>
-  <view class="item">
-    <text>开始时间</text>
-    <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
-    <view class="tui-picker-detail">
-      {{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}
-    </view>
-   </picker>
-  </view>
+  <canvas id="dashboard" type="2d" style="width: {{canvasWidth }}px;height: {{canvasWidth * 5/8}}px;"></canvas>
 
-  <view class="item">
-    <text>结束时间</text>
-    <picker mode="multiSelector" value="{{dateTime2}}" bindchange="changeDateTime2" bindcolumnchange="changeDateTimeColumn2" range="{{dateTimeArray2}}">
-    <view class="tui-picker-detail">
-      {{dateTimeArray2[0][dateTime2[0]]}}-{{dateTimeArray2[1][dateTime2[1]]}}-{{dateTimeArray2[2][dateTime2[2]]}} {{dateTimeArray2[3][dateTime2[3]]}}:{{dateTimeArray2[4][dateTime2[4]]}}
+	<view class="item">
+		<text>采集间隔</text>
+		<text>{{deviceParams[8]}}分钟</text>
+	</view>
+  <view class="menu-list">
+  <view class="menu-item" wx:for="{{menuList}}" wx:key="{{index}}" data-tap="{{item.tap}}" bindtap="toPage">
+    <view class="item-left">
+      <text>{{item.text}}</text>
     </view>
-   </picker>
-  </view>
-  <view class="item">
-    <text>报警高温</text>
-    <view class="templete">
-      <radio-group class="radio-group" bindchange="radioChange1">
-        <label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems}}" wx:key="name">
-          <text>{{item.value}}</text>
-          <radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
-        </label>
-      </radio-group>
-      <input value="30"></input>
-      <text> °C</text>
+    <view class="item-right">
+      <image src="../../../images/icon-arrow@2x.png"></image>
     </view>
-  </view>
-  <view class="item">
-    <text>报警低温</text>
-    <view class="templete">
-      <radio-group class="radio-group" bindchange="radioChange2">
-        <label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems2}}" wx:key="name">
-          <text>{{item.value}}</text>
-          <radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
-        </label>
-      </radio-group>
-      <input value="2"></input>
-      <text> °C</text>
-    </view>
-  </view>
-
-  <view class="bind">
-    <button type="primary" bindtap="submit">确定</button>
-    <button type="primary" bindtap="firmwareUpdate">设备升级</button>
-    <button class="btn" bindtap="judgeIsLogin">绑定设备</button>
-    <button class="btn" hidden="{{isFinished}}" bindtap="upload">上传云端</button>
   </view>
 </view>
+	
+
+	<!-- <view class="bind">
+		<button class="btn" type="primary" bindtap="submit">确定</button>
+		<button class="btn" type="primary" bindtap="firmwareUpdate">设备升级</button>
+		<button class="btn" bindtap="judgeIsLogin">绑定设备</button>
+		<button class="btn" hidden="{{isFinished}}" bindtap="upload">上传云端</button>
+	</view> -->
+</view>
 <view wx:else></view>
+
+
+<view class="modal zoomIn" hidden="{{!isShowModal}}">
+<view class="content">
+  <progress show-info="true" activeColor="rgba(85, 190, 202, 1)" percent="{{percent}}" bindactiveend="finish" active-mode="forwards" active />
+</view>
+</view>

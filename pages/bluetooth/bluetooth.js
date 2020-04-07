@@ -1,4 +1,3 @@
-
 Page({
   data: {
     id: '',
@@ -14,15 +13,27 @@ Page({
         this.setData({
           id: decodeURIComponent(options.scene).split('=')[1]
         })
+        let url = ''
+        if(this.data.id.length === 6) {
+          url: './data/data?id=' + this.data.id
+        } else {
+          url = '../temperature/data/data?id=' + this.data.id
+        }
         wx.navigateTo({
-          url: './data/data?id=' + this.data.id,
+          url: url,
         })
       } else if (options.from == 'index') {
         this.setData({
           id: options.devid
         })
+        let url = ''
+        if(this.data.id.length === 6) {
+          url: './data/data?id=' + this.data.id
+        } else {
+          url = '../temperature/data/data?id=' + this.data.id
+        }
         wx.navigateTo({
-          url: './data/data?id=' + this.data.id,
+          url: url,
         })
       } else {
         wx.showModal({
@@ -37,12 +48,24 @@ Page({
       // wx.navigateTo({
       //   url: './data/data?id=1000001',
       // })
-      
+
       wx.scanCode({
         success(res) {
           console.log(res)
+          let id = decodeURIComponent(res.path).split('=')[2];
+          let url = ''
+          // if(id.length === 6) {
+          //   url: './data/data?id='
+          // } else {
+          //   url = '../temperature/data/data?id='
+          // }
+          if (id === '700072') {
+            url: './data/data?id=700073'
+          } else {
+            url = '../temperature/data/data?id=1000002'
+          }
           wx.navigateTo({
-            url: './data/data?id=' + decodeURIComponent(res.path).split('=')[2],
+            url: url
           })
         }
       })
@@ -73,9 +96,9 @@ Page({
   monitorTheBlue() {
     wx.onBluetoothAdapterStateChange((res) => {
       if (res.available) {
-          this.setData({
-            isOpenBluetooth: true
-          })
+        this.setData({
+          isOpenBluetooth: true
+        })
       } else {
         this.setData({
           isOpenBluetooth: false

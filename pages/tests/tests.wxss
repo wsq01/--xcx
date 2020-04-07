@@ -1,0 +1,5 @@
+
+canvas {
+  background: -webkit-linear-gradient(top, rgba(23, 110, 197, 0.9) 0%, rgba(33, 189, 246, 1) 100%);
+  background-color: linear-gradient(top, rgba(23, 110, 197, 0.9) 0%, rgba(33, 189, 246, 1) 100%);
+}

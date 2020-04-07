@@ -8,7 +8,7 @@
     <text>延时时间</text>
     <input type="number" placeholder="单位：分钟 1~60" disabled="{{isDelayDisabled}}" data-tag="delay" bindinput="bindInput"></input>
   </view>
-  <view class="btn"><button type="primary" bindtap="submitSetting">确定</button></view>
+  <view class="bind"><button class="btn" type="primary" bindtap="submitSetting">确定</button></view>
 </view>
 
 <view class="result" wx:elif="{{showPage === 'default'}}">

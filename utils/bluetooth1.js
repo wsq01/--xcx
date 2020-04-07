@@ -48,7 +48,6 @@ const connetBlue = (deviceId) => {
         console.log('createBLEConnection fail')
         wx.hideLoading();
         wx.showModal({
-          title: '提示',
           content: '蓝牙连接失败，请稍后重试',
           showCancel: false,
           success() {
@@ -96,7 +95,7 @@ const getServiceId = (deviceId, characteristicId) => {
 const monitorTheBlue = (isFirstShow) => {
   wx.onBluetoothAdapterStateChange((res) => {
     if (res.available) {
-      if (!isFirstShow) {
+      if (isFirstShow) {
         wx.showToast({
           title: '蓝牙已开启',
           icon: 'none',
@@ -115,15 +114,31 @@ const monitorTheBlue = (isFirstShow) => {
 //监听蓝牙设备是否会异常断开
 const getTheBlueDisConnectWithAccident = (callback) => {
   wx.onBLEConnectionStateChange(function(res) {
+    console.log(res)
     if (!res.connected) {
       wx.closeBluetoothAdapter({
         success: function(res) {
-          wx.openBluetoothAdapter({
-            success: function(res) {}
-          })
         },
       })
-      typeof callback === 'function' && callback();
+    }
+    typeof callback === 'function' && callback(res.connected);
+  })
+}
+
+const sendInstruct = (value, deviceId, serviceId, characteristicId) => {
+  wx.writeBLECharacteristicValue({
+    deviceId,
+    serviceId,
+    characteristicId,
+    value,
+    success() {
+      console.log("写入成功");
+    },
+    fail() {
+      wx.showToast({
+        title: '设置失败!',
+        icon: 'none'
+      })
     }
   })
 }
@@ -133,5 +148,6 @@ export {
   connetBlue,
   findBluetooth,
   getTheBlueDisConnectWithAccident,
-  openBluetoothAdapter
+  openBluetoothAdapter,
+  sendInstruct
 }

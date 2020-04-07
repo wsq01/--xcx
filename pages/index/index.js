@@ -30,6 +30,9 @@ Page({
     wx.reLaunch({
       url: '../device/device',
     })
+    // wx.reLaunch({
+    //   url: '../tests/tests',
+    // })
   },
   initBMap() {
     wx.getLocation({
