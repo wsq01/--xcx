@@ -9,14 +9,10 @@ const openBluetoothAdapter = () => {
 // 搜索蓝牙设备
 const findBluetooth = (bluetoothDeviceName) => {
   return new Promise((resolve, reject) => {
-    wx.showLoading({
-      title: '正在搜索设备...'
-    })
     wx.startBluetoothDevicesDiscovery({
       success() {
         wx.getBluetoothDevices({
           success(res) {
-            console.log(res)
             var deviceId = '';
             for (var i = 0; i < res.devices.length; i++) {
               if (res.devices[i].name && res.devices[i].localName && (res.devices[i].name == bluetoothDeviceName || res.devices[i].localName == bluetoothDeviceName)) {
@@ -115,7 +111,6 @@ const monitorTheBlue = (isFirstShow) => {
 //监听蓝牙设备是否会异常断开
 const getTheBlueDisConnectWithAccident = (callback) => {
   wx.onBLEConnectionStateChange(function(res) {
-    console.log(res)
     if (!res.connected) {
       wx.closeBluetoothAdapter({
         success: function(res) {

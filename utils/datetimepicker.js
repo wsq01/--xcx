@@ -48,7 +48,7 @@ function getNewDateArry() {
     seco = withData(newDate.getSeconds());
   return [year, mont, date, hour, minu, seco];
 }
-function dateTimePicker(startYear, endYear, date) {
+function dateTimePicker(startYear, endYear, date, date2) {
   // 返回默认显示的数组和联动数组的声明
   var dateTime1 = [], dateTimeArray1 = [[], [], [], [], [], []];
   var dateTime2 = [], dateTimeArray2 = [[], [], [], [], [], []];
@@ -56,6 +56,7 @@ function dateTimePicker(startYear, endYear, date) {
   var end = endYear || 2030;
   // 默认开始显示数据
   var defaultDate = date ? date : getNewDateArry();
+  var defaultDate2 = date2 ? date2 : getNewDateArry();
   // 处理联动列表数据
   /*年月日 时分秒*/
   dateTimeArray1[0] = getLoopArray(start, end);
@@ -63,7 +64,7 @@ function dateTimePicker(startYear, endYear, date) {
   dateTimeArray1[2] = getMonthDay(defaultDate[0], defaultDate[1]);
   dateTimeArray1[3] = getLoopArray(0, 23);
   dateTimeArray1[4] = getLoopArray(0, 59);
-  dateTimeArray1[5] = getLoopArray(0, 59);
+  // dateTimeArray1[5] = getLoopArray(0, 59);
 
   dateTimeArray1.forEach((current, index) => {
     dateTime1.push(current.indexOf(defaultDate[index]));
@@ -73,10 +74,10 @@ function dateTimePicker(startYear, endYear, date) {
   dateTimeArray2[2] = getMonthDay(defaultDate[0], defaultDate[1]);
   dateTimeArray2[3] = getLoopArray(0, 23);
   dateTimeArray2[4] = getLoopArray(0, 59);
-  dateTimeArray2[5] = getLoopArray(0, 59);
+  // dateTimeArray2[5] = getLoopArray(0, 59);
 
   dateTimeArray2.forEach((current, index) => {
-    dateTime2.push(current.indexOf(defaultDate[index]));
+    dateTime2.push(current.indexOf(defaultDate2[index]));
   });
 
   return {

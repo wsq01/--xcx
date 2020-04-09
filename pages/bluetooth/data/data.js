@@ -179,6 +179,9 @@ Page({
             isFirstShow: false
           })
         });
+        wx.showLoading({
+          title: '正在搜索设备...'
+        })
         let deviceId = await bluetoothUtil.findBluetooth(this.data.bluetoothDeviceName);
         if(!deviceId) {
           clearTimeout(this.data.timer2);
@@ -205,6 +208,8 @@ Page({
         } else {
           let res1 = await bluetoothUtil.connetBlue(deviceId);
           let serviceId = await bluetoothUtil.getServiceId(deviceId, this.data.characteristicId);
+          wx.hideLoading()
+          wx.showToast({ title: '连接成功！' })
           this.setData({
             deviceId,
             servicesUUID: serviceId

@@ -22,7 +22,7 @@ var deg1 = Math.PI * 11 / 45
 Page({
   data: {
     isFirstShow: true,
-    mobile: wx.getStorageSync('mobile'),
+    mobile: '',
     servicesUUID: '',
     deviceId: '',
     bluetoothDeviceName: '',
@@ -37,7 +37,6 @@ Page({
     findBluetoothTimer: null,
     overTimer: null,
     reloadTimer: null,
-    findBluetoothTimer: null,
     debounceTimer: null,
     isOverTime: false,
     isPercent100: false,
@@ -74,18 +73,6 @@ Page({
     wx.closeBluetoothAdapter()
   },
   onShow() {
-    const tempParams = {
-      tempReadInterval: "1",
-      tempAlarmHeigh: 0,
-      tempAlarmLow: 0,
-      tempStartTime: formatTime(new Date()),
-      tempEndTime: formatTime(new Date()),
-      tempDataLength: 0,
-      tempDataStartNum: 0
-    }
-    this.setData({
-      tempParams: JSON.parse(wx.getStorageSync('tempParams') || JSON.stringify(tempParams))
-    })
     if(this.data.showPage === 'default') {
       wx.createSelectorQuery().select('#dashboard').fields({
         node: true,
@@ -96,11 +83,29 @@ Page({
   onLoad(options) {
     console.log(options)
     if (options.id) {
+      if(options.id !== wx.getStorageSync('bluetoothDeviceName')) {
+        wx.clearStorageSync('tempParams')
+      }
       this.setData({
         bluetoothDeviceName: options.id
       })
       wx.setStorageSync('bluetoothDeviceName', options.id)
     }
+    const tempParams = {
+      tempReadInterval: "1",
+      tempAlarmHeigh: 0,
+      tempAlarmLow: 0,
+      tempStartTime: formatTime(new Date()),
+      tempEndTime: formatTime(new Date()),
+      tempDataLength: 0,
+      tempDataStartNum: 0
+    }
+    this.setData({
+      tempParams: wx.getStorageSync('tempParams') || tempParams,
+      mobile: wx.getStorageSync('mobile')
+    })
+    wx.setStorageSync('tempParams', this.data.tempParams)
+    this.getOpenId()
     this.initBluetooth();
   },
   toPage(e) {
@@ -177,10 +182,10 @@ Page({
       percent: 0,
       isOverTime: false
     })
-    const startNum = this.data.tempParams.tempDataStartNum;
-    const endNum = this.data.tempParams.tempDataLength
-    console.log(startNum, endNum)
-    const code = generateCode2(['FE', 'FD', startNum, endNum], 8)
+    let {tempDataStartNum, tempDataLength, tempReadInterval } = this.data.tempParams;
+    console.log(this.data.tempParams)
+    const code = generateCode2(['FE', 'FD', tempDataStartNum, tempDataLength, tempReadInterval], 8)
+    console.log(code)
     this.sendMy(string2buffer(code));
   },
   // 初始化蓝牙
@@ -188,6 +193,9 @@ Page({
     // 开启蓝牙适配器
     let isOpenBluetoothAdapterSuccess = await bluetoothUtil.openBluetoothAdapter();
     if(isOpenBluetoothAdapterSuccess) {
+      wx.showLoading({
+        title: '正在搜索设备...'
+      })
       bluetoothUtil.getTheBlueDisConnectWithAccident((res) => {
         if(!res) {
           this.setData({
@@ -204,7 +212,6 @@ Page({
       });
       // 搜索蓝牙设备获取deviceid
       let deviceId = await bluetoothUtil.findBluetooth(this.data.bluetoothDeviceName);
-      console.log(deviceId)
       // 没找到设备
       if (!deviceId) {
         const findBluetoothTimer = setTimeout(() => {
@@ -212,8 +219,13 @@ Page({
         }, 3000)
         this.setData({ findBluetoothTimer })
       } else {
+        wx.showLoading({
+          title: '正在连接设备...',
+        })
         let res = await bluetoothUtil.connetBlue(deviceId);
         let servicesUUID = await bluetoothUtil.getServiceId(deviceId, this.data.characteristicId);
+        wx.hideLoading()
+        wx.showToast({ title: '连接成功！' })
         this.setData({
           deviceId,
           servicesUUID,
@@ -279,6 +291,7 @@ Page({
   // 获取设备参数
   handleFEFA(nonceId) {
     const code = transformCode(nonceId, [2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2]);
+    console.log(code)
     code[3] === '0' ? code[3] = '1' : code[3];
     const startDate = '20' + code[1] + '/' + code[2].padStart(2, '0') + '/' + code[3].padStart(2, '0') + ' ' + code[4].padStart(2, '0') + ':' + code[5].padStart(2, '0') + ':' + code[6].padStart(2, '0');
     this.setData({
@@ -319,7 +332,7 @@ Page({
         this.judgeIsOverTime();
         wx.setStorageSync('historyList', JSON.stringify(this.data.historyList));
         wx.navigateTo({
-          url: `../chart/chart?delay=${this.data.deviceParams[8]}&startTime=${this.data.tempParams.tempStartTime}&needNum=${this.data.tempParams.tempDataLength}&heigh=${this.data.tempParams.tempAlarmHeigh}&low=${this.data.tempParams.tempAlarmLow}`,
+          url: `../chart/chart?delay=${this.data.tempParams.tempReadInterval}&startTime=${this.data.tempParams.tempStartTime}&needNum=${this.data.tempParams.tempDataLength}&heigh=${this.data.tempParams.tempAlarmHeigh}&low=${this.data.tempParams.tempAlarmLow}`,
         })
       }, 800)()
     }
@@ -354,8 +367,8 @@ Page({
         content: '账号未登录，是否前往登录？',
         success(res) {
           if (res.confirm) {
-            // clearTimeout(that.data.timer)
-            wx.reLaunch({
+            clearTimeout(that.data.overTimer)
+            wx.navigateTo({
               url: '../../mobile/verify/verify?handle=bind',
             })
           }
@@ -437,6 +450,7 @@ Page({
     })
   },
   initCanvas(res) {
+    console.log(res)
     var that = this;
     var canvas = res[0].node;
     var ctx = canvas.getContext('2d');
@@ -464,6 +478,7 @@ Page({
           angle += dotSpeed;
         }
         dot.draw(ctx);
+        console.log(angle)
         if (credit < that.data.deviceParams[7]/10 - textSpeed) {
           credit += textSpeed;
         } else if (credit >= that.data.deviceParams[7]/10 - textSpeed && credit < that.data.deviceParams[7]/10) {

@@ -129,12 +129,17 @@ Page({
     })
   },
   initBluetooth(e) {
-    const that = this;
     wx.openBluetoothAdapter({
       success:(res) => {
-        wx.navigateTo({
-          url: '../bluetooth/data/data?id=' + e.currentTarget.dataset.devid + '&from=index',
-        })
+        if(e.currentTarget.dataset.devid.length === 6) {
+          wx.navigateTo({
+            url: '../bluetooth/data/data?id=' + e.currentTarget.dataset.devid + '&from=index'
+          })
+        } else {
+          wx.navigateTo({
+            url: '../temperature/data/data?id=' + e.currentTarget.dataset.devid + '&from=index'
+          })
+        }
       },
       fail: (res) => {
         wx.showModal({

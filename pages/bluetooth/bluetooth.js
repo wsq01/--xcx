@@ -84,10 +84,10 @@ Page({
   },
   turnToPage() {
     let url = ''
-    if(this.data.id === '700073') {
+    if(this.data.id.length === 6) {
       url = './data/data?id=' + this.data.id
     } else {
-      url = '../temperature/data/data?id=' + '1000002'
+      url = '../temperature/data/data?id=' + this.data.id
     }
     wx.navigateTo({
       url

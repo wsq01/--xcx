@@ -35,11 +35,9 @@ Page({
     tempParams: null
   },
   onLoad(options) {
-    const that = this
-    console.log(options)
 
     this.setData({
-      tempParams: JSON.parse(wx.getStorageSync('tempParams')),
+      tempParams: wx.getStorageSync('tempParams'),
       deviceParams: JSON.parse(options.deviceParams),
       totalNum: options.totalNum
     })
@@ -70,18 +68,34 @@ Page({
       alarmItems2[0].checked = false
       alarmItems2[1].checked = true
     }
+    let dateTime1 = new Date(tempStartTime)
+    let dateTime2 = new Date(tempEndTime)
+    var year = withData(dateTime1.getFullYear()),
+    mont = withData(dateTime1.getMonth() + 1),
+    date = withData(dateTime1.getDate()),
+    hour = withData(dateTime1.getHours()),
+    minu = withData(dateTime1.getMinutes());
+    var year2 = withData(dateTime2.getFullYear()),
+    mont2 = withData(dateTime2.getMonth() + 1),
+    date2 = withData(dateTime2.getDate()),
+    hour2 = withData(dateTime2.getHours()),
+    minu2 = withData(dateTime2.getMinutes());
+    const obj = datetimepickerUtil.dateTimePicker('20' + this.data.deviceParams[1], undefined, [year, mont, date, hour, minu], [year2, mont2, date2, hour2, minu2]);
+    console.log(obj)
     this.setData({
       readInterval: tempReadInterval,
       alarmHeigh: Math.abs(tempAlarmHeigh),
       alarmLow: Math.abs(tempAlarmLow),
       alarmItems1,
-      alarmItems2
+      alarmItems2,
+      dateTime1: obj.dateTime1,
+      dateTimeArray1: obj.dateTimeArray1,
+      dateTime2: obj.dateTime2,
+      dateTimeArray2: obj.dateTimeArray2
     })
-
   },
   submit() {
     const that = this;
-    console.log(this.data.readInterval)
     if(!this.data.readInterval || this.data.readInterval < 0) {
       wx.showModal({
         title: '提示',
@@ -141,7 +155,7 @@ Page({
       tempAlarmLow: low,
       tempReadInterval: this.data.readInterval
     }
-    wx.setStorageSync('tempParams', JSON.stringify(setParams))
+    wx.setStorageSync('tempParams', setParams)
     wx.navigateBack({ delta: 1 })
   },
   radioChange1(e) {
@@ -211,3 +225,6 @@ Page({
     });
   },
 })
+function withData(param) {
+  return param < 10 ? '0' + param : '' + param;
+}
