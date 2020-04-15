@@ -4,6 +4,7 @@ Page({
     isOpenBluetooth: false
   },
   async onLoad(options) {
+    const that = this;
     console.log(options);
     let res = await this.initBluetooth();
     this.monitorTheBlue()
@@ -12,7 +13,14 @@ Page({
         this.setData({
           id: decodeURIComponent(options.scene).split('=')[1]
         })
-        this.turnToPage()
+        wx.showModal({
+          content: '确定连接设备' + that.data.id + '吗？',
+          success(res) {
+            if(res.confirm) {
+              that.turnToPage()
+            }
+          }
+        })
       } else if (options.from == 'index') {
         this.setData({
           id: options.devid
@@ -37,7 +45,15 @@ Page({
           that.setData({
             id
           })
-          that.turnToPage()
+          wx.showModal({
+            content: '确定连接设备' + that.data.id + '吗？',
+            success(res) {
+              if(res.confirm) {
+                that.turnToPage()
+
+              }
+            }
+          })
         }
       })
     } else {

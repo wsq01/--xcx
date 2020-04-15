@@ -17,7 +17,7 @@ Page({
   },
   async submit() {
     const mainName = wx.getStorageSync('mobile');
-    const res = this.reqAddMember(mainName, this.data.mobile, this.data.name);
+    const res = await this.reqAddMember(mainName, this.data.mobile, this.data.name);
     if(res.data.code === 0) {
       wx.showToast({
         title: '添加成功',

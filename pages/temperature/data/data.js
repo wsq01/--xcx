@@ -300,6 +300,17 @@ Page({
     })
     this.judgeIsFirstConnectDevice(code[9]);
   },
+  handleFEFB() {
+    this.setData({
+      showPage: 'default'
+    })
+    this.sendMy(string2buffer(this.data.instructs.getTotal));
+    this.getSystemInfo();
+    wx.createSelectorQuery().select('#dashboard').fields({
+      node: true,
+      size: true
+    }).exec(this.initCanvas.bind(this))
+  },
   // 获取数据总条数
   handleFEFE(nonceId) {
     const code = transformCode(nonceId, [2, 4, 1, 2]);
@@ -381,9 +392,13 @@ Page({
   // 判断是否是新设备
   judgeIsFirstConnectDevice(code) {
     if (code === "0") {
-      this.setData({
-        showPage: 'setting'
-      })
+      // this.setData({
+      //   showPage: 'setting'
+      // })
+      const now = new Date();
+      const dateArr = [parseInt(now.getFullYear().toString().slice(2)), (now.getMonth() + 1), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()];
+      const code = generateCode2(['FE', 'FB', ...dateArr, 1, 1], 2);
+      this.sendMy(string2buffer(code));
     } else {
       this.setData({
         showPage: 'default'

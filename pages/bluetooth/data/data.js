@@ -51,6 +51,39 @@ Page({
     },
     isPercent100: false
   },
+  onHide() {
+    wx.closeBluetoothAdapter({
+      success: function(res) {
+        wx.openBluetoothAdapter({
+          success: function(res) {
+            wx.stopBluetoothDevicesDiscovery({
+              success: function(res) {
+                wx.hideLoading();
+              },
+            })
+            wx.showModal({
+              title: '提示框',
+              content: '蓝牙已断开，是否重新连接？',
+              success(res) {
+                if (res.confirm) {
+                  wx.showLoading({
+                    title: '准备重连中...',
+                  })
+                  let timer4 = setTimeout(() => {
+                    wx.hideLoading();
+                    that.initBluetooth();
+                  }, 10000)
+                  that.setData({
+                    timer4
+                  })
+                }
+              }
+            })
+          }
+        })
+      }
+    })
+  },
   onLoad: function(options) {
     console.log(options);
     this.setData({
@@ -113,7 +146,7 @@ Page({
             })
           }
         })
-      }, 60000)
+      }, 120000)
       this.setData({
         timer
       })
