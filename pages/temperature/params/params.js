@@ -35,7 +35,6 @@ Page({
     tempParams: null
   },
   onLoad(options) {
-
     this.setData({
       tempParams: wx.getStorageSync('tempParams'),
       deviceParams: JSON.parse(options.deviceParams),
@@ -135,8 +134,8 @@ Page({
       })
       return
     }
-    let startNum = parseInt((s1.getTime() - s2.getTime()) / 1000 / 60 / that.data.deviceParams[8]);
-    let endNum = parseInt((s3.getTime() - s1.getTime()) / 1000 / 60 / that.data.deviceParams[8]);
+    let startNum = parseInt((s1.getTime() - s2.getTime()) / 1000 / 60 / this.data.readInterval);
+    let endNum = parseInt((s3.getTime() - s1.getTime()) / 1000 / 60 / this.data.readInterval);
     const heigh = this.data.alarmItems1.filter(item => item.checked)[0].name * this.data.alarmHeigh
     const low = this.data.alarmItems2.filter(item => item.checked)[0].name * this.data.alarmLow
     if(low > heigh) {

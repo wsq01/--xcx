@@ -40,6 +40,7 @@ Page({
     debounceTimer: null,
     isOverTime: false,
     isPercent100: false,
+    isShowPasswordModal: false,
     percent: 0,
     historyList: [], // 历史数据
     menuList: [
@@ -58,12 +59,17 @@ Page({
       {
         text: '上传云端',
         tap: 'upload'
+      },
+      {
+        text: '恢复出厂设置',
+        tap: 'factory'
       }
     ],
     isConnected: false,
     tempParams: null,
     isShowModal: false,
-    canvasWidth: undefined
+    canvasWidth: undefined,
+    password: ''
   },
   onUnload() {
     clearTimeout(this.data.overTimer)
@@ -78,14 +84,26 @@ Page({
         node: true,
         size: true
       }).exec(this.initCanvas.bind(this))
+      const tempParams = {
+        tempReadInterval: "1",
+        tempAlarmHeigh: 0,
+        tempAlarmLow: 0,
+        tempStartTime: formatTime(new Date()),
+        tempEndTime: formatTime(new Date()),
+        tempDataLength: 0,
+        tempDataStartNum: 0
+      }
+      this.setData({
+        tempParams: wx.getStorageSync('tempParams') || tempParams
+      })
     }
   },
   onLoad(options) {
-    console.log(options)
     if (options.id) {
-      if(options.id !== wx.getStorageSync('bluetoothDeviceName')) {
-        wx.clearStorageSync('tempParams')
-      }
+      wx.clearStorageSync('tempParams')
+      // if(options.id !== wx.getStorageSync('bluetoothDeviceName')) {
+        
+      // }
       this.setData({
         bluetoothDeviceName: options.id
       })
@@ -108,7 +126,15 @@ Page({
     this.getOpenId()
     this.initBluetooth();
   },
+  hidePasswordModal() {
+    this.setData({
+      isShowPasswordModal: !this.data.isShowPasswordModal
+    })
+  },
   toPage(e) {
+    clearTimeout(this.data.overTimer)
+    this.setData({ isOverTime: true, overTimer: null })
+    this.judgeIsOverTime()
     if(e.currentTarget.dataset.tap === 'params') {
       wx.navigateTo({
         url: `../params/params?deviceParams=${JSON.stringify(this.data.deviceParams)}&totalNum=${this.data.totalNum}`,
@@ -141,6 +167,30 @@ Page({
         return
       }
       this.upload()
+    } else if(e.currentTarget.dataset.tap === 'factory') {
+      this.setData({
+        isShowPasswordModal: true
+      })
+    }
+  },
+  // 输入密码
+  bindInputVal(e) {
+    this.setData({
+      password: e.detail.value
+    })
+  },
+  bindPasswordSubmit() {
+    if(this.data.password === '123') {
+      this.sendMy(string2buffer('FEF73132330a0d'))
+      this.setData({ isShowPasswordModal: false })
+      wx.showLoading({
+        title: '恢复中...'
+      })
+    } else {
+      wx.showToast({
+        title: '密码错误',
+        icon: 'none'
+      })
     }
   },
   // 上传
@@ -149,10 +199,13 @@ Page({
       title: '上传中...',
     })
     let uploadData = await this.getLocation();
-    if(!uploadData) {
+    if(uploadData.length == 0) {
+      wx.hideLoading()
+      wx.showToast({
+        title: '暂无数据'
+      })
       return 
     }
-    console.log(uploadData);
     let res = await reqUpload(this.data.bluetoothDeviceName, uploadData)
     console.log(res)
     wx.hideLoading();
@@ -163,7 +216,7 @@ Page({
     } else {
       wx.showToast({
         icon: 'none',
-        title: '上传失败！',
+        title: '上传失败！' + res.data.message,
       })
     }
   },
@@ -183,10 +236,9 @@ Page({
       isOverTime: false
     })
     let {tempDataStartNum, tempDataLength, tempReadInterval } = this.data.tempParams;
-    console.log(this.data.tempParams)
-    const code = generateCode2(['FE', 'FD', tempDataStartNum, tempDataLength, tempReadInterval], 8)
-    console.log(code)
+    const code = generateCode3(['FE', 'FD', tempReadInterval, tempDataStartNum, tempDataLength], [0, 0, 2, 8, 8])
     this.sendMy(string2buffer(code));
+    clearTimeout(this.data.overTimer)
   },
   // 初始化蓝牙
   async initBluetooth() {
@@ -288,16 +340,42 @@ Page({
         })
     }
   },
+  handleFEF7(nonceId) {
+    wx.hideLoading()
+    const code = transformCode(nonceId, [2, 1, 1]);
+    console.log(code)
+    if(code[1] === '1') {
+      wx.showToast({
+        title: '恢复成功！',
+        duration: 2000,
+        success(res) {
+          setTimeout(() => {
+            wx.navigateBack({
+              delta: 1
+            })
+
+          }, 2000)
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '恢复失败',
+        icon: 'none'
+      })
+    }
+  },
   // 获取设备参数
   handleFEFA(nonceId) {
     const code = transformCode(nonceId, [2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2]);
-    console.log(code)
     code[3] === '0' ? code[3] = '1' : code[3];
     const startDate = '20' + code[1] + '/' + code[2].padStart(2, '0') + '/' + code[3].padStart(2, '0') + ' ' + code[4].padStart(2, '0') + ':' + code[5].padStart(2, '0') + ':' + code[6].padStart(2, '0');
     this.setData({
       deviceParams: code,
+      'tempParams.tempStartTime': startDate,
+      'tempParams.tempEndTime': startDate,
       startDate
     })
+    wx.setStorageSync('tempParams', this.data.tempParams)
     this.judgeIsFirstConnectDevice(code[9]);
   },
   handleFEFB() {
@@ -335,6 +413,7 @@ Page({
   finish() {
     if (this.data.percent >= 100 && this.data.isPercent100) {
       this.debounce(() => {
+        clearTimeout(this.data.overTimer)
         this.setData({
           isPercent100: false,
           isOverTime: true,
@@ -343,9 +422,9 @@ Page({
         this.judgeIsOverTime();
         wx.setStorageSync('historyList', JSON.stringify(this.data.historyList));
         wx.navigateTo({
-          url: `../chart/chart?delay=${this.data.tempParams.tempReadInterval}&startTime=${this.data.tempParams.tempStartTime}&needNum=${this.data.tempParams.tempDataLength}&heigh=${this.data.tempParams.tempAlarmHeigh}&low=${this.data.tempParams.tempAlarmLow}`,
+          url: `../chart/chart?delay=${this.data.tempParams.tempReadInterval}&endTime=${this.data.tempParams.tempEndTime}&needNum=${this.data.tempParams.tempDataLength}&heigh=${this.data.tempParams.tempAlarmHeigh}&low=${this.data.tempParams.tempAlarmLow}`,
         })
-      }, 800)()
+      }, 500)()
     }
   },
   // 获取openid
@@ -391,16 +470,33 @@ Page({
   },
   // 判断是否是新设备
   judgeIsFirstConnectDevice(code) {
+    const that = this;
     if (code === "0") {
       // this.setData({
       //   showPage: 'setting'
       // })
-      setTimeout(() => {
-        const now = new Date();
-        const dateArr = [parseInt(now.getFullYear().toString().slice(2)), (now.getMonth() + 1), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()];
-        const code = generateCode2(['FE', 'FB', ...dateArr, 1, 1], 2);
-        this.sendMy(string2buffer(code));
-      }, 300)
+      wx.showModal({
+        content: '是否开始记录数据？',
+        success(res) {
+          if(res.confirm) {
+            setTimeout(() => {
+              const now = new Date();
+              const dateArr = [parseInt(now.getFullYear().toString().slice(2)), (now.getMonth() + 1), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()];
+              that.setData({
+                'tempParams.tempStartTime': formatTime(now),
+                'tempParams.tempEndTime': formatTime(now)
+              })
+              wx.setStorageSync('tempParams', that.data.tempParams)
+              const code = generateCode2(['FE', 'FB', ...dateArr, 1, 1], 2);
+              that.sendMy(string2buffer(code));
+            }, 100)
+          } else {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        }
+      })
     } else {
       this.setData({
         showPage: 'default'
@@ -495,11 +591,11 @@ Page({
           angle += dotSpeed;
         }
         dot.draw(ctx);
-        console.log(angle)
         if (credit < that.data.deviceParams[7]/10 - textSpeed) {
           credit += textSpeed;
         } else if (credit >= that.data.deviceParams[7]/10 - textSpeed && credit < that.data.deviceParams[7]/10) {
-          credit += 1;
+          credit = parseFloat((0.1 + credit).toFixed(1));
+          // credit = credit.toFixed(1)
         }
         drawText(credit, ctx);
         if(credit >= that.data.deviceParams[7]/10) {
@@ -606,9 +702,7 @@ Page({
         success(res) {
           const latitude = res.latitude;
           const longitude = res.longitude;
-          console.log(wx.getStorageSync('uploadData'))
-          const result = wx.getStorageSync('uploadData')
-          console.log(result)
+          const result = wx.getStorageSync('uploadData') || []
           result.forEach(item => {
             item.jingdu = longitude;
             item.weidu = latitude;

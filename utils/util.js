@@ -212,9 +212,8 @@ const generateCode3 = (params, fixed) => {
     if (index === 0 || index === 1) {
       return item;
     } else {
-      return transToHexadecimal(item, fixed);
+      return transToHexadecimal(item, fixed[index]);
     }
-
   });
   const verify = checksum(arr);
   return arr.reduce((sum, item) => sum + item) + verify + '0a0d';

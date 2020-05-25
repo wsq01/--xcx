@@ -507,7 +507,6 @@ Page({
     if(!uploadData) {
       return 
     }
-    console.log(uploadData);
     let res = await reqUpload(this.data.bluetoothDeviceName, uploadData)
     console.log(res)
     wx.hideLoading();
@@ -749,7 +748,7 @@ Page({
     };
   },
   countDown() {
-    var nsecond = 30;
+    var nsecond = 60;
     var timer5 = setInterval(() => {
       nsecond -= 1;
       this.setData({
@@ -759,12 +758,10 @@ Page({
         clearInterval(timer5);
         this.setData({
           connectOverTime: true,
-          second: 30
+          second: 60
         })
       }
-    })
-    this.setData({
-      timer5
-    })
+    }, 1000)
+    this.setData({ timer5 })
   }
 })

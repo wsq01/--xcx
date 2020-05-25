@@ -20,9 +20,11 @@
             <text>温度</text>
           </view>
           <view>
-            <view class="data-item" wx:for="{{deviceDataList}}" wx:key="{{index}}">
-              <text>{{item.time}}</text>
-              <text>{{item.temperature01}}</text>
+            <view wx:for="{{deviceDataList}}" wx:key="index">
+              <view class="data-item" wx:for-item="sItem" wx:key-index="sIndex" wx:for="{{item}}" wx:key="sIndex">
+                  <text>{{sItem.time}}</text>
+                  <text>{{sItem.temperature01}}</text>
+              </view>
             </view>
             <view wx:if="{{isEnd}}" class="end">已经到底了~</view>
           </view>

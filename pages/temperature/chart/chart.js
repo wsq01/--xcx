@@ -17,10 +17,11 @@ Page({
       }
     ],
     isRequested: false,
-    deviceDataList: [],
+    deviceDataList: {},
     startNo: 0,
     devid: '',
     multiSelectorList: [],
+    deviceDataListLength: 1
   },
   onLoad(options) {
     wx.showLoading({
@@ -28,10 +29,10 @@ Page({
     })
     this.ecComponent = this.selectComponent('#mychart-dom-bar');
     console.log(options)
-    let { delay, startTime, needNum, heigh, low } = options;
+    let { delay, endTime, needNum, heigh, low } = options;
     this.setData({
       delay,
-      startTime,
+      endTime,
       needNum,
       heigh,
       low,
@@ -39,33 +40,69 @@ Page({
     })
     this.initChart();
   },
-  initChart() {
+  onReachBottom() {
+    if(this.data.currentItem !== 1) { return }
     let [yArr, xArr, i, timeArr] = [[], [], 0, []];
     this.data.historyList.forEach((item, index) => {
       item.forEach((sItem, sIndex) => {
         if (sIndex === 0 || sIndex === item.length - 2 || sIndex === item.length - 1 || i >= this.data.needNum) {
           return;
         }
-        console.log(this.data.startTime + this.data.delay * 1000 * 60 * (i + 1))
-        let time = formatTime(new Date(parseInt(this.data.startTime) + this.data.delay * 1000 * 60 * (i + 1))).slice(0, -3).slice(11);
-        let time1 = formatTime(new Date(parseInt(this.data.startTime) + this.data.delay * 1000 * 60 * (i + 1))).slice(0, -3);
-        timeArr.push(time1);
-        xArr.push(time);
+        let time = formatTime(new Date(parseInt(this.data.endTime) - this.data.delay * 1000 * 60 * (i + 1))).slice(0, -3).slice(11);
+        let time1 = formatTime(new Date(parseInt(this.data.endTime) - this.data.delay * 1000 * 60 * (i + 1))).slice(0, -3);
+        timeArr.unshift(time1);
+        xArr.unshift(time);
         yArr.push(sItem / 10);
         i++;
       })
     })
-    console.log(xArr);
-    console.log(yArr);
     const bluetoothDeviceName = wx.getStorageSync('bluetoothDeviceName')
     let deviceDataList = xArr.map((item, index) => {
       return { shebeibianhao: bluetoothDeviceName, time: timeArr[index], temperature01: yArr[index] + '°C'}
     })
-    this.setData({ deviceDataList })
-    wx.setStorageSync('uploadData', deviceDataList)
+    this.setData({
+      ['deviceDataList[' + this.data.deviceDataListLength + ']']: deviceDataList.slice(100 * (this.data.deviceDataListLength - 1), 100 * this.data.deviceDataListLength),
+      deviceDataListLength: ++this.data.deviceDataListLength
+    })
+
+    this.setSwiperHeight('.tab-swiper2');
+  },
+  initChart() {
+    const that = this;
+    let [yArr, xArr, i, timeArr, upY] = [[], [], 0, [], []];
+    this.data.historyList.forEach((item, index) => {
+      item.forEach((sItem, sIndex) => {
+        if (sIndex === 0 || sIndex === item.length - 2 || sIndex === item.length - 1 || i >= this.data.needNum) {
+          return;
+        }
+        let time = formatTime(new Date(parseInt(this.data.endTime) - this.data.delay * 1000 * 60 * (i + 1))).slice(0, -3).slice(11);
+        let time1 = formatTime(new Date(parseInt(this.data.endTime) - this.data.delay * 1000 * 60 * (i + 1))).slice(0, -3);
+        timeArr.unshift(time1);
+        xArr.unshift(time);
+        yArr.push(sItem / 10);
+        upY.push(sItem)
+        i++;
+      })
+    })
+    const bluetoothDeviceName = wx.getStorageSync('bluetoothDeviceName')
+    let deviceDataList = xArr.map((item, index) => {
+      return { shebeibianhao: bluetoothDeviceName, time: timeArr[index], temperature01: yArr[index] + '°C'}
+    })
+
+        that.setData({
+          ['deviceDataList[' + this.data.deviceDataListLength + ']']: deviceDataList.slice(0, 100),
+          deviceDataListLength: ++this.data.deviceDataListLength
+        })
+
+    let uploadData = xArr.map((item, index) => {
+      return { shebeibianhao: bluetoothDeviceName, time: timeArr[index], temperature01: upY[index]}
+    })
+    wx.setStorageSync('uploadData', uploadData)
     this.setSwiperHeight('.tab-swiper1');
     this.initCharts(xArr, yArr, this.data.low, this.data.heigh);
-    wx.hideLoading();
+    // that.setData({ deviceDataList: deviceDataList })
+
+
   },
   initCharts(xAxis, seriesData, low, heigh) {
     const that = this;
@@ -144,8 +181,8 @@ Page({
         }
       }
     }
-    console.log(option)
     chart.setOption(option);
+    wx.hideLoading();
   },
   bindtabChange(e) {
     let active = ['', ''];
@@ -156,13 +193,13 @@ Page({
     })
     const mobile = wx.getStorageSync('mobile');
     const devid = this.data.devid;
-    console.log(e.currentTarget.dataset.id)
   },
   swiperChange(e) {
     let active = ['', ''];
     active[e.detail.current] = 'active'
     this.setData({
-      active: active
+      active: active,
+      currentItem: e.detail.current
     })
     if (e.detail.current === 0) {
       // 获取图表
@@ -174,10 +211,11 @@ Page({
     }
   },
   setSwiperHeight(selector) {
-    wx.createSelectorQuery().select(selector).boundingClientRect((rect) => {
+    const query = wx.createSelectorQuery()
+    query.select(selector).boundingClientRect((rect) => {
       this.setData({
         swiperItemHeight: rect.height + 50 + 'px'
       })
     }).exec()
-  },
+  }
 })

@@ -32,3 +32,16 @@
   <progress show-info="true" activeColor="rgba(85, 190, 202, 1)" percent="{{percent}}" bindactiveend="finish" active-mode="forwards" active />
 </view>
 </view>
+
+
+<view class="modal zoomIn" bindtap="hidePasswordModal" wx:if="{{isShowPasswordModal}}">
+  <view class='form'>
+    <view class='form-item' catchtap="stopProp">
+      <label for='mobile'>密码</label>
+      <input id='mobile' type='password' bindinput='bindInputVal' value="{{setname}}" focus='true' placeholder='请输入密码'></input>
+    </view>
+    <view class='form-submit' catchtap='bindPasswordSubmit'>
+      <button class='submit'>确定</button>
+    </view>
+  </view>
+</view>
