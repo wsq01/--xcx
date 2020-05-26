@@ -43,11 +43,16 @@ Page({
     paramsData: {},
     isRequested: false,
     deviceDataList: [],
+    shebeiType:'',
     startNo: 0,
     devid: '',
     multiSelectorList: [],
     choose_year: 2019,
-    isShowDownload: false
+    isShowDownload: false,
+    ismap:false,
+    latitude: 24.4795100000,
+    longitude: 118.0894800000
+
   },
   onLoad: function (options) {
     // 获取组件
@@ -90,7 +95,7 @@ Page({
         let list = this.data.deviceDataList;
         list = list.concat(res.data.resultCode);
         this.setData({
-          deviceDataList: list
+          deviceDataList: list,
         })
         this.setSwiperHeight('.tab-swiper2');
       } else if (res.data.code === 10000 && res.data.resultCode == 'null') {
@@ -107,6 +112,7 @@ Page({
         let xArr = [];
         let yArr1 = [];
         let yArr2 = [];
+        let yArr3 = [];
         const list = res.data.resultCode === 'null' ? [] : res.data.resultCode;
         if(list.length === 0) {
           this.setData({
@@ -120,15 +126,16 @@ Page({
         }
         list.forEach((item) => {
           xArr.push(item.time.substr(5, 11));
-          yArr1.push(item.temperature01);
-          yArr2.push(item.humidity);
+          yArr1.push(parseFloat(Number(item.temperature01).toFixed(2)));
+          yArr2.push(parseFloat(Number(item.temperature02).toFixed(2)));
+          yArr3.push(parseFloat(Number(item.humidity).toFixed(2)));
         })
-        this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse());
+        this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse(), yArr3.reverse());
         this.setSwiperHeight('.tab-swiper1');
       }
     })
   },
-  initCharts: function (xData, seriesData1, seriesData2) {
+  initCharts: function (xData, seriesData1, seriesData2,seriesData3) {
     this.ecComponent.init((canvas, width, height) => {
       // 获取组件的 canvas、width、height 后的回调函数
       // 在这里初始化图表
@@ -136,7 +143,7 @@ Page({
         width: width,
         height: height
       });
-      setOption(chart, xData, seriesData1, seriesData2, ['温度', '湿度']);
+      setOption(chart, xData, seriesData1, seriesData2,seriesData3, ['温度1','温度2','湿度']);
       // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
       this.chart = chart;
       // 注意这里一定要返回 chart 实例，否则会影响事件处理等
@@ -148,6 +155,16 @@ Page({
     this.setData({
       ['paramsData.'+ e.currentTarget.dataset.key]: e.detail.value
     })
+  },
+  gocurrentState(e){
+    const getCurrentClass = e.currentTarget.dataset.obj;
+    this.setData({
+      ismap:true
+    })
+    wx.navigateTo({    
+      //'page/home/home?user_id=111'
+      url:'../detailmap/detailmap?data='+JSON.stringify(getCurrentClass)
+   })
   },
   bindSwitchChange(e) {
     let value = 0;
@@ -195,7 +212,7 @@ Page({
     })
     const mobile = wx.getStorageSync('mobile');
     const devid = this.data.devid;
-    console.log(e.currentTarget.dataset.id)
+    // console.log(e.currentTarget.dataset.id)
     // if(e.currentTarget.dataset.id === 0) {
     //   this.setData({
     //     isShowDownload: false
@@ -254,7 +271,8 @@ Page({
         if (res.data.code === 10000) {
           this.setData({
             deviceDataList: res.data.resultCode === 'null' ? [] : res.data.resultCode,
-            isShowDownload: true
+            isShowDownload: true,
+            shebeiType:res.data.guigexinghao
           })
           this.setSwiperHeight('.tab-swiper2');
         }

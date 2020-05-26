@@ -1,0 +1,12 @@
+<map 
+id="myMap" 
+style="width: {{mapWidth}}rpx; height: {{mapHeight}}rpx;" latitude="{{latitude}}" 
+longitude="{{longitude}}" 
+markers="{{markers}}" 
+show-location 
+bindmarkertap="selectMarket" 
+include-points="{{markers}}" 
+bindmarkertap="toaddress"
+scale="12"
+>
+</map>

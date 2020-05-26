@@ -23,14 +23,16 @@
         <view class="data-container" wx:if="{{deviceDataList.length !== 0}}">
           <view class="data-item data-title">
             <text>时间</text>
-            <text>温度</text>
+            <text>温度1</text>
+            <text>温度2</text>
             <text>湿度</text>
           </view>
           <view>
-            <view class="data-item" wx:for="{{deviceDataList}}" wx:key="{{index}}">
+            <view class="data-item" wx:for="{{deviceDataList}}" wx:key="{{index}}" data-obj="{{item}}" bindtap="gocurrentState">
               <text>{{item.time}}</text>
               <text>{{item.temperature01}}</text>
-              <text>{{item.humidity}}</text>
+              <text v-show="{{item.temperature02 !='-'}}">{{item.temperature02}}</text>
+              <text v-show="{{item.humidity !='-'}}">{{item.humidity}}</text>
             </view>
             <view wx:if="{{isEnd}}" class="end">已经到底了~</view>
           </view>
