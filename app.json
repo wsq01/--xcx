@@ -27,7 +27,8 @@
     "pages/temperature/data/data",
     "pages/temperature/chart/chart",
     "pages/tests/tests",
-    "pages/temperature/params/params"
+    "pages/temperature/params/params",
+    "pages/device/detailmap/detailmap"
   ],
   "window": {
     "backgroundTextStyle": "light",

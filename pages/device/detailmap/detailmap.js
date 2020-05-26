@@ -18,7 +18,7 @@ Page({
         longitude: '',
         // alpha:0,
         callout:{
-          content: "服务:出租龙兴园西区9号楼二单元501\r\n姓名:陶士涵\r\n电话:18808987876",
+          content: "",
           padding:10,
           display:'ALWAYS',
           textAlign:'center',

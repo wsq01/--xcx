@@ -32,11 +32,11 @@
 							<text>温度1：{{item.last_temperature01}}℃</text>
 							<text wx:if="{{item.last_temperature02==0}}">温度2：-</text>
 							<text wx:else>温度2：{{item.last_temperature02}}℃</text>
-							<text wx:if="{{item.last_humidity==0}}">湿度：-</text>
-							<text wx:else>湿度：{{item.last_humidity}}%RH</text>
+							<text>电量：{{item.last_power}}%</text>
 						</view>
 						<view>
-	            <text>电量：{{item.last_power}}%</text>
+	           	<text wx:if="{{item.last_humidity==0}}">湿度：-</text>
+							<text wx:else>湿度：{{item.last_humidity}}%RH</text>
 							<text wx:if="{{item.xinhaoqiangdu>=26}}">信号强度：强</text>
 							<text wx:elif="{{item.xinhaoqiangdu>=20 && item.xinhaoqiangdu<26}}">信号强度：好</text>
 							<text wx:elif="{{item.xinhaoqiangdu>=13 && item.xinhaoqiangdu<20}}">信号强度：良</text>
@@ -100,7 +100,7 @@
 	<view class='form'>
 		<view class='form-item' catchtap="stopProp">
 			<label for='mobile'>昵称</label>
-			<input id='mobile' type='number' bindinput='inputName' value="{{setname}}" focus='true' placeholder='请输入昵称'></input>
+			<input id='mobile' type='number' bindinput='inputName' value="{{setname}}"  placeholder='请输入昵称'></input>
 		</view>
 		<view class='form-submit' catchtap='changeName'>
 			<button class='submit'>确定</button>
