@@ -100,7 +100,7 @@ Page({
   },
   onLoad(options) {
     if (options.id) {
-      wx.clearStorageSync('tempParams')
+      wx.setStorageSync('tempParams', '')
       // if(options.id !== wx.getStorageSync('bluetoothDeviceName')) {
         
       // }
@@ -202,9 +202,15 @@ Page({
     if(uploadData.length == 0) {
       wx.hideLoading()
       wx.showToast({
-        title: '暂无数据'
+        title: '暂无数据',
+        icon: 'none'
       })
       return 
+    } else if(uploadData === false) {
+      wx.showToast({
+        title: '位置信息获取失败',
+        icon: 'none'
+      })
     }
     let res = await reqUpload(this.data.bluetoothDeviceName, uploadData)
     console.log(res)
@@ -451,7 +457,7 @@ Page({
   },
   judgeIsLogin() {
     const that = this;
-    const mobile = that.data.mobile;
+    const mobile = wx.getStorageSync('mobile');
     if (!mobile) {
       wx.showModal({
         content: '账号未登录，是否前往登录？',
@@ -713,10 +719,8 @@ Page({
           wx.hideLoading();
           wx.openSetting({
             success(res) {
-              console.log(res);
               if (res.authSetting["scope.userLocation"] == true) {
                 resolve(false)
-
               } else {
                 wx.showToast({
                   icon: 'none',

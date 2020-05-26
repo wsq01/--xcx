@@ -5,10 +5,8 @@ Page({
     isOpenBluetooth: false
   },
   async onLoad(options) {
-    console.log(options);
     let res = await this.initBluetooth();
     this.monitorTheBlue()
-    console.log(res)
     if (res) {
       if (options.scene) {
         this.setData({
@@ -37,10 +35,6 @@ Page({
   },
   bindScanCode() {
     if (this.data.isOpenBluetooth) {
-      // wx.navigateTo({
-      //   url: './data/data?id=100002',
-      // })
-
       wx.scanCode({
         success(res) {
           console.log(res)
@@ -51,6 +45,9 @@ Page({
           } else {
             url = '../temperature/data/data?id='
           }
+          wx.navigateTo({
+            url: url + this.data.id,
+          })
         }
       })
     } else {

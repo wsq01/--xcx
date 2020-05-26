@@ -48,29 +48,6 @@ Page({
       wx.navigateTo({
         url: './update/update?mobile=' + this.data.mobile,
       })
-      // const openid = wx.getStorageSync('openid');
-      // reqUnbind(openid, this.data.mobile, this.data.smsCode).then(res => {
-      //   if (res.data.code === 0) {
-      //     wx.removeStorageSync('mobile');
-      //     wx.showToast({
-      //       title: '解绑成功',
-      //       icon: 'success',
-      //       duration: 1500,
-      //       success: res => {
-      //         setTimeout(() => {
-      //           wx.navigateBack({
-      //             delta: 2
-      //           })
-      //         }, 1500)
-      //       }
-      //     })
-      //   } else {
-      //     wx.showToast({
-      //       title: res.data.message,
-      //       icon: 'none'
-      //     })
-      //   }
-      // })
     }
   },
   inputMobile: function (e) {

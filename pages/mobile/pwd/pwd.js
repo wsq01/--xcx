@@ -37,7 +37,6 @@ Page({
         icon: 'none'
       })
     } else {
-
       const openid = wx.getStorageSync('openid');
       reqRegister(openid, this.data.mobile, this.data.smsCode, this.data.pwd1).then(res => {
         if (res.data.code === 0) {
