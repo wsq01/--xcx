@@ -124,18 +124,31 @@ Page({
             hasChartList: true
           })
         }
+      if(res.data.model_type=='TH'){
         list.forEach((item) => {
           xArr.push(item.time.substr(5, 11));
-          yArr1.push(parseFloat(Number(item.temperature01).toFixed(2)));
-          yArr2.push(parseFloat(Number(item.temperature02).toFixed(2)));
-          yArr3.push(parseFloat(Number(item.humidity).toFixed(2)));
+          yArr1.push(parseFloat(Number(item.temperature01).toFixed(2)))
+          yArr2.push(parseFloat(Number(item.humidity).toFixed(2)));
         })
-        this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse(), yArr3.reverse());
+        this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse(),"TH");
         this.setSwiperHeight('.tab-swiper1');
+      }else if(res.data.model_type=='TT'){
+        list.forEach((item) => {
+          xArr.push(item.time.substr(5, 11));
+          yArr1.push(parseFloat(Number(item.temperature01).toFixed(2)))
+          yArr2.push(parseFloat(Number(item.temperature02).toFixed(2)));
+        })
+        this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse(),"TT");
+        this.setSwiperHeight('.tab-swiper1');
+      }
+      else{
+        console.log("其他型号")
+      }
+       
       }
     })
   },
-  initCharts: function (xData, seriesData1, seriesData2,seriesData3) {
+  initCharts: function (xData, seriesData1, seriesData2,type) {
     this.ecComponent.init((canvas, width, height) => {
       // 获取组件的 canvas、width、height 后的回调函数
       // 在这里初始化图表
@@ -143,7 +156,16 @@ Page({
         width: width,
         height: height
       });
-      setOption(chart, xData, seriesData1, seriesData2,seriesData3, ['温度1','温度2','湿度']);
+      console.log("xinghao"+type)
+      if(type=='TT'){
+        setOption(chart, xData, seriesData1, seriesData2,'TT', ['温度1','温度2']);
+      }else if(type=='TH'){
+        setOption(chart, xData, seriesData1, seriesData2, 'TH',['温度','湿度']);
+      }
+      else{
+
+      }
+     
       // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
       this.chart = chart;
       // 注意这里一定要返回 chart 实例，否则会影响事件处理等
@@ -272,7 +294,7 @@ Page({
           this.setData({
             deviceDataList: res.data.resultCode === 'null' ? [] : res.data.resultCode,
             isShowDownload: true,
-            shebeiType:res.data.guigexinghao
+            shebeiType:res.data.model_type
           })
           this.setSwiperHeight('.tab-swiper2');
         }

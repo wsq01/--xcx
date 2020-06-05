@@ -91,7 +91,18 @@ const multiSelectorList = () => {
     seconds
   ]
 }
-const setOption = (chart, xData, seriesData1, seriesData2,seriesData3, legendData) => {
+const setOption = (chart, xData, seriesData1, seriesData2,type,legendData) => {
+  let obj={};
+  let formatters='';
+  if(type=='TT'){
+      obj.val1='温度1';
+      obj.val2='温度2';
+      formatters='温度1：{c0}°C \n温度2：{c1}°C \n时间：{b}'
+  }else{
+      obj.val1='温度';
+      obj.val2='湿度';
+      formatters='温度：{c0}°C \n湿度：{c1}%RH \n时间：{b}'
+  }
   var option = {
     animation: false,
     grid: {
@@ -99,7 +110,7 @@ const setOption = (chart, xData, seriesData1, seriesData2,seriesData3, legendDat
     },
     tooltip: {
       trigger: 'axis',
-      formatter: "温度1：{c0}°C \n温度2：{c1}°C \n湿度：{c2}%RH \n时间：{b}"
+      formatter: formatters
     },
     legend: {
       data: legendData
@@ -119,20 +130,15 @@ const setOption = (chart, xData, seriesData1, seriesData2,seriesData3, legendDat
       }
     },
     series: [{
-      name: '温度1',
+      name: obj.val1,
       type: 'line',
       smooth: true,
       data: seriesData1
     }, {
-      name: '温度2',
+      name: obj.val2,
       type: 'line',
       smooth: true,
       data: seriesData2
-    }, {
-      name: '湿度',
-      type: 'line',
-      smooth: true,
-      data: seriesData3
     }]
   };
   chart.setOption(option);

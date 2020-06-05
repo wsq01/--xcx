@@ -21,18 +21,22 @@
     <swiper-item>
       <view class="tab-swiper tab-swiper2">
         <view class="data-container" wx:if="{{deviceDataList.length !== 0}}">
-          <view class="data-item data-title">
+          <view class="data-item data-title" wx:if="{{shebeiType=='TT'}}">
             <text>时间</text>
             <text>温度1</text>
-            <text>温度2</text>
+            <text >温度2</text>
+          </view>
+          <view class="data-item data-title" wx:else>
+            <text>时间</text>
+            <text>温度</text>
             <text>湿度</text>
           </view>
           <view>
             <view class="data-item" wx:for="{{deviceDataList}}" wx:key="{{index}}" data-obj="{{item}}" bindtap="gocurrentState">
               <text>{{item.time}}</text>
               <text>{{item.temperature01}}</text>
-              <text v-show="{{item.temperature02 !='-'}}">{{item.temperature02}}</text>
-              <text v-show="{{item.humidity !='-'}}">{{item.humidity}}</text>
+              <text wx:if="{{shebeiType=='TT'}}">{{item.temperature02}}</text>
+              <text wx:if="{{shebeiType=='TH'}}">{{item.humidity}}</text>
             </view>
             <view wx:if="{{isEnd}}" class="end">已经到底了~</view>
           </view>
@@ -60,6 +64,9 @@
           </view>
           <view class="form-submit">
             <view class="more-setting">更多设置请前往（中集智冷科技）公众号</view>
+            <!-- <view class="container">
+              <web-view src="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx029d1989acb9f44c&redirect_uri=http://www.ccsc58.cc/leng/oauth2_templatform.php&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect">go</web-view>
+              </view> -->
             <button bindtap="bindSaveParams">保存</button>
           </view>
         </block>

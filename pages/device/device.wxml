@@ -12,40 +12,40 @@
 				</view>
 				<view class="list-item fadeInLeft" style="animation-delay: {{(index * 0.1) + 's'}}" wx:for="{{deviceList}}" wx:key="{{index}}" data-devid="{{item.shebeibianhao}}" bindtap="toDetail" data-master="{{item.is_master}}">
 					<view class="item-title">
-						<text>设备号：{{item.shebeibianhao}}{{item.is_master === 1 ? '(主)' : '(副)'}}</text>
+						<text>设备号：{{item.shebeibianhao}}{{item.is_master === 1 ? '(主)' : '(分)'}}</text>
 						<text catchtap="bindSetName" data-devid="{{item.shebeibianhao}}" data-name="{{item.beizhu}}">昵称：{{item.beizhu}}</text>
 						<text catchtap="unbind" data-type="{{item.is_master}}" data-devid="{{item.shebeibianhao}}">解绑</text>
 					</view>
 					<view class="item-content">
           <!-- 双温度显示 -->
-						<!-- <view wx:if="{{item.guigexinghao==='ZL-TT10TP'||item.guigexinghao==='ZL-TH10TP(双温版)'}}">
+						<view wx:if="{{item.model_type==='TT'}}">
 							<text >温度1：{{item.last_temperature01}}℃</text>
 							<text>温度2：{{item.last_temperature02}}℃</text>
-							<text>电量：{{item.last_power}}%</text>
 						</view>
 						<view wx:else>
 							<text>温度：{{item.last_temperature01}}℃</text>
 							<text>湿度：{{item.last_humidity}}%RH</text>
-							<text>电量：{{item.last_power}}%</text>
-						</view> -->
-						<view>
+						</view>
+						<!-- <view>
 							<text>温度1：{{item.last_temperature01}}℃</text>
 							<text wx:if="{{item.last_temperature02==0}}">温度2：-</text>
 							<text wx:else>温度2：{{item.last_temperature02}}℃</text>
 							<text>电量：{{item.last_power}}%</text>
-						</view>
+						</view> -->
 						<view>
-	           	<text wx:if="{{item.last_humidity==0}}">湿度：-</text>
-							<text wx:else>湿度：{{item.last_humidity}}%RH</text>
+	           	<!-- <text wx:if="{{item.last_humidity==0}}">湿度：-</text>
+							<text wx:else>湿度：{{item.last_humidity}}%RH</text> -->
+								
 							<text wx:if="{{item.xinhaoqiangdu>=26}}">信号强度：强</text>
 							<text wx:elif="{{item.xinhaoqiangdu>=20 && item.xinhaoqiangdu<26}}">信号强度：好</text>
 							<text wx:elif="{{item.xinhaoqiangdu>=13 && item.xinhaoqiangdu<20}}">信号强度：良</text>
 							<text wx:elif="{{item.xinhaoqiangdu>=5 && item.xinhaoqiangdu<13}}">信号强度：弱</text>
-							<text wx:elif="{{item.xinhaoqiangdu>=0 && item.xinhaoqiangdu<5}}">信号强度：无信号</text>
+							<text wx:else>信号强度：无信号</text>
+							<text>电量：{{item.last_power}}%</text>
 						</view>
 						<text>采集时间：{{item.last_time}}</text>
 						<text>到期时间：{{item.daoqishijian}}</text>
-						<text space="nbsp">地址：{{item.address || '暂无数据'}}</text>
+						<text space="nbsp">地理地址：{{item.address || '暂无数据'}}</text>
 					</view>
 				</view>
 			</view>
