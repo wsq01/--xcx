@@ -54,13 +54,19 @@ Page({
           longitude: hisdata.jingdu
       },
       success: function(res) {
+          let tempinfo='';
+          if(res.model_type=="TT"){
+            tempinfo=res.result.address+'\n'+'温度1:'+hisdata.temperature01+'℃ / 温度2:'+hisdata.temperature02+'℃'+'\n'+'时间'+hisdata.time  
+          }else{
+            tempinfo=res.result.address+'\n'+'温度:'+hisdata.temperature01+'℃ / 湿度:'+hisdata.humidity+'%RH'+'\n'+'时间'+hisdata.time
+          }
           that.setData({
             address:res.result.address,
               latitude:hisdata.weidu,
               longitude:hisdata.jingdu,
               [latitude1]:hisdata.weidu,
               [longitude1]:hisdata.jingdu,
-              [content]:res.result.address+'\n'+'温度1:'+hisdata.temperature01+'℃/温度2:'+hisdata.temperature02+'℃/湿度:'+hisdata.humidity+'%RH'+'\n'+'时间'+hisdata.time,
+              [content]:tempinfo,
           })
       },
       fail: function(res) {
