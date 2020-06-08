@@ -55,7 +55,7 @@ Page({
       },
       success: function(res) {
           let tempinfo='';
-          if(res.model_type=="TT"){
+          if(hisdata.humidity=="-"){
             tempinfo=res.result.address+'\n'+'温度1:'+hisdata.temperature01+'℃ / 温度2:'+hisdata.temperature02+'℃'+'\n'+'时间'+hisdata.time  
           }else{
             tempinfo=res.result.address+'\n'+'温度:'+hisdata.temperature01+'℃ / 湿度:'+hisdata.humidity+'%RH'+'\n'+'时间'+hisdata.time
