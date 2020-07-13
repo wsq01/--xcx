@@ -1,0 +1,44 @@
+swiper-item {
+  overflow-y: auto;
+  position: relative;
+}
+.my-form-group .title {
+  min-width: calc(6em + 50rpx);
+}
+
+.chart-container {
+  height: 740rpx;
+  padding-top: 70rpx
+}
+.chart-btn {
+  position: absolute;
+  top: 18rpx;
+  right: 20rpx;
+}
+radio {
+  transform: scale(.7);
+  vertical-align: baseline;
+}
+
+.tab-swiper2 image {
+  display: inline-block;
+}
+.tab-swiper2 .time {
+  width: 26rpx;
+  height: 26rpx;
+}
+.tab-swiper2 .temp {
+  width: 13rpx;
+  height: 33rpx;
+}
+.tab-swiper2 .humidity {
+  width: 29rpx;
+  height: 29rpx;
+}
+
+.bottom-btn {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 100
+}

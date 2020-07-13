@@ -1,0 +1,76 @@
+.my-modal {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1110;
+	opacity: 0;
+	outline: 0;
+	text-align: center;
+	transform: scale(1.185);
+	backface-visibility: hidden;
+	perspective: 2000rpx;
+	background: rgba(0, 0, 0, 0.6);
+	transition: all 0.3s ease-in-out 0s;
+	pointer-events: none;
+}
+
+.my-modal::before {
+	content: "\200B";
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.my-modal.show {
+	opacity: 1;
+	transition-duration: 0.3s;
+	transform: scale(1);
+	overflow-x: hidden;
+	overflow-y: auto;
+	pointer-events: auto;
+}
+
+.my-dialog {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: auto;
+	margin-right: auto;
+	width: 680rpx;
+	max-width: 100%;
+	background-color: #f8f8f8;
+	border-radius: 10rpx;
+	overflow: hidden;
+}
+
+.my-modal.drawer-modal {
+	transform: scale(1);
+	display: flex;
+}
+
+.my-modal.drawer-modal .my-dialog {
+	height: 100%;
+	min-width: 200rpx;
+	border-radius: 0;
+	margin: initial;
+	transition-duration: 0.3s;
+}
+
+.my-modal.drawer-modal.justify-start .my-dialog {
+	transform: translateX(-100%);
+}
+
+.my-modal.drawer-modal.justify-end .my-dialog {
+	transform: translateX(100%);
+}
+
+.my-modal.drawer-modal.show .my-dialog {
+	transform: translateX(0%);
+}
+.my-modal .my-dialog>.my-bar:first-child .action{
+  min-width: 100rpx;
+  margin-right: 0;
+  min-height: 100rpx;
+}

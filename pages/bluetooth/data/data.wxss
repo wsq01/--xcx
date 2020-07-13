@@ -1,0 +1,111 @@
+page {
+  color: #232323;
+  background: #f2f2f2;
+  font-size: 30rpx;
+}
+.container .item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  margin: 0 0 20rpx;
+  line-height: 100rpx;
+  background: #fff;
+  align-items: center;
+}
+.title {
+  line-height: 100rpx;
+  padding: 0 30rpx;
+}
+.container .btn {
+  margin: 100rpx 30rpx;
+}
+.result .item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  margin: 0 0 10rpx;
+  line-height: 100rpx;
+  background: #fff;
+}
+.result .btn {
+  margin: 20rpx 30rpx;
+}
+.result .btn button:nth-child(1) {
+  margin: 0 0 30rpx;
+}
+progress {
+  width: 450rpx;
+}
+.bind {
+  text-align: center;
+  margin: 50rpx 100rpx;
+}
+.bind button {
+ margin: 0 0 10rpx;
+  background: rgba(85, 190, 202, 1);
+  color: #fff;
+  border-radius: 40rpx;
+}
+.bind button::after {
+  border: none;
+}
+.label_active {
+  color: #fff;
+  background: rgba(85, 190, 202, 1);
+}
+.templete {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.templete input {
+  width: 150rpx;
+  text-align: center;
+}
+
+ec-canvas {
+  position: absolute;
+  top: 20rpx;
+  bottom: 50rpx;
+  left: 10rpx;
+  right: 10rpx;
+}
+.echarts-container {
+  position: relative;
+  background: #fff;
+  height: 700rpx;
+  margin: 0 auto;
+}
+.echarts-btn {
+  display: flex;
+  justify-content: row;
+  align-content: space-around;
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+}
+.echarts-btn button {
+  font-size: 28rpx;
+  background: #fff;
+  color: #232323;
+}
+.echarts-btn .active {
+  border-bottom: 4rpx solid;
+  color: rgba(85, 190, 202, 1);
+}
+.echarts-btn button::after {
+  border: none;
+}
+.echarts-btn wx-button {
+  padding: 0 10rpx;
+  margin: 0 10rpx;
+  color: rgba(85, 190, 202, 0.6);
+  border-radius: 0;
+}
+.echarts-btn button[disabled] {
+  color: #ccc !important;
+  background: transparent !important;
+  border-color: transparent !important;
+}

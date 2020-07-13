@@ -1,0 +1,8 @@
+{
+  "navigationBarBackgroundColor": "#639FF7",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "蓝牙温度计",
+  "usingComponents": {
+    "custom-bar": "/components/custom-bar/index"
+  }
+}

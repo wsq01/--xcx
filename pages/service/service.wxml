@@ -1,0 +1,25 @@
+<view class="container solid-top">
+	<view class="padding-lg bg-white flex align-center">
+		<image src="/images/phone@2x.png" class="margin-right-sm" style="display: inline-block;width:34rpx;height: 28rpx;vertical-align"></image>
+		<text>客服热线：</text>
+		<text class="text-blue" bindtap="makePhoneCall">010-83612390</text>
+	</view>
+
+	<view class="margin-top bg-white" style="height: calc(100vh - 146rpx);">
+		<view class="solid-bottom padding-lg margin-bottom">
+			<text class="myIcon-weixin text-green text-xl margin-right-sm"></text>
+			<text>客服微信</text>
+		</view>
+		<view class="flex justify-center flex-direction align-center">
+			<image src="/images/qrcode@2x.png" show-menu-by-longpress="true" style="width: 248rpx;height: 248rpx;"></image>
+			<text class="text-blue margin-xl">长按保存二维码</text>
+		</view>
+		<view class="solid-bottom solid-top padding-lg margin-bottom" wx:if="{{isShowAccount}}">
+			<text class="myIcon-weixin text-green text-xl margin-right-sm"></text>
+			<text>公众号</text>
+		</view>
+		<view class="flex justify-center flex-direction align-center">
+			<official-account bindload="bindLoad" style="width: calc(80vw);" class="text-blue"></official-account>
+		</view>
+	</view>
+</view>

@@ -1,0 +1,11 @@
+<!-- <custom-bar bgColor="bg-cyan" isCustom="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">蓝牙温度计</view>
+</custom-bar> -->
+
+<view class="flex justify-center align-center margin-top-lg">
+  <image src="/images/bluetooth-bg@2x.png" style="display: block;width: 623rpx" mode="widthFix"></image>
+</view>
+<view class="text-center bottom-btn" style="position: absolute;bottom: 60rpx;width: 100%">
+  <button class="my-btn round bg-blue margin-tb-lg text-lg" style="width: 540rpx;height: 90rpx;" bindtap="bindScanCode">扫描设备</button>
+</view>

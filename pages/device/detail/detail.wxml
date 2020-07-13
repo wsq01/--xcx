@@ -1,0 +1,130 @@
+<view class="container">
+	<scroll-view scroll-x class="bg-white nav v-nav radius">
+		<view class="flex text-center">
+			<view class="my-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabList}}" wx:key="{{index}}" bindtap="tabSelect" data-id="{{index}}">
+				{{item}}
+			</view>
+		</view>
+	</scroll-view>
+	<swiper style="height: calc(100vh - 100rpx)" bindchange='swiperChange' current='{{TabCur}}'>
+		<swiper-item  catchtouchmove="stopTouchMove" class="swiper-item bg-white margin-top-sm" style="position: relative">
+			<view class="flex solids-bottom padding-tb-sm margin-lr align-center">
+				<view class="flex-sub flex justify-between padding-tb-xs align-center">
+					<text class="text-cut" style="max-width: 260rpx;">{{deviceParams.beizhu}}</text>
+					<view>
+						{{deviceParams.shebeibianhao}}
+						(
+						<image wx:if="{{isMaster === '1'}}" style="display: inline-block;width: 30rpx;height: 30rpx;vertical-align: middle" src="/images/zhu@2x.png"></image>
+						<text wx:else class="myIcon-share"></text>
+						)
+					</view>
+				</view>
+				<view class="padding-left-sm">到期时间:{{deviceParams.daoqishijian}}</view>
+			</view>
+
+			<view style="position: relative">
+				<view class="chart-container">
+					<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+				</view>
+				<view class="chart-btn">
+					<checkbox-group class="flex">
+						<view bindtap='changeChart' data-id="1">
+							<checkbox class="blue" style="transform: scale(.6)" checked="{{checkedRadio === 1}}"></checkbox><text class="text-sm">最近1天</text>
+						</view>
+						<view bindtap='changeChart' data-id="2">
+							<checkbox class="blue" style="transform: scale(.6)" checked="{{checkedRadio === 2}}"></checkbox><text class="text-sm">最近1周</text>
+						</view>
+						<view bindtap='changeChart' data-id="3">
+							<checkbox class="blue" style="transform: scale(.6)" checked="{{checkedRadio === 3}}"></checkbox><text class="text-sm">最近1月</text>
+						</view>
+					</checkbox-group>
+				</view>
+			</view>
+			<view class="padding-sm margin-lr solids-bottom text-center margin-bottom text-grey">
+				设备温度变化统计折线({{lastYear}}年)
+			</view>
+			<view class="text-center bottom-btn bg-white" style="position: absolute;bottom: 0">
+				<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="bindUnBind" style="width: 540rpx;height: 90rpx;">解除绑定</button>
+			</view>
+		</swiper-item>
+		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item margin-top-sm">
+			<view class="margin-lr">
+				<map id="myMap" style="width: 100%; height: 700rpx;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" show-location catchmarkertap="selectMarket" include-points="{{markers}}" scale="12">
+				</map>
+			</view>
+			<view class="padding-sm margin solids-bottom text-center text-grey">
+				设备具体安装位置({{lastYear}}年)
+			</view>
+		</swiper-item>
+		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item tab-swiper2 bg-white margin-top-sm">
+			<scroll-view scroll-y bindscrolltolower="bindscrolltolower" style="height: calc(100vh - 100rpx);" scroll-with-animation="{{true}}">
+				<view class="flex justify-between padding solid-bottom">
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 350rpx">
+						<image class="time margin-right-xs" src="/images/icon-time@2x.png"></image>
+						<text>(采集时间)</text>
+					</view>
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 150rpx;">
+						<image class="temp margin-right-xs" src="/images/icon-temp@2x.png"></image>
+						<text>(°C)</text>
+					</view>
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 150rpx;" wx:if="{{deviceParams.model_type=='TT'}}">
+						<image class="temp margin-right-xs" src="/images/icon-temp@2x.png"></image>
+						<text>(°C)</text>
+					</view>
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 150rpx;" wx:else>
+						<image class="humidity margin-right-xs" src="/images/icon-humidity@2x.png"></image>
+						<text>(%RH)</text>
+					</view>
+				</view>
+
+				<view class="flex justify-between padding solid-bottom" wx:for="{{deviceDataList}}" wx:key="{{index}}">
+					<text class="text-center" style="flex: 0 0 350rpx">{{item.time}}</text>
+					<text class="text-center {{(deviceParams.baojingwendu_shangxian_baojing === '1' && deviceParams.baojingwendu_shangxian - 0 <= item.temperature01) || (deiceParams.baojingwendu_xiaxian_baojing === '1' && deviceParams.baojingwendu_xiaxian - 0 >= item.temperature01) ? 'text-red' : ''}}" style="flex: 0 0 150rpx;">{{item.temperature01}}</text>
+					<text class="text-center {{(deviceParams.baojingwendu_two_shangxian_baojing === '1' && deviceParams.baojingwendu_two_shangxian - 0 <= item.temperature02) || (deiceParams.baojingwendu_two_xiaxian_baojing === '1' && deviceParams.baojingwendu_two_xiaxian - 0 >= item.temperature02) ? 'text-red' : ''}}" style="flex: 0 0 150rpx;" wx:if="{{deviceParams.model_type=='TT'}}">{{item.temperature02}}</text>
+					<text class="text-center {{(deviceParams.chaodishidubaojing === '1' && deviceParams.chaodishidubaojingfazhi - 0 >= item.humidity) || (deviceParams.chaogaoshidubaojing === '1' && deviceParams.chaogaoshidubaojingfazhi - 0 <= item.humidity) ? 'text-red' : ''}}" style="flex: 0 0 150rpx;" wx:else>{{item.humidity}}</text>
+				</view>
+
+				<view wx:if="{{isShowLoadMore}}" class="my-load {{!isLoad ? 'loading':'over'}}"></view>
+				<view wx:if="{{deviceDataList.length === 0}}" class="text-center text-gray margin-tb">暂无数据</view>
+			</scroll-view>
+			<view class="text-center bottom-btn bg-white">
+				<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="bindPrinter" style="width: 540rpx;height: 90rpx">蓝牙打印</button>
+			</view>
+		</swiper-item>
+		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item margin-top-sm">
+			<view class="form-group" wx:for="{{paramsList}}" wx:key="index">
+				<view class="bg-white padding text-bold text-lg text-black solid-top solid-bottom flex justify-between align-center" style="color: #333;">
+					<view>
+						<text class="myIcon-title text-blue"></text>
+						{{item.title}}
+					</view>
+					<text class="myIcon-roundadd" wx:if="{{item.title === '定时推送时间'}}" bindtap="addFormItem"></text>
+				</view>
+				<form>
+					<view class="my-form-group" wx:if="{{paramsData[sItem.value].length != 0}}" wx:for="{{item.content}}" wx:for-item="sItem" wx:for-index="sIndex" wx:key="sIndex">
+						<view class="title" wx:if="{{sItem.label}}">{{sItem.label}}</view>
+						<input class="text-right" wx:if="{{sItem.type === 'input'}}" disabled="{{isMaster === '0' ? true : sItem.disabled}}" bindchange="bindInputChange" data-key="{{sItem.value}}" type="{{sItem.value === 'beizhu' ? 'text' : 'number'}}" value="{{paramsData[sItem.value]}}" placeholder="{{sItem.placeholder}}"></input>
+						<input class="text-right" wx:if="{{sItem.type === 'digit'}}" disabled="{{isMaster === '0' ? true : sItem.disabled}}" bindchange="bindInputChange" data-key="{{sItem.value}}" type="{{sItem.value === 'beizhu' ? 'text' : 'number'}}" value="{{paramsData[sItem.value]}}" placeholder="{{sItem.placeholder}}"></input>
+						<switch class="blue" bindchange="bindSwitchChange" disabled="{{isMaster === '0' ? true : sItem.disabled}}" checked="{{paramsData[sItem.value] == '1' ? true : false}}" data-key="{{sItem.value}}" wx:elif="{{sItem.type === 'switch'}}" color="#82C6D3"></switch>
+
+						<view wx:elif="{{sItem.type === 'mulitPicker'}}">
+							<view class="my-form-group" wx:for="{{paramsData[sItem.value]}}" wx:for-item="ssItem" wx:for-index="ssIndex" wx:key="{{ssIndex}}">
+								<text class="title">{{sItem.label}} {{ssIndex + 1}}</text>
+								<picker value="{{ssItem}}" mode="multiSelector" data-index="{{ssIndex}}" data-key="{{sItem.value}}" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{multiSelectorList}}" disabled="{{isMaster === '0' ? true : sItem.disabled}}">
+									<view class="picker"><input disabled="true" value="{{ssItem}}" placeholder='选择时间' /></view>
+								</picker>
+								<text class="myIcon-delete" bindtap="deleteFormItem" data-index="{{ssIndex}}"></text>
+							</view>
+						</view>
+
+					</view>
+				</form>
+			</view>
+			<view wx:if="{{isMaster === '0' ? true : false}}" class="padding-tb bg-white"></view>
+			<view class="text-center padding-tb-sm text-gray" wx:if="{{isMaster === '0' ? false : true}}">更多设置请前往（中集智冷科技）公众号</view>
+			<view class="text-center bottom-btn" style="position: absolute;bottom: 0rpx;" wx:if="{{isMaster === '0' ? false : true}}">
+				<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSaveParams">保存</button>
+			</view>
+		</swiper-item>
+	</swiper>
+</view>

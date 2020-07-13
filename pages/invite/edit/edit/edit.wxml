@@ -1,0 +1,13 @@
+<form>
+  <view class="my-form-group solids-top">
+    <view class="title">账号</view>
+    <input placeholder="请输入手机号" value="{{member.phone}}" disabled="true"></input>
+  </view>
+  <view class="my-form-group">
+    <view class="title">昵称</view>
+    <input placeholder="请输入昵称" value="{{member.relation_name}}" bindinput="bindInput"></input>
+  </view>
+</form>
+<view class="text-center" style="width: 100%;position: absolute;bottom: 50rpx;">
+  <button class="my-btn bg-blue margin-top round text-lg" style="width: 540rpx;height: 90rpx" bindtap="editItem">保存</button>
+</view>

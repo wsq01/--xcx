@@ -1,0 +1,13 @@
+<view class="my-list menu solid-top" bindtap="toAdd">
+  <view class="my-item arrow" bindtap="toVerify" data-name="bind">
+    <view class="content">
+      <text bindtap="scanCode">绑定手机号</text>
+    </view>
+  </view>
+  <view  wx:if="{{mobile}}" class="my-item arrow" bindtap="toVerify" data-name="unbind">
+    <view class="content">
+      <text bindtap="bindDev">更换手机号</text>
+    </view>
+    <text class="action" space="nbsp">{{mobile}}</text>
+  </view>
+</view>

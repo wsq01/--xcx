@@ -1,0 +1,27 @@
+
+.tab-swiper2 image {
+  display: inline-block;
+}
+.tab-swiper2 .time {
+  width: 26rpx;
+  height: 26rpx;
+}
+.tab-swiper2 .temp {
+  width: 13rpx;
+  height: 33rpx;
+}
+.tab-swiper2 .humidity {
+  width: 29rpx;
+  height: 29rpx;
+}
+
+.bottom-btn {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 100
+}
+
+.chart-container {
+  height: 800rpx;
+}

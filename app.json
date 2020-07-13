@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/issue/issue",
+    "pages/service/service",
+    "pages/mobile/verify/verify",
+    "pages/invite/invite",
+    "pages/invite/edit/edit/edit",
+    "pages/invite/edit/edit",
+    "pages/invite/add/add",
+    "pages/mobile/mobile",
+    "pages/bill/bill",
+    "pages/device/device",
+    "pages/device/detail/detail",
+    "pages/mobile/pwd/pwd",
+    "pages/bluetooth/bluetooth",
+    "pages/mobile/verify/update/update",
+    "pages/bluetooth/data/data",
+    "pages/bluetooth/chart/chart",
+    "pages/temperature/data/data",
+    "pages/temperature/chart/chart",
+    "pages/printer/printer",
+    "pages/device/bluetoothDetail/bluetoothDetail",
+    "pages/device/bluetoothDetailList/bluetoothDetailList"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "鲜盾管家",
+    "navigationBarTextStyle": "black"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序获取位置信息"
+    }
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,95 @@
+page {
+  background: #fff;
+}
+
+.container {
+  position: relative;
+  height: 600rpx;
+  background-color: var(--yblue);
+  overflow: hidden;
+}
+
+/* 默认背景样式*/
+radio .wx-radio-input {
+  width: 40rpx;
+  height: 40rpx;
+  display: none;
+}
+
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked {
+  width: 40rpx;
+  /* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 40rpx;
+  /* 选中后对勾大小，不要超过背景的尺寸 */
+  border: none;
+  background: #E1C371;
+}
+
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked::before {
+  border-radius: 50%;
+  /* 圆角 */
+  width: 40rpx;
+  /* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 40rpx;
+  /* 选中后对勾大小，不要超过背景的尺寸 */
+  line-height: 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  /* 对勾大小 30rpx */
+  color: #fff;
+  /* 对勾颜色 白色 */
+  border: 1rpx solid #E1C371;
+  background: #E1C371;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+.radio {
+  display: none;
+}
+
+.radio-group label {
+  padding: 6rpx 16rpx;
+  margin: 0 5rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+}
+
+.label_active {
+  color: #fff;
+  background: #1B4BEF;
+}
+
+.form-box {
+  overflow: hidden;
+  transition: all .6s ease-in-out;
+}
+
+.slideDown {
+  height: 620rpx;
+}
+
+.slideUp {
+  height: 0;
+}
+
+
+.point {
+  position: absolute;
+  width: 320rpx;
+  height: 316rpx;
+  top: 212rpx;
+  left: 218rpx;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAsVBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+3mHKcAAAAOnRSTlMAAwcLEw8bLyoXaEsl0iEe8seIfVA0+vbt3qxgSEA3wqh1bTyik+Th2MycRLmQjIJjWbSxVOi9cpdbJstJsQAAAkpJREFUOMvVlNmSokAQRbuRfV9kFWQRRER2tW3//8MmC+gmaGRmHmduhAYPJ25lVtbNt/9Y70gYhv7/hAG3wbAN/AD/LYooAoQTQK+zvSOOMyRIIhmg15wRSOCkyFNINC+STA+/JnFGpHUvdznOzQ86JZL4yC4PJ3nd2zY1G0Vs3Ww9nZZwYlHEQNJ7t2HDSi1LtQrZhjsAu+gO1Unye24Xqo84cJwgTtSw3n6x73OU4XV3FxZxd/cVxb93caKxwJLQ2w8Sl6j8MyyCS3aybfskZHfnUbHcngfbhenhGpWBL9iyacrWLRWU7qztcgpsoYCJxAiSynfa+SLcnr1k63jyneJjuxfntnC+uN9GpaOkz1GmdRQuYOvRDGpsciUY2muQqfmFGqZlK4HKctSsMUBJOq+r2D89v2XKR6GFCnQR/4FSLqsGij2hBqCXR48COUM5tgyU1JihbTKir1zNqQArzboi4igJUMRObcFdQa0349t0aMuFec0K2OAwgTBps9QyBnK8rE+PX9yrpHOsGt+F1JJNwzBM+QYjKKMXI4AKDk2YODDYmyXLaFhK+xgGiwE6q0CEh6Ulzh2eS3pMbcFvzxU7M50ag+daa0nc+kqWZcrFOVfR9TBvCmkMAXraSex0nROcC429euhpvwwM+PaBKZJS1T7qrUcNIViJIXfdQQyjend1IS6vI4uha5Bo/eC5HKTb21M8hLs3XbDDJpB4etgZosTga/ulZzfEsIkYBl8Bp+QgGmkznb0KTxrBdXYUfPzl8n77B/ULeC9JjYOGF+oAAAAASUVORK5CYII=") no-repeat;
+  animation: rotate 8s linear infinite;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

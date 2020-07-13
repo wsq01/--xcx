@@ -1,0 +1,39 @@
+<view class="container">
+  <scroll-view scroll-x class="bg-white nav v-nav radius">
+		<view class="flex text-center">
+			<view class="my-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabList}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+				{{item}}
+			</view>
+		</view>
+	</scroll-view>
+  <swiper style="height: calc(100vh - 258rpx); " bindchange='swiperChange' current='{{TabCur}}'>
+    <swiper-item catchtouchmove="stopTouchMove" class="swiper-item bg-white margin-top-sm">
+      <view class="chart-container padding">
+        <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+      </view>
+    </swiper-item>
+    <swiper-item catchtouchmove="stopTouchMove" class="swiper-item tab-swiper2 bg-white margin-top-sm">
+      <scroll-view scroll-y bindscrolltolower="bindscrolltolower" style="height: calc(100vh - 100rpx);" scroll-with-animation="{{true}}">
+				<view class="flex justify-between padding solid-bottom">
+					<view class="text-center flex align-center justify-center" style="flex: 1">
+						<image class="time margin-right-xs" src="/images/icon-time@2x.png"></image>
+						<text>(采集时间)</text>
+					</view>
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 300rpx;">
+						<image class="temp margin-right-xs" src="/images/icon-temp@2x.png"></image>
+						<text>(°C)</text>
+					</view>
+				</view>
+        <view class="flex justify-between padding solid-bottom" wx:for="{{deviceDataList}}" wx:key="index">
+          <text class="text-center"style="flex: 1">{{item.time}}</text>
+          <text class="text-center" style="flex: 0 0 300rpx;">{{item.temperature01}}</text>
+        </view>
+
+				<view wx:if="isShowLoadMore" class="my-load {{!isLoad ? 'loading':'over'}}"></view>
+			</scroll-view>
+    </swiper-item>
+  </swiper>
+  <view class="text-center bottom-btn bg-white">
+      <button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="upload" style="width: 540rpx;height: 90rpx;">上传数据</button>
+    </view>
+</view>

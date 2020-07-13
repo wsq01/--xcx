@@ -1,0 +1,84 @@
+page {
+	--red: #e54d42;
+	--olive: #8dc63f;
+	--green: #39b54a;
+	--cyan: #639FF7;
+	--yblue: #2e5afd;
+	--blue: #1B4CEF;
+	--grey: #8799a3;
+	--black: #333333;
+	--darkGray: #666666;
+	--gray: #aaaaaa;
+	--ghostWhite: #FAFAFA;
+	--white: #ffffff;
+	/* 渐变色 */
+	--gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);
+	--gradualOrange: linear-gradient(45deg, #ff9700, #ed1c24);
+	--gradualGreen: linear-gradient(45deg, #39b54a, #8dc63f);
+	--gradualPurple: linear-gradient(45deg, #9000ff, #5e00ff);
+	--gradualPink: linear-gradient(45deg, #ec008c, #6739b6);
+	--gradualBlue: linear-gradient(45deg, #0081ff, #1cbbb4);
+	/* 阴影透明色 */
+	--ShadowSize: 6rpx 6rpx 8rpx;
+	--oliveShadow: rgba(124, 173, 55, 0.2);
+	--greenShadow: rgba(48, 156, 63, 0.2);
+	--cyanShadow: rgba(28, 187, 180, 0.2);
+	--blueShadow: rgba(221, 237, 250, 0.4);
+	--greyShadow: rgba(114, 130, 138, 0.2);
+	--grayShadow: rgba(114, 130, 138, 0.2);
+	--blackShadow: rgba(26, 26, 26, 0.2);
+
+	background-color: var(--ghostWhite);
+	font-size: 28rpx;
+	color: var(--black);
+	font-family: Helvetica Neue, Helvetica, sans-serif;
+}
+
+view,
+scroll-view,
+swiper,
+button,
+input,
+textarea,
+label,
+navigator,
+image {
+	box-sizing: border-box;
+}
+
+.round {
+	border-radius: 5000rpx;
+}
+
+.radius {
+	border-radius: 10rpx;
+}
+.radius-lg {
+	border-radius: 20rpx;
+}
+.radius-xl {
+	border-radius: 40rpx;
+}
+
+.hide {
+	display: none;
+}
+.visibility{
+	visibility: hidden;
+}
+
+@import './border.wxss';
+@import './modal.wxss';
+@import './icon.wxss';
+@import './form.wxss';
+@import './btn.wxss';
+@import './bar.wxss';
+@import './nav.wxss';
+@import './layout.wxss';
+@import './list.wxss';
+@import './text.wxss';
+@import './switch.wxss';
+@import './bg.wxss';
+@import './load.wxss';
+@import './animation.wxss';
+@import './progress.wxss';

@@ -1,0 +1,25 @@
+{
+  "name": "xiandunguanjia--xcx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wsq01/xiandunguanjia--xcx.git"
+  },
+  "author": "WSQ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wsq01/xiandunguanjia--xcx/issues"
+  },
+  "homepage": "https://github.com/wsq01/xiandunguanjia--xcx#readme",
+  "dependencies": {
+    "text-encoding": "^0.7.0"
+  }
+}

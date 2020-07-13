@@ -1,0 +1,170 @@
+<custom-bar bgImage="data:image/png;base64,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" isHome="{{true}}">
+	<view slot="homeText" class="flex align-center">
+		<image class="slide" mode="aspectfill" bindtap="showModal" data-target="drawerModal" src="/images/slide@2x.png"></image>
+		<view class="flex align-center" bindtap="toPage" data-page="../add/add">
+			<image class="add margin-right-sm margin-left-lg" src="/images/add@2x.png"></image>
+			<text>添加设备</text>
+		</view>
+	</view>
+</custom-bar>
+<view>
+	<image class="banner" mode="aspectfill" src="/images/banner@2x.png"></image>
+	<scroll-view scroll-x class="bg-white nav v-nav radius">
+		<view class="flex text-center">
+			<view class="my-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabList}}" wx:key="index" bindtap="tabSelect" data-id="{{index}}">
+				{{item}}
+			</view>
+		</view>
+	</scroll-view>
+
+	<swiper style="height: calc(100vh - 350rpx)" class='swiper' bindchange='swiperChange' current="{{TabCur}}">
+		<swiper-item class="tab-swiper-0">
+      <scroll-view refresher-enabled="{{true}}" refresher-triggered="{{isTriggered}}" bindrefresherrefresh="bindrefresherrefresh" scroll-y bindscrolltolower="bindscrolltolower" style="height: calc(100vh - 350rpx);" scroll-with-animation="{{true}}">
+			  <view class="text-center text-gray">您当前绑定的设备总数为<text class="text-blue">{{count1}}</text>台</view>
+        <view class="radius-lg shadow-box margin animation-{{animation1 ? 'slide-bottom' : ''}}" wx:for="{{devList}}" wx:key="index" bindtap="toPage" data-type="redirect" data-page="../device/detail/detail?devid={{item.shebeibianhao}}&isMaster={{item.is_master}}"  style="animation-delay: {{(index+1)*0.1}}s;">
+          <view class="radius-lg bg-white padding-tb-sm padding-lr">
+
+            <view class="flex solids-bottom">
+              <view class="flex-sub flex justify-between padding-tb-xs align-center">
+                <view catchtap="bindShowSetNameModal" data-id="{{item.shebeibianhao}}" data-name="{{item.beizhu}}" class="flex-sub padding-right text-cut {{item.beizhu ? '' : 'text-gray'}}">{{item.beizhu ? item.beizhu : '点击设置昵称'}}</view>
+                <view>
+                  {{item.shebeibianhao}}
+                  (
+                  <image wx:if="{{item.is_master === 1}}" style="display: inline-block;width: 30rpx;height: 30rpx;vertical-align: middle" src="/images/zhu@2x.png"></image>
+                  <text wx:else class="myIcon-share"></text>
+                  )
+                </view>
+              </view>
+              <view class="solids-right margin-lr-sm margin-tb-sm"></view>
+              <view class="padding-tb-sm {{item.is_line ? 'text-green' : 'text-gray'}}">{{item.is_line ? '在线' : '离线'}}</view>
+            </view>
+            <view class="flex justify-between padding-tb-sm">
+              <view class="flex flex-direction align-center justify-center">
+                <image style="display: block;width: 18rpx;height: 42rpx;" src="{{!item.is_line ? '/images/temp-off@2x.png' : ((item.baojingwendu_shangxian_baojing === 1 && item.last_temperature01 >= item.baojingwendu_shangxian) || (item.baojingwendu_xiaxian_baojing === 1 && item.baojingwendu_xiaxian >= item.item.last_temperature01)) ? '/images/temp-heigh@2x.png' : '/images/temp@2x.png'}}"></image>
+                <text class="margin-top-xs">{{item.last_temperature01}}°C</text>
+              </view>
+              <view wx:if="{{item.model_type==='TT'}}" class="flex flex-direction align-center justify-center">
+                <image style="display: block;width: 18rpx;height: 42rpx;" src="{{!item.is_line ? '/images/temp-off@2x.png' : ((item.baojingwendu_two_shangxian_baojing === 1 && item.last_temperature02 >= item.baojingwendu_two_shangxian) || (item.baojingwendu_two_xiaxian_baojing === 1 && item.last_temperature02 <= item.baojingwendu_two_xiaxian)) ? '/images/temp-heigh@2x.png' : '/images/temp@2x.png'}}"></image>
+                <text class="margin-top-xs">{{item.last_temperature02}}°C</text>
+              </view>
+              <view wx:else class="flex flex-direction align-center justify-center">
+                <image src="{{!item.is_line ? '/images/humidity-off@2x.png' : ((item.chaodishidubaojing === 1 && item.chaodishidubaojingfazhi >= item.last_humidity) || (item.chaogaoshidubaojing === 1 && item.chaogaoshidubaojingfazhi <= item.last_humidity)) ? '/images/humidity-heigh@2x.png' : '/images/humidity@2x.png'}}" style="display: block;width: 42rpx;height: 42rpx;"></image>
+                <text class="margin-top-xs">{{item.last_humidity}}%RH</text>
+              </view>
+              <view class="flex flex-direction align-center justify-center">
+                <image class="power" src="{{!item.is_line ? '/images/power-off@2x.png' : item.last_power > 80 ? '/images/power4@2x.png' : item.last_power > 60 ? '/images/power3@2x.png' : item.last_power > 40 ? '/images/power2@2x.png' : item.last_power > 20 ? '/images/power1@2x.png' : item.dianliang_xiaxian_baojing === 1 ? '/images/power1@2x.png' : '/images/power2@2x.png'}}"></image>
+                <text class="margin-top-xs">{{item.last_power}}%</text>
+              </view>
+              <view class="flex flex-direction align-center justify-center">
+                <image style="display:block;width: 34rpx;height: 30rpx;" src="{{!item.is_line ? '/images/signal-off@2x.png' : item.xinhaoqiangdu < 30 ? '/images/signal1@2x.png' : '/images/signal2@2x.png'}}"></image>
+                <text class="margin-top-xs">{{item.xinhaoqiangdu < 30 ? '弱' : '强'}}</text>
+              </view>
+            </view>
+						<view class="padding-top-sm solid-top">
+              <view>
+                <text class="myIcon-timefill text-blue margin-right-xs"></text>
+                <text>采集时间：{{item.last_time}}</text>
+              </view>
+              <view class="flex">
+                <text style="margin-top: 6rpx;" class="myIcon-locationfill text-blue margin-right-xs"></text>
+                <text style="min-width: fit-content">地理位置：</text>
+								<text>{{item.address}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view wx:if="{{isShowLoadMore1}}" class="my-load margin-bottom-sm {{!isLoad1 ? 'loading':'over'}}"></view>
+      </scroll-view>
+		</swiper-item>
+		<swiper-item>
+			<scroll-view refresher-enabled="{{true}}" refresher-triggered="{{isTriggered}}" bindrefresherrefresh="bindrefresherrefresh" scroll-y bindscrolltolower="bindscrolltolower" style="height: calc(100vh - 350rpx);" scroll-with-animation="{{true}}">
+			  <view class="text-center text-gray">您当前绑定的设备总数为<text class="text-blue">{{count2}}</text>台</view>
+        <view class="radius-lg shadow-box margin animation-{{animation2 ? 'slide-bottom' : ''}}" wx:for="{{bluetoothList}}" wx:key="index" bindtap="toPage" data-devid="{{item.shebeibianhao}}" data-page="../device/bluetoothDetailList/bluetoothDetailList?devid={{item.shebeibianhao}}" style="animation-delay: {{(index+1)*0.1}}s;">
+          <view class="radius-lg bg-white padding-tb-sm padding-lr">
+            <view class="flex solids-bottom">
+              <view class="flex-sub flex justify-between padding-tb-xs align-center">
+                <view catchtap="bindShowSetNameModal" data-id="{{item.shebeibianhao}}" data-name="{{item.beizhu}}" class="flex-sub padding-right text-cut {{item.beizhu ? '' : 'text-gray'}}">{{item.beizhu ? item.beizhu : '点击设置昵称'}}</view>
+                <view>
+                  {{item.shebeibianhao}}
+                </view>
+              </view>
+              <view class="solids-right margin-lr-sm margin-tb-sm"></view>
+              <view class="padding-tb-sm" data-id="{{item.shebeibianhao}}" catchtap="bindUnBind">解绑</view>
+            </view>
+            <view class="padding-top-sm">
+              <view>
+                <text class="myIcon-timefill text-blue margin-right-xs"></text>
+                <text>采集时间：{{item.last_time}}</text>
+              </view>
+              <view class="flex">
+                <text style="margin-top: 6rpx;" class="myIcon-locationfill text-blue margin-right-xs"></text>
+                <text style="min-width: fit-content">地理位置：</text>
+								<text>{{item.address}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view wx:if="{{isShowLoadMore2}}" class="my-load margin-bottom-sm {{!isLoad2 ? 'loading':'over'}}"></view>
+      </scroll-view>
+		</swiper-item>
+	</swiper>
+
+</view>
+
+<view class=" v-modal my-modal drawer-modal justify-start {{modalName=='drawerModal'?'show':''}}" bindtap="hideModal" style="z-index:99999;">
+	<view class="my-dialog basis-xl bg-white" catchtap style="height:calc(100vh)">
+
+		<view class="user-container padding-bottom-lg">
+			<view class="userinfo">
+				<open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
+				<open-data class="text-cut" type="userNickName"></open-data>
+			</view>
+		</view>
+
+		<view class="my-list menu">
+			<view class="my-item animation-{{animation ? 'slide-left':''}} margin-tb-sm" wx:for="{{menuList}}" bindtap="toPageWidthVerify" data-type="{{item.type}}" data-page="{{item.page}}" style="animation-delay: {{(index+1)*0.1}}s;" wx:key="index">
+				<view class="content text-left flex align-center">
+					<image src="{{item.icon}}"></image>
+					<text class="">{{item.text}}</text>
+				</view>
+			</view>
+		</view>
+
+		<view class="flex justify-center" style="position: absolute;bottom: 40rpx;left: 80rpx;right: 80rpx;">
+			<view class="padding-right-lg solids-right flex align-center" bindtap="toPage" data-page="../add/add">
+				<image class="add margin-right-sm" src="/images/icon-add@2x.png"></image>
+				<text class="text-center">添加设备</text>
+			</view>
+			<navigator class="padding-left-lg flex align-center" target="miniProgram" open-type="exit">
+				<image class="add margin-right-sm" src="/images/icon-quit@2x.png"></image>
+				<text>退出</text>
+			</navigator>
+		</view>
+
+	</view>
+</view>
+
+<view class="my-modal {{modalName=='setName'?'show':''}}">
+	<view class="my-dialog">
+		<view class="my-bar bg-white justify-end">
+			<view class="content">设置昵称</view>
+			<view class="action" bindtap="hideModal">
+				<text class="myIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl">
+			<form>
+				<view class="my-form-group">
+					<view class="title solids-right">昵称：</view>
+					<input type="text" placeholder="请输入昵称" value="{{currDevice.name}}" bindinput="bindInputName"></input>
+				</view>
+			</form>
+		</view>
+		<view class="my-bar bg-white justify-end">
+			<view class="action">
+				<button class="my-btn line-blue text-blue" bindtap="hideModal">取消</button>
+				<button class="my-btn bg-blue margin-left" bindtap="bindChangeName">确定</button>
+			</view>
+		</view>
+	</view>
+</view>

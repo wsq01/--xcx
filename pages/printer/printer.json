@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "custom-bar": "/components/custom-bar/index"
+  },
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "打印数据"
+}

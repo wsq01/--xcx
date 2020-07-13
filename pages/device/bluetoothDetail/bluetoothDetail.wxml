@@ -1,0 +1,83 @@
+<view class="container">
+	<scroll-view scroll-x class="bg-white nav v-nav radius">
+		<view class="flex text-center">
+			<view class="my-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabList}}" wx:key="{{index}}" bindtap="tabSelect" data-id="{{index}}">
+				{{item}}
+				<!-- <text class="myIcon-order" wx:if="{{item === '列表'}}"></text> -->
+			</view>
+		</view>
+	</scroll-view>
+	<swiper style="height: calc(100vh - 260rpx)" circular="{{true}}" bindchange='swiperChange' current='{{TabCur}}'>
+		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item bg-white margin-top-sm" style="position: relative">
+			<scroll-view scroll-y class="chart-container padding" hidden="{{isHideCanvas}}">
+					<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+				</scroll-view>
+		</swiper-item>
+		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item tab-swiper2 bg-white margin-top-sm">
+			<scroll-view scroll-y bindscrolltolower="bindscrolltolower" style="height: 100%;" scroll-with-animation="{{true}}">
+				<view class="flex justify-between padding solid-bottom">
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 500rpx">
+						<image class="time margin-right-xs" src="/images/icon-time@2x.png"></image>
+						<text>(采集时间)</text>
+					</view>
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 150rpx;">
+						<image class="temp margin-right-xs" src="/images/icon-temp@2x.png"></image>
+						<text>(°C)</text>
+					</view>
+				</view>
+
+				<view class="flex justify-between padding solid-bottom" wx:for="{{deviceDataList}}" wx:key="{{index}}">
+					<text class="text-center" style="flex: 0 0 500rpx">{{item.time}}</text>
+					<text class="text-center" style="flex: 0 0 150rpx;">{{item.temperature01}}</text>
+				</view>
+
+				<view wx:if="{{isShowLoadMore}}" class="my-load {{!isLoad ? 'loading':'over'}}"></view>
+        <view wx:if="{{deviceDataList.length === 0}}" class="text-center text-gray margin-tb">暂无数据</view>
+			</scroll-view>
+		</swiper-item>
+	</swiper>
+	<view class="text-center bottom-btn bg-white">
+		<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="bindScreen" style="width: 540rpx;height: 90rpx">筛选</button>
+	</view>
+</view>
+
+<view class="my-modal {{modalName=='screen'?'show':''}}">
+	<view class="my-dialog">
+		<view class="my-bar bg-white justify-end">
+			<view class="content">设置筛选条件</view>
+			<view class="action" bindtap="hideModal">
+				<text class="myIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl">
+			<form>
+				<view class="my-form-group">
+					<view class="title">开始时间</view>
+					<picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+						<view class="picker">
+							{{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}
+						</view>
+					</picker>
+				</view>
+				<view class="my-form-group">
+					<view class="title">结束时间</view>
+					<picker mode="multiSelector" value="{{dateTime2}}" bindchange="changeDateTime2" bindcolumnchange="changeDateTimeColumn2" range="{{dateTimeArray2}}">
+						<view class="picker">
+							{{dateTimeArray2[0][dateTime2[0]]}}-{{dateTimeArray2[1][dateTime2[1]]}}-{{dateTimeArray2[2][dateTime2[2]]}} {{dateTimeArray2[3][dateTime2[3]]}}:{{dateTimeArray2[4][dateTime2[4]]}}
+						</view>
+					</picker>
+				</view>
+				<view class="my-form-group">
+					<view class="title">时间间隔</view>
+					<input class="text-right" bindinput="bindInput" maxlength="2" type="number" value="{{form.interval}}"></input>
+				</view>
+			</form>
+		</view>
+		<view class="my-bar bg-white justify-end">
+			<view class="action">
+				<button class="my-btn line-blue text-blue" bindtap="hideModal">取消</button>
+				<button class="my-btn bg-blue margin-left" bindtap="bindSubmit">确定</button>
+			</view>
+		</view>
+	</view>
+</view>

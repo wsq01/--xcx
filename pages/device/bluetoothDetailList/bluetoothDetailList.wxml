@@ -1,0 +1,13 @@
+<scroll-view scroll-y bindscrolltolower="bindscrolltolower" style="height: calc(100vh);" scroll-with-animation="{{true}}">
+  <view class="my-list menu solid-top">
+    <view class="my-item arrow" wx:for="{{list}}" bindtap="toPage" data-start="{{item.start_time}}" data-end="{{item.end_time}}">
+      <view class="content">
+        {{item.start_time}} — {{item.end_time}}
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{list.length === 0}}" class="text-center margin-tb-lg text-grey">暂无数据</view>
+</scroll-view>
+<view class="text-center bottom-btn" style="position: absolute;bottom: 0rpx;width: 100%;">
+  <button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="toBluetooth" style="width: 540rpx;height: 90rpx">连接设备</button>
+</view>

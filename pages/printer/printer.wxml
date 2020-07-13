@@ -1,0 +1,44 @@
+<custom-bar bgColor="bg-white" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">{{customBarText}}</view>
+	<view class="action" slot="right">
+    <view class="my-load load-icon {{!isLoad?'loading':'over'}}"></view>
+  </view>
+</custom-bar>
+
+<view class="my-list menu" wx:if="{{showPage === 'list'}}">
+	<view class="my-item" wx:for="{{bluetoothList}}" wx:key="index" bindtap="bindClickBluetooth" data-id="{{item.deviceId}}" data-name="{{item.name}}" wx:if="{{item.name}}">
+		<view class="content flex align-center">
+			<image class="margin-right-sm" style="width: 30rpx;height: 30rpx;display: block" src="/images/bluetooth@2x.png"></image>
+			<text>{{item.name}}</text>
+		</view>
+	</view>
+</view>
+<view wx:elif="{{showPage === 'params'}}">
+	<form>
+		<view class="my-form-group">
+			<view class="title">起始时间</view>
+			<picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+				<view class="picker">
+					{{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}:{{dateTimeArray1[5][dateTime1[5]]}}
+				</view>
+			</picker>
+		</view>
+		<view class="my-form-group">
+			<view class="title">结束时间</view>
+			<picker mode="multiSelector" value="{{dateTime2}}" bindchange="changeDateTime2" bindcolumnchange="changeDateTimeColumn2" range="{{dateTimeArray2}}">
+				<view class="picker">
+					{{dateTimeArray2[0][dateTime2[0]]}}-{{dateTimeArray2[1][dateTime2[1]]}}-{{dateTimeArray2[2][dateTime2[2]]}} {{dateTimeArray2[3][dateTime2[3]]}}:{{dateTimeArray2[4][dateTime2[4]]}}:{{dateTimeArray2[5][dateTime2[5]]}}
+				</view>
+			</picker>
+		</view>
+		<view class="my-form-group">
+			<view class="title">时间逆序</view>
+			<switch class="blue" bindchange="bindChangeSwitch"></switch>
+		</view>
+	</form>
+  <view class="text-center" style="position: absolute;bottom: 50rpx;width: 100%;">
+    <button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSendOrder" loading="{{isDisabled}}" disabled="{{isDisabled}}">开始打印</button>
+  </view>
+</view>
+<view wx:else></view>

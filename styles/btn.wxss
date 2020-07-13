@@ -1,0 +1,112 @@
+.my-btn {
+	position: relative;
+	border: 0rpx;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	padding: 0 30rpx;
+	font-size: 28rpx;
+	height: 64rpx;
+	line-height: 1;
+	text-align: center;
+	text-decoration: none;
+	overflow: visible;
+	margin-left: initial;
+	transform: translate(0rpx, 0rpx);
+	margin-right: initial;
+}
+
+.my-btn::after {
+	display: none;
+}
+
+.my-btn:not([class*="bg-"]) {
+	background-color: #f0f0f0;
+}
+
+.my-btn[class*="line"] {
+	background-color: transparent;
+}
+
+.my-btn[class*="line"]::after {
+	content: " ";
+	display: block;
+	width: 200%;
+	height: 200%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 1rpx solid currentColor;
+	transform: scale(0.5);
+	transform-origin: 0 0;
+	box-sizing: border-box;
+	border-radius: 12rpx;
+	z-index: 1;
+	pointer-events: none;
+}
+
+.my-btn.round[class*="line"]::after {
+	border-radius: 1000rpx;
+}
+
+.my-btn[class*="lines"]::after {
+	border: 6rpx solid currentColor;
+}
+
+.my-btn[class*="bg-"]::after {
+	display: none;
+}
+
+.my-btn.sm {
+	padding: 0 20rpx;
+	font-size: 20rpx;
+	height: 48rpx;
+}
+
+.my-btn.lg {
+	padding: 0 40rpx;
+	font-size: 32rpx;
+	height: 80rpx;
+}
+
+.my-btn.icon.sm {
+	width: 48rpx;
+	height: 48rpx;
+}
+
+.my-btn.icon {
+	width: 64rpx;
+	height: 64rpx;
+	border-radius: 500rpx;
+	padding: 0;
+}
+
+button.icon.lg {
+	width: 80rpx;
+	height: 80rpx;
+}
+
+.my-btn.shadow-blur::before {
+	top: 4rpx;
+	left: 4rpx;
+	filter: blur(6rpx);
+	opacity: 0.6;
+}
+
+.my-btn.button-hover {
+	transform: translate(1rpx, 1rpx);
+}
+
+.block {
+	display: block;
+}
+
+.my-btn.block {
+	display: flex;
+}
+
+.my-btn[disabled] {
+	opacity: 0.6;
+	color: var(--white);
+}

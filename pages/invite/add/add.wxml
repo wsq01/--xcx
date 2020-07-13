@@ -1,0 +1,13 @@
+<form>
+  <view class="my-form-group solids-top">
+    <view class="title">账号</view>
+    <input placeholder="请输入手机号" bindinput="bindInputMobile"></input>
+  </view>
+  <view class="my-form-group">
+    <view class="title">昵称</view>
+    <input placeholder="请输入昵称" bindinput="bindInputName"></input>
+  </view>
+</form>
+<view class="text-center" style="position: absolute;bottom: 50rpx;width: 100%;">
+  <button class="my-btn bg-blue margin-tb-lg round lg" style="width: 540rpx;" bindtap="submit">添加</button>
+</view>

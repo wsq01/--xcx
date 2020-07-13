@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "温度曲线",
+  "usingComponents": {
+    "ec-canvas": "../../../components/ec-canvas/ec-canvas"
+  }
+}

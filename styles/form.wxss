@@ -1,0 +1,83 @@
+.my-form-group {
+	background-color: var(--white);
+	padding: 1rpx 30rpx;
+	display: flex;
+	align-items: center;
+	min-height: 100rpx;
+	justify-content: space-between;
+}
+
+.my-form-group+.my-form-group {
+	border-top: 1rpx solid #eee;
+}
+
+.my-form-group .title {
+	text-align: justify;
+	padding-right: 30rpx;
+	font-size: 30rpx;
+	position: relative;
+	height: 60rpx;
+	line-height: 60rpx;
+}
+
+.my-form-group input {
+	flex: 1;
+	font-size: 30rpx;
+	color: #555;
+	padding-right: 20rpx;
+}
+
+.my-form-group>text[class*="myIcon-"] {
+	font-size: 36rpx;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.my-form-group textarea {
+	margin: 32rpx 0 30rpx;
+	height: 4.6em;
+	width: 100%;
+	line-height: 1.2em;
+	flex: 1;
+	font-size: 28rpx;
+	padding: 0;
+}
+
+.my-form-group.align-start .title {
+	height: 1em;
+	margin-top: 32rpx;
+	line-height: 1em;
+}
+
+.my-form-group picker {
+	flex: 1;
+	padding-right: 40rpx;
+	overflow: hidden;
+	position: relative;
+}
+
+.my-form-group picker .picker {
+	line-height: 100rpx;
+	font-size: 28rpx;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 100%;
+	text-align: right;
+}
+
+.my-form-group picker::after {
+	font-family: "myIcon";
+	display: block;
+	content: "\e6a3";
+	position: absolute;
+	font-size: 34rpx;
+	color: var(--grey);
+	line-height: 100rpx;
+	width: 60rpx;
+	text-align: center;
+	top: 0;
+	bottom: 0;
+	right: -20rpx;
+	margin: auto;
+}

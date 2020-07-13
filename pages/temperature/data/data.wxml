@@ -1,0 +1,182 @@
+<custom-bar bgColor="bg-yblue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">蓝牙温度计</view>
+</custom-bar>
+
+<view class="result" wx:if="{{showPage === 'default'}}">
+	<view class="container" style="height: 700rpx">
+		<image src="/images/bg@2x.png" style="display: block;width: 534rpx;height: 534rpx;margin: 100rpx auto 0;"></image>
+		<view class="point"></view>
+
+		<view class="flex flex-direction justify-center align-center text-white margin-bottom" style="position: absolute;top: 280rpx;width: 100%;">
+			<text style="font-size: 100rpx;">{{deviceParams[9]/10}}°C</text>
+			<text>{{startDate}}</text>
+		</view>
+		<view class="flex justify-between padding text-white" style="position: absolute;bottom: 0;width: 100%;">
+			<text>设备号：{{device.name}}</text>
+			<view>总量：<text class="{{totalNum >= 595680 ? 'text-red' : ''}}">{{totalNum}}/60万</text></view>
+		</view>
+		<view class="flex justify-end padding text-white" style="position: absolute;bottom: 40rpx;width: 100%;">
+			<view class="flex align-center">
+				<image class="margin-right-xs" src="{{deviceParams[11] > 10 ? '/images/power0@2x.png' : '/images/power1@2x.png'}}" style="display: block; width: 22rpx;height: 32rpx;"></image>
+				<view class="{{deviceParams[11] <= 10 ? 'text-red' : ''}}">{{deviceParams[11]}}%</view>
+			</view>
+		</view>
+	</view>
+	<view class="my-bar solids-bottom">
+		<view class="action">
+			<image class="margin-right-xs" src="/images/tips@2x.png" style="display: block;width: 28rpx;height: 28rpx;margin-top: 2rpx;"></image>
+			<view class="text-bold" style="margin-top: 2rpx;">温馨提示</view>
+		</view>
+	</view>
+	<view class="my-bar solids-bottom">
+		<view class="action">
+			<view class="text-gray">与设备默认连接时间为120s,将在<text class="text-red text-xl">{{closeTime}}s</text>后断开连接</view>
+		</view>
+	</view>
+	<view class="my-list menu sm-border">
+		<view class="my-item" bindtap="bindShowParams">
+			<view class="content">
+				<image class="margin-right-xs" src="/images/setting@2x.png" style="width: 28rpx;height: 28rpx;"></image>
+				<text class="text-bold" style="vertical-align: middle;">参数配置</text>
+			</view>
+			<view class="action">
+				<text style="color: var(--grey);font-size: 32rpx;font-weight: 600" class="{{isOpen ? 'myIcon-fold' : 'myIcon-unfold'}}"></text>
+			</view>
+		</view>
+		<view class="form-box {{isOpen ? 'slideDown' : 'slideUp'}}">
+			<form>
+				<view class="my-form-group">
+					<view class="title">开始时间</view>
+					<picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+						<view class="picker">
+							{{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}
+						</view>
+					</picker>
+				</view>
+
+				<view class="my-form-group">
+					<view class="title">结束时间</view>
+					<picker mode="multiSelector" value="{{dateTime2}}" bindchange="changeDateTime2" bindcolumnchange="changeDateTimeColumn2" range="{{dateTimeArray2}}">
+						<view class="picker">
+							{{dateTimeArray2[0][dateTime2[0]]}}-{{dateTimeArray2[1][dateTime2[1]]}}-{{dateTimeArray2[2][dateTime2[2]]}} {{dateTimeArray2[3][dateTime2[3]]}}:{{dateTimeArray2[4][dateTime2[4]]}}
+						</view>
+					</picker>
+				</view>
+
+				<view class="my-form-group">
+					<view class="title">高温阈值</view>
+					<view class="flex align-center">
+						<radio-group class="radio-group" bindchange="radioChange1">
+							<label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems1}}" wx:key="name">
+								<text>{{item.value}}</text>
+								<radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
+							</label>
+						</radio-group>
+						<input class="text-center" style="width: 60rpx;" value="{{alarmHeigh}}" maxlength="5" type="digit" bindinput="bindInputVal" data-type="alarmHeigh"></input>
+						<text> °C</text>
+					</view>
+				</view>
+
+				<view class="my-form-group">
+					<view class="title">低温阈值</view>
+					<view class="flex align-center">
+						<radio-group class="radio-group" bindchange="radioChange2">
+							<label class="{{item.checked ? 'label_active' : ''}}" wx:for-items="{{alarmItems2}}" wx:key="name">
+								<text>{{item.value}}</text>
+								<radio class="radio" value="{{item.name}}" checked="{{item.checked}}"></radio>
+							</label>
+						</radio-group>
+						<input class="text-center" style="width: 60rpx;" value="{{alarmLow}}" maxlength="5" type="digit" bindinput="bindInputVal" data-type="alarmLow"></input>
+						<text> °C</text>
+					</view>
+				</view>
+				<view class="margin-tb text-center">
+					<button class="my-btn round bg-blue margin-tb-lg text-lg" style="width: 540rpx;height: 90rpx;" bindtap="bindSaveParams">读取数据</button>
+				</view>
+			</form>
+		</view>
+
+		<!-- <view class="my-item solid-top arrow" bindtap="toPage" data-tap="history">
+			<view class="content">
+				<image class="margin-right-xs" src="/images/history@2x.png" style="width: 28rpx;height: 28rpx"></image>
+				<text style="vertical-align: middle;">实时数据</text>
+			</view>
+		</view> -->
+		<view class="my-item arrow" bindtap="toPage" data-tap="binddevice">
+			<view class="content">
+				<image class="margin-right-xs" src="/images/bind@2x.png" style="width: 28rpx;height: 28rpx"></image>
+				<text class="text-bold" style="vertical-align: middle;">绑定设备</text>
+			</view>
+		</view>
+		<view class="my-item arrow" bindtap="toPage" data-tap="factory" wx:if="{{isadmin}}">
+			<view class="content">
+				<image class="margin-right-xs" src="/images/factory@2x.png" style="width: 28rpx;height: 28rpx"></image>
+				<text class="text-bold" style="vertical-align: middle;">恢复出厂设置</text>
+			</view>
+		</view>
+		<view class="margin-tb-lg"></view>
+	</view>
+
+</view>
+
+
+<view class="my-modal {{modalName=='progress'?'show':'hide'}}">
+	<view class="my-dialog">
+		<view class="padding-xl">
+			<view class="flex">
+				<view class="my-progress round sm striped active">
+					<view class="bg-green" style="width:{{percent}}%;"></view>
+				</view>
+				<text class="margin-left">{{percent}}%</text>
+			</view>
+		</view>
+	</view>
+</view>
+
+
+<view class="my-modal {{modalName=='inputPwd'?'show':'hide'}}">
+	<view class="my-dialog">
+		<view class="my-bar bg-white justify-end">
+			<view class="content">密码确认</view>
+			<view class="action" bindtap="hideModal">
+				<text class="myIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl">
+			<form>
+				<view class="my-form-group">
+					<view class="title solids-right">密码：</view>
+					<input type='password' bindinput='bindInputVal' placeholder='请输入密码' data-type="password"></input>
+				</view>
+			</form>
+		</view>
+		<view class="my-bar bg-white justify-end">
+			<view class="action">
+				<button class="my-btn line-blue text-blue" bindtap="hideModal">取消</button>
+				<button class="my-btn bg-blue margin-left" bindtap="bindPasswordSubmit">确定</button>
+			</view>
+		</view>
+	</view>
+</view>
+
+<view class="my-modal {{modalName=='setName'?'show':'hide'}}">
+	<view class="my-dialog">
+		<view class="my-bar bg-white justify-end">
+			<view class="content">设置设备名称</view>
+		</view>
+		<view class="padding-xl">
+			<form>
+				<view class="my-form-group">
+					<view class="title solids-right">设备名称：</view>
+					<input type="number" placeholder="请输入7位设备名称" maxlength="7" minlength="7" bindinput="bindInputName"></input>
+				</view>
+			</form>
+		</view>
+		<view class="my-bar bg-white justify-end">
+			<view class="action">
+				<button class="my-btn bg-blue" bindtap="reqJudgeBluetoothName" loading="{{isShowLoading}}">确定</button>
+			</view>
+		</view>
+	</view>
+</view>

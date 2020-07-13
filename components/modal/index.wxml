@@ -1,0 +1,25 @@
+<view class="my-modal">
+  <view class="my-dialog">
+    <view class="my-bar bg-white justify-end">
+      <view class="content">
+        <slot name="title"></slot>
+      </view>
+      <view class="action" bindtap="hideModal" wx:if="{{isShowCustomCloseBtn}}">
+        <text class="myIcon-close text-red"></text>
+      </view>
+      <slot wx:else name="close"></slot>
+    </view>
+
+    <view class="padding-xl">
+      <slot name="content"></slot>
+    </view>
+
+    <view class="my-bar bg-white justify-end" wx:if="{{isShowCustomFooter}}">
+      <view class="action">
+        <button class="my-btn line-{{footerBtnColor}} text-{{footerBtnColor}}" bindtap="hideModal">{{cancelBtnText}}</button>
+        <button class="my-btn bg-{{footerBtnColor}} margin-left" bindtap="confirm">{{confirmBtnText}}</button>
+      </view>
+    </view>
+    <slot wx:else name="footer"></slot>
+  </view>
+</view>

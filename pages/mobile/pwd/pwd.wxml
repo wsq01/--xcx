@@ -1,0 +1,13 @@
+<form>
+  <view class="my-form-group solids-top">
+    <view class="title"></view>
+    <input type='password' bindinput='inputVal' maxlength="30" value="{{pwd1}}" focus='true' placeholder='{{mobileData.placeholder}}' data-key="pwd1"></input>
+  </view>
+  <view class="my-form-group">
+    <view class="title"></view>
+    <input type='password' bindinput='inputVal' maxlength="30" value="{{pwd2}}" placeholder='{{mobileData.placeholder}}' data-key="pwd2"></input>
+  </view>
+</form>
+<view class="text-center" style="position: absolute;bottom: 50rpx;width: 100%;">
+  <button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="submitForm">确定</button>
+</view>

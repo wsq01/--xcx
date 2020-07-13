@@ -1,0 +1,24 @@
+swiper-item {
+  overflow-y: auto;
+}
+.chart-container {
+  height: 700rpx;
+}
+.tab-swiper2 image {
+  display: inline-block;
+}
+.tab-swiper2 .time {
+  width: 26rpx;
+  height: 26rpx;
+}
+.tab-swiper2 .temp {
+  width: 13rpx;
+  height: 33rpx;
+}
+
+.bottom-btn {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100
+}

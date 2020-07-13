@@ -1,0 +1,128 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": [
+			{
+				"type": "folder",
+				"value": "doc"
+			},
+			{
+				"type": "folder",
+				"value": "node_modules"
+			}
+		]
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"enhance": true,
+		"postcss": true,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"bundle": true,
+		"useIsolateContext": true,
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.11.2",
+	"appid": "wx28db04fa5b729118",
+	"projectname": "xiandun",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "蓝牙",
+					"pathName": "pages/bluetooth/bluetooth",
+					"query": "scene=id=1000070",
+					"scene": 1011
+				},
+				{
+					"id": -1,
+					"name": "pages/index",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "温度计",
+					"pathName": "pages/temperature/temperature",
+					"query": "scene=id=700073",
+					"scene": 1011
+				},
+				{
+					"id": -1,
+					"name": "canvas",
+					"pathName": "pages/tests/tests",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "打印机",
+					"pathName": "pages/printer/printer",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "蓝牙00",
+					"pathName": "pages/bluetooth/bluetooth",
+					"query": "scene=id=0000000",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "扫码进入",
+					"pathName": "pages/index/index",
+					"query": "scene=id=1000022",
+					"scene": 1011
+				}
+			]
+		}
+	}
+}

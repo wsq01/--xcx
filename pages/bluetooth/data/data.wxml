@@ -1,0 +1,42 @@
+<view class="container" wx:if="{{showPage === 'setting'}}">
+  <view class="title">设备参数设置</view>
+  <view class="item">
+    <text>间隔时间</text>
+    <input type="number" placeholder="单位：分钟  1~60" disabled="{{isIntervalDisabled}}" data-tag="interval" bindinput="bindInput"></input>
+  </view>
+  <view class="item">
+    <text>延时时间</text>
+    <input type="number" placeholder="单位：分钟 1~60" disabled="{{isDelayDisabled}}" data-tag="delay" bindinput="bindInput"></input>
+  </view>
+  <view class="bind"><button class="btn" type="primary" bindtap="submitSetting">确定</button></view>
+</view>
+
+<view class="result" wx:elif="{{showPage === 'default'}}">
+  <view class="item">
+    <text>设备名称</text>
+    <text>{{bluetoothDeviceName}}</text>
+  </view>
+  <view class="item">
+    <text>当前温度</text>
+    <text>{{deviceParams[7]/10}}°C</text>
+  </view>
+  <view class="item">
+    <text>温度数据</text>
+    <view wx:if="{{!isShowPercent}}">暂无数据</view>
+    <progress wx:else activeColor="rgba(85, 190, 202, 1)" percent="{{percent}}" bindactiveend="finish" active-mode="forwards" active />
+  </view>
+  <view class="echarts-container" hidden="{{isFinished}}">
+    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+    <view class="echarts-btn" hidden="{{isFinished}}">
+      <button class="{{active[0] ? 'active' : ''}}" bindtap="bindSelectDate" disabled="{{isPercent100}}" data-index="0">近一天</button>
+      <button class="{{active[1] ? 'active' : ''}}" bindtap="bindSelectDate" disabled="{{isPercent100}}" data-index="1">近三天</button>
+      <button class="{{active[2] ? 'active' : ''}}" bindtap="bindSelectDate" disabled="{{isPercent100}}" data-index="2">近七天</button>
+    </view>
+  </view>
+  <view class="bind">
+    <button class="btn" bindtap="judgeIsLogin">绑定设备</button>
+    <button class="btn" hidden="{{isFinished}}" bindtap="upload">上传云端</button>
+    <!-- <button type="primary" bindtap="firmwareUpdate ">设备升级</button> -->
+  </view>
+</view>
+<view wx:else></view>

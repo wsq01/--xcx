@@ -1,0 +1,8 @@
+<canvas class="ec-canvas" canvas-id="{{ canvasId }}"
+bindinit="init"
+bindtouchstart="{{ ec.disableTouch ? '' : 'touchStart' }}" 
+bindtouchmove="{{ ec.disableTouch ? '' : 'touchMove' }}" 
+bindtouchend="{{ ec.disableTouch ? '' : 'touchEnd' }}" 
+hidden="{{isHiddenCanvas}}">
+</canvas>
+<image hidden="{{!isHiddenCanvas}}" src="{{imgSrc}}" style="width: 100%;height: 100%;"></image>

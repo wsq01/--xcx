@@ -1,0 +1,16 @@
+<view class="my-list menu solid-top" bindtap="toAdd">
+  <view class="my-item arrow">
+    <view class="content">
+      <text class="">添加成员</text>
+    </view>
+  </view>
+</view>
+
+<view class="my-list menu" bindtap="toEdit" data-member="{{item}}" wx:for="{{memberList}}" wx:key="{{index}}">
+  <view class="my-item arrow">
+    <view class="content">
+      <text class="">{{item.relation_name}}</text>
+    </view>
+      <text class="action">{{item.phone}}</text>
+  </view>
+</view>
