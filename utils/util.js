@@ -218,19 +218,40 @@ const ab2hex = (buffer) => {
   return hexArr.join('');
 }
 // 指令转换 
-const transformCode = (code, split) => {
-  let sum = 0;
-  return split.map((item, index) => {
-    let a;
-    if (index === 0 || index === split.length - 1) {
-      a = code.substr(sum * 2, item * 2)
-    } else {
-      a = parseInt(code.substr(sum * 2, item * 2), 16).toString();
-    }
-    sum += item;
-    return a;
-  })
-}
+// const transformCode = (code, split) => {
+//   let sum = 0;
+//   return split.map((item, index) => {
+//     let a;
+//     if (index === 0 || index === split.length - 1) {
+//       a = code.substr(sum * 2, item * 2)
+//     } else {
+//       a = parseInt(code.substr(sum * 2, item * 2), 16).toString();
+//     }
+//     sum += item;
+//     return a;
+//   })
+// }
+// 指令转换 
+const transformCode = (code, split) => {
+    let sum = 0;
+    return split.map((item, index) => {
+      let a;
+      let b;
+      if (index === 0 || index === split.length - 1) {
+        a = code.substr(sum * 2, item * 2)
+      } else {
+        b = code.substr(sum * 2, item * 2);
+        if(b.toString().substring(0,1) != 0 && b.length == 4){
+          let str = parseInt('ffff', 16);
+          a = '-'+((parseInt(b, 16)^str)+1).toString();
+        }else{
+          a = parseInt(b, 16).toString();
+        }
+      }
+      sum += item;
+      return a;
+    })
+  }
 // 校验和
 const checksum = (arr) => {
   const res = arr.map(item => parseInt(item, 16)).reduce((sum, item) => sum + item).toString(16).padStart(2, '0').slice(-2)

@@ -33,6 +33,17 @@ Page({
           // { label: '飞行模式开关', value: 'feixingmoshikaiqi', type: 'switch', placeholder: '请输入' }
         ]
       },
+       {
+        title: '打印设置',
+        content: [
+          { label: '车牌号', value: 'car_number', type: 'input', placeholder: '请输入车牌号' },
+          { label: '发货单位', value: 'forwarding_unit', type: 'input', placeholder: '请输入发货单位' },
+          { label: '收货单位', value: 'getcommpany_unit', type: 'input', placeholder: '请输入收货单位' },
+          { label: '运输人员', value: 'transport_person', type: 'input', placeholder: '请输入运输人员' },
+          { label: '运单编号', value: 'Transport_num', type: 'input', placeholder: '请输入运单编号' },
+          { label: '物品名称', value: 'goods_name', type: 'input', placeholder: '请输入物品名称' },
+        ]
+      },
       // {
       //   title: '电量设置',
       //   content: [
@@ -54,6 +65,7 @@ Page({
       //     { value: 'dingshifasong', type: 'mulitPicker' }
       //   ]
       // }
+      
     ],
     paramsListTHItem: [
       // {
@@ -116,7 +128,8 @@ Page({
     }],
     isMaster: "0",
     isShowLoadMore: false,
-    isLoad: false
+    isLoad: false,
+    isutypeb:true,
   },
   onLoad (options) {
     this.ecComponent = this.selectComponent('#mychart-dom-bar')
@@ -130,6 +143,11 @@ Page({
     this.reqDevParams(mobile, devid)
     this.initChart(mobile, devid)
     this.reqDevData(mobile, devid)
+    if(wx.getStorageSync('utype')=="b"){
+      this.setData({
+        isutypeb:false
+      })
+    }
   },
   async bindscrolltolower() {
     this.setData({ isShowLoadMore: true })

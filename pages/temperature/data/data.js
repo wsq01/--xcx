@@ -119,12 +119,17 @@ Page({
       {name:"孙总",phone:"13520357219"},
       {name:"郭志强",phone:"17718500803"},
     ]
-    const mobile = wx.getStorageSync('mobile') || ''
-    if(personadmin.indexOf(mobile) > -1){
-      console.log("存在")
+    const mobile = wx.getStorageSync('mobile') || '';
+    let _result = personadmin.some(function(item) {
+			if(item.phone == mobile) {
+				return true;
+			}
+		})
+    if(_result){
+     //有权限恢复出厂
       this.setData({ isadmin:true })
     }else{
-      console.log("不存在")
+      //无权限恢复出厂
       this.setData({ isadmin:false })
     }
     this.judgeIsOpenLocation()
@@ -347,6 +352,12 @@ Page({
           showCancel: false
         })
         break
+      case 'stet3':
+          wx.showModal({
+            content: '开始与结束时间请在3天以内',
+            showCancel: false
+          })
+          break
       case 'sgte':
         wx.showModal({
           content: '结束时间不得早于开始时间',
@@ -484,7 +495,7 @@ Page({
   },
   // 处理蓝牙返回值 
   handleBLEValue(nonceId) {
-    //console.log(nonceId)
+    console.log(nonceId)
     switch (nonceId.slice(6, 8)) {
       case '20':
         this.handle20(nonceId)
@@ -724,6 +735,11 @@ Page({
     }
     if (s3 - s1 < 0) {
       this.modal('sgte')
+      return
+    }
+    //开始时间和结束时间不能大于3天
+    if (s3 - s1 > 259200000) {
+      this.modal('stet3')
       return
     }
     if (deviceEndTime - s3.getTime() < 0) {

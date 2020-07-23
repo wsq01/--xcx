@@ -216,6 +216,11 @@ export const reqSetParams = submitData => wxRequest({
   data: submitData
 })
 
+export const reqSetRemarks = submitData => wxRequest({
+  url: API.reqSetRemarks,
+  method: 'post',
+  data: submitData
+})
 export const reqBillList = mainname => wxRequest({
   url: API.reqBillList,
   data: {
@@ -223,11 +228,12 @@ export const reqBillList = mainname => wxRequest({
   }
 })
 
-export const reqCheckSmsCode = (phone, code) => wxRequest({
+export const reqCheckSmsCode = (phone, code, openid) => wxRequest({
   url: API.reqCheckSmsCode,
   data: {
     phone,
-    code
+    code,
+    openid
   }
 })
 

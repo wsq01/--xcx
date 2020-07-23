@@ -29,12 +29,19 @@ Page({
   },
   async submitForm() {
     if (this.data.handle === 'bind') {
-      const res = await reqCheckSmsCode(this.data.mobile, this.data.smsCode)
-      if (res.data.code === 0) {
+      const openid = wx.getStorageSync('openid')
+      const res = await reqCheckSmsCode(this.data.mobile, this.data.smsCode,openid)
+      if (res.data.code === 0&&res.data.data.length==0) {
         wx.navigateTo({
           url: '../pwd/pwd?mobile=' + this.data.mobile + '&code=' + this.data.smsCode
         })
-      } else {
+      }if (res.data.code === 0&&res.data.data.type=='b') {
+        wx.setStorageSync('mobile', this.data.mobile)
+        wx.setStorageSync('utype', "b")
+        wx.navigateTo({
+          url: '../../index/index'
+        })
+      }  else {
         wx.showToast({
           title: res.data.message,
           icon: 'none'

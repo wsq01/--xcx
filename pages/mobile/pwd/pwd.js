@@ -31,6 +31,7 @@ Page({
       reqRegister(openid, this.data.mobile, this.data.smsCode, this.data.pwd1).then(res => {
         if (res.data.code === 0) {
           wx.setStorageSync('mobile', this.data.mobile)
+          wx.setStorageSync('utype', "c")
           wx.showToast({
             title: '绑定成功',
             icon: 'success',

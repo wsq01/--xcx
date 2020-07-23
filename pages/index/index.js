@@ -1,5 +1,5 @@
 const app = getApp()
-import { reqVerifyRegister, reqOpenid, reqDevList, reqSetParams, reqBluetoothList, reqUnBindDev } from '../../service/service.js'
+import { reqVerifyRegister, reqOpenid, reqDevList, reqSetParams, reqBluetoothList, reqUnBindDev, reqSetRemarks } from '../../service/service.js'
 
 Page({
   data: {
@@ -55,7 +55,8 @@ Page({
     animation: false,
     animation1: true,
     animation2: false,
-    isTriggered: false
+    isTriggered: false,
+    isutypeb:true,
   },
   onLoad(options) {
     if (options.id) {
@@ -111,10 +112,39 @@ Page({
     if (res.data.code === 0 && res.data.data) {
       if (res.data.data.phone) {
         wx.setStorageSync('mobile', res.data.data.phone)
+        wx.setStorageSync('utype',res.data.data.uType)
+        if(res.data.data.uType=='b'){
+           this.setData({
+            isutypeb:false
+           })
+           this.data.tabList.splice(1,1);
+           this.setData({
+            tabList:this.data.tabList,
+            'tabList[0]':'设备列表'
+           });
+           let _menulist=this.data.menuList.slice(3);
+           console.log(_menulist)
+            this.setData({
+              menuList:_menulist
+            });
+        }
+        
         this.setData({ isHasAcess: true })
       } else {
         wx.removeStorageSync('mobile')
+
       }
+    }else{
+      wx.showModal({
+        content: '账号未登录，请前往登录',
+        success: res => {
+          if(res.confirm) {
+            wx.redirectTo({
+              url: '../mobile/verify/verify?handle=bind'
+            })
+          }
+        }
+      })
     }
   },
   async getDevList(openid, offset = 0) {
@@ -210,13 +240,13 @@ Page({
   },
   bindChangeName() {
     console.log(this.data.TabCur)
+   
     if(this.data.TabCur==0){
       const obj = {
-        devid: this.data.currDevice.id,
-        beizhu: this.data.currDevice.name,
-        openid: this.data.openid,
+        shebeibianhao: this.data.currDevice.id,
+        beizhu: this.data.currDevice.name
       }
-      this.reqSetParams(obj)
+      this.reqSetRemarks(obj)
     }else{
       const obj = {
         devid: this.data.currDevice.id,
@@ -246,6 +276,23 @@ Page({
     if (res.data.code === 0) {
       wx.showToast({
         title: '修改成功!',
+        icon: 'success'
+      })
+      this.hideModal()
+      this.getDevList(this.data.openid, 0)
+      this.getBluetoothList(this.data.openid, 0)
+    } else {
+      wx.showToast({
+        title: res.data.message,
+        icon: 'none'
+      })
+    }
+  },
+  async reqSetRemarks(params) {
+    const res = await reqSetRemarks(params)
+    if (res.data.code === 0) {
+      wx.showToast({
+        title: '设置成功!',
         icon: 'success'
       })
       this.hideModal()

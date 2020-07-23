@@ -43,7 +43,7 @@
 			<view class="padding-sm margin-lr solids-bottom text-center margin-bottom text-grey">
 				设备温度变化统计折线({{lastYear}}年)
 			</view>
-			<view class="text-center bottom-btn bg-white" style="position: absolute;bottom: 0">
+			<view class="text-center bottom-btn bg-white" style="position: absolute;bottom: 0" wx:if='{{isutypeb}}'>
 				<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="bindUnBind" style="width: 540rpx;height: 90rpx;">解除绑定</button>
 			</view>
 		</swiper-item>
@@ -92,6 +92,7 @@
 			</view>
 		</swiper-item>
 		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item margin-top-sm">
+			<scroll-view scroll-y  style="height: calc(100vh - 100rpx);" scroll-with-animation="{{true}}">
 			<view class="form-group" wx:for="{{paramsList}}" wx:key="index">
 				<view class="bg-white padding text-bold text-lg text-black solid-top solid-bottom flex justify-between align-center" style="color: #333;">
 					<view>
@@ -101,12 +102,11 @@
 					<text class="myIcon-roundadd" wx:if="{{item.title === '定时推送时间'}}" bindtap="addFormItem"></text>
 				</view>
 				<form>
-					<view class="my-form-group" wx:if="{{paramsData[sItem.value].length != 0}}" wx:for="{{item.content}}" wx:for-item="sItem" wx:for-index="sIndex" wx:key="sIndex">
+					<view class="my-form-group" wx:for="{{item.content}}" wx:for-item="sItem" wx:for-index="sIndex" wx:key="sIndex">
 						<view class="title" wx:if="{{sItem.label}}">{{sItem.label}}</view>
 						<input class="text-right" wx:if="{{sItem.type === 'input'}}" disabled="{{isMaster === '0' ? true : sItem.disabled}}" bindchange="bindInputChange" data-key="{{sItem.value}}" type="{{sItem.value === 'beizhu' ? 'text' : 'number'}}" value="{{paramsData[sItem.value]}}" placeholder="{{sItem.placeholder}}"></input>
 						<input class="text-right" wx:if="{{sItem.type === 'digit'}}" disabled="{{isMaster === '0' ? true : sItem.disabled}}" bindchange="bindInputChange" data-key="{{sItem.value}}" type="{{sItem.value === 'beizhu' ? 'text' : 'number'}}" value="{{paramsData[sItem.value]}}" placeholder="{{sItem.placeholder}}"></input>
 						<switch class="blue" bindchange="bindSwitchChange" disabled="{{isMaster === '0' ? true : sItem.disabled}}" checked="{{paramsData[sItem.value] == '1' ? true : false}}" data-key="{{sItem.value}}" wx:elif="{{sItem.type === 'switch'}}" color="#82C6D3"></switch>
-
 						<view wx:elif="{{sItem.type === 'mulitPicker'}}">
 							<view class="my-form-group" wx:for="{{paramsData[sItem.value]}}" wx:for-item="ssItem" wx:for-index="ssIndex" wx:key="{{ssIndex}}">
 								<text class="title">{{sItem.label}} {{ssIndex + 1}}</text>
@@ -122,9 +122,10 @@
 			</view>
 			<view wx:if="{{isMaster === '0' ? true : false}}" class="padding-tb bg-white"></view>
 			<view class="text-center padding-tb-sm text-gray" wx:if="{{isMaster === '0' ? false : true}}">更多设置请前往（中集智冷科技）公众号</view>
-			<view class="text-center bottom-btn" style="position: absolute;bottom: 0rpx;" wx:if="{{isMaster === '0' ? false : true}}">
+			<view class="text-center bottom-btn"  wx:if="{{isMaster === '0' ? false : true}}">
 				<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSaveParams">保存</button>
 			</view>
+			</scroll-view>
 		</swiper-item>
 	</swiper>
 </view>

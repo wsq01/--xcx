@@ -2,8 +2,8 @@
 	<view slot="backText">返回</view>
 	<view slot="content">{{customBarText}}</view>
 	<view class="action" slot="right">
-    <view class="my-load load-icon {{!isLoad?'loading':'over'}}"></view>
-  </view>
+		<view class="my-load load-icon {{!isLoad?'loading':'over'}}"></view>
+	</view>
 </custom-bar>
 
 <view class="my-list menu" wx:if="{{showPage === 'list'}}">
@@ -36,9 +36,30 @@
 			<view class="title">时间逆序</view>
 			<switch class="blue" bindchange="bindChangeSwitch"></switch>
 		</view>
+		<view class="my-form-group">
+			<view class="title">车牌号</view>
+			<input type="text" placeholder="请输入车牌号" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+		</view>
+		<view class="my-form-group">
+			<view class="title">发货单位</view>
+			<input type="text" placeholder="请输入发货单位" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+		</view>
+		<view class="my-form-group">
+			<view class="title">运输人员</view>
+			<input type="text" placeholder="请输入运输人员" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+		</view>
+		<view class="my-form-group">
+			<view class="title">运单编号</view>
+			<input type="text" placeholder="请输入运单编号" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+		</view>
+		<view class="my-form-group">
+			<view class="title">物品名称 </view>
+			<input type="text" placeholder="请输入物品名称" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+		</view>
 	</form>
-  <view class="text-center" style="position: absolute;bottom: 50rpx;width: 100%;">
-    <button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSendOrder" loading="{{isDisabled}}" disabled="{{isDisabled}}">开始打印</button>
-  </view>
+	<view class="text-center" style="position: absolute;bottom: 50rpx;width: 100%;">
+		<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSendOrder" loading="{{isDisabled}}" disabled="{{isDisabled}}">开始打印</button>
+	</view>
+
 </view>
 <view wx:else></view>

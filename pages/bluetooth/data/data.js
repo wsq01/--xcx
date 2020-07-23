@@ -319,6 +319,7 @@ Page({
       this.judgeIsOverTime()
     } else {
       let obj = this.data.historyList
+      
       obj.push(transformCode(nonceId, [2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1]))
       this.setData({
         isShowPercent: true,
@@ -395,7 +396,7 @@ Page({
   },
   // 处理蓝牙返回值 
   handleBLEValue(nonceId) {
-    //console.log(nonceId)
+    console.log(nonceId)
     const that = this;
     switch(nonceId.slice(0, 4)) {
       case 'fefa':
@@ -550,7 +551,7 @@ Page({
     console.log('所需条数：' + endNum)
     console.log('开始时间：' + new Date(startTime))
     const code = generateCode2(['FE', 'FD', startNum, endNum], 8)
-
+    
     this.setData({
       needNum: endNum,
       percent: 0,

@@ -1,1 +1,4 @@
 /* pages/printer/printer.wxss */
+.nickname_placeholder, .nickname_input {
+  text-align: right;
+}

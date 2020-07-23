@@ -50,16 +50,28 @@ Page({
       })
     })
     const deviceDataList = []
-    for(let i = 0; i < xArr.length; i++) {
-      if(i > 1000) break
-      deviceDataList.unshift({ time: timeArr[i], temperature01: yArr[i] + '°C'})
+    //数据大于1000条逆序排列
+    if(xArr.length>1000){
+      for(let i =xArr.length-1; i>=0;i--) {
+        if(i<i-1000) break
+        deviceDataList.unshift({ time: timeArr[i], temperature01: yArr[i] + '°C'})
+      }
+      const _deviceDataList=deviceDataList.reverse()
+      this.setData({ deviceDataList:_deviceDataList  })
+    }else{
+      for(let i = 0; i < xArr.length; i++) {
+        if(i > 1000) break
+        deviceDataList.unshift({ time: timeArr[i], temperature01: yArr[i] + '°C'})
+      }
+      const _deviceDataList=deviceDataList
+      this.setData({ deviceDataList:_deviceDataList })
     }
 
     let uploadData = xArr.map((item, index) => {
       return { shebeibianhao: this.data.deviceName, time: timeArr[index], temperature01: upY[index] }
     })
     this.initCharts(xArr, yArr, this.data.options.low, this.data.options.heigh)
-    this.setData({ deviceDataList, uploadData })
+    this.setData({ uploadData })
   },
   initCharts(xAxis, seriesData, low, heigh) {
     this.ecComponent.init((canvas, width, height) => {
