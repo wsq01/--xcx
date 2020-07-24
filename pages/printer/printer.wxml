@@ -38,23 +38,27 @@
 		</view>
 		<view class="my-form-group">
 			<view class="title">车牌号</view>
-			<input type="text" placeholder="请输入车牌号" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+			<input type="text" placeholder="请输入车牌号" bindinput="updatecph" class="nickname_input" placeholder-class="nickname_placeholder" value="{{printsetData.chepaihao}}"></input>
 		</view>
 		<view class="my-form-group">
 			<view class="title">发货单位</view>
-			<input type="text" placeholder="请输入发货单位" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+			<input type="text" placeholder="请输入发货单位" bindinput="updatefhdw" class="nickname_input" placeholder-class="nickname_placeholder"  value="{{printsetData.forwarding_unit}}"></input>
+		</view>
+		<view class="my-form-group">
+			<view class="title">收货单位</view>
+			<input type="text" placeholder="请输入收货单位" bindinput="updateshdw" class="nickname_input" placeholder-class="nickname_placeholder"  value="{{printsetData.receiving_unit}}"></input>
 		</view>
 		<view class="my-form-group">
 			<view class="title">运输人员</view>
-			<input type="text" placeholder="请输入运输人员" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+			<input type="text" placeholder="请输入运输人员" bindinput="updatefhry" class="nickname_input" placeholder-class="nickname_placeholder" value="{{printsetData.transport_personnel}}"></input>
 		</view>
 		<view class="my-form-group">
 			<view class="title">运单编号</view>
-			<input type="text" placeholder="请输入运单编号" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+			<input type="text" placeholder="请输入运单编号" class="nickname_input" bindinput="updateydbh" placeholder-class="nickname_placeholder" value="{{printsetData.waybill_number}}"></input>
 		</view>
 		<view class="my-form-group">
 			<view class="title">物品名称 </view>
-			<input type="text" placeholder="请输入物品名称" class="nickname_input" placeholder-class="nickname_placeholder"></input>
+			<input type="text" placeholder="请输入物品名称" class="nickname_input" bindinput="updatewpmc" placeholder-class="nickname_placeholder" value="{{printsetData.item_name}}"></input>
 		</view>
 	</form>
 	<view class="text-center" style="position: absolute;bottom: 50rpx;width: 100%;">

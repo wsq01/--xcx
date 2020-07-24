@@ -3,7 +3,7 @@ import {
   ab2hex,
   formatTime
 } from '../../utils/util'
-import { reqPrinter } from '../../service/service'
+import { reqPrinter , reqPrintInfo } from '../../service/service'
 const PrinterJobs = require('../../utils/printer/printerjobs')
 const printerUtil = require('../../utils/printer/printerutil')
 import * as datetimepickerUtil from '../../utils/datetimepicker'
@@ -19,6 +19,7 @@ Page({
     devid: '',
     sort: false,
     printData: {},
+    printsetData:{},
     isDisabled: false,
     page: 1,
     delay: 0,
@@ -33,6 +34,7 @@ Page({
     }
     this.initPicker()
     this.initBluetooth()
+    this.reqPrintInfo()
   },
   onUnload() {
     wx.offBLEConnectionStateChange()
@@ -40,6 +42,37 @@ Page({
       deviceId: this.data.deviceConfig.id
     })
     wx.closeBluetoothAdapter()
+  },
+  
+  updatecph: function (e) {
+      this.setData({
+        'printsetData.chepaihao':e.detail.value
+      })
+  },
+  updatefhdw: function (e) {
+    this.setData({
+      'printsetData.forwarding_unit':e.detail.value
+    })
+  },
+  updatefhry: function (e) {
+    this.setData({
+      'printsetData.transport_personnel':e.detail.value
+    })
+  },
+  updateydbh: function (e) {
+    this.setData({
+      'printsetData.waybill_number':e.detail.value
+    })
+  },
+  updateshdw: function (e) {
+    this.setData({
+      'printsetData.receiving_unit':e.detail.value
+    })
+  },
+  updatewpmc:function(e){
+    this.setData({
+      'printsetData.item_name':e.detail.value
+    })
   },
   modal(type, msg) {
     const that = this
@@ -185,9 +218,17 @@ Page({
   async reqPrinter() {
     const startTime = formatDate(false, this.data.dateTimeArray1, this.data.dateTime1)
     const endTime = formatDate(false, this.data.dateTimeArray2, this.data.dateTime2)
-    const res = await reqPrinter(this.data.devid, this.data.sort, startTime, endTime, this.data.page)
+    const res = await reqPrinter(this.data.devid, this.data.sort, startTime, endTime, this.data.page,this.data.printsetData.chepaihao ,this.data.printsetData.forwarding_unit,this.data.printsetData.receiving_unit,this.data.printsetData.transport_personnel,this.data.printsetData.waybill_number,this.data.printsetData.item_name)
     if (res.data.code === 0) {
       this.setData({ printData: res.data.data })
+    } else {
+      this.modal('error', res.data.message)
+    }
+  },
+  async reqPrintInfo() {
+    const res = await reqPrintInfo(this.data.devid)
+    if (res.data.code === 0) {
+      this.setData({ printsetData: res.data.data })
     } else {
       this.modal('error', res.data.message)
     }
@@ -212,7 +253,29 @@ Page({
     wx.showLoading({ title: '打印中...' })
     const now = formatTime(new Date())
     const mobile = wx.getStorageSync('mobile')
-    const strArr = ['println', 'setSize(2, 2)', this.data.printData.gongsimingcheng, 'setSize(1, 1)', '用户名:' + mobile, 'ID号:' + this.data.devid, '车牌号:' + this.data.printData.chepaihao, '打印时间:' + now, '温度记录如下:', 'println', 'setAlign-c']
+    //, ,,, ,
+    const strArr1 = ['println', 'setSize(2, 2)', this.data.printData.gongsimingcheng, 'setSize(1, 1)', '用户名:' + mobile, 'ID号:' + this.data.devid]
+    if(this.data.printData.chepaihao.length>0){
+      strArr1.push( '车牌号:' + this.data.printData.chepaihao)
+    }
+    if(this.data.printsetData.forwarding_unit.length>0){
+      strArr1.push('发货单位:' + this.data.printsetData.forwarding_unit)
+    }
+    if(this.data.printsetData.receiving_unit.length>0){
+      strArr1.push('收货单位:' + this.data.printsetData.receiving_unit)
+    }
+    if(this.data.printsetData.transport_personnel.length>0){
+      strArr1.push('运输人员:' + this.data.printsetData.transport_personnel)
+    }
+    if(this.data.printsetData.waybill_number.length>0){
+      strArr1.push('运单编号:' + this.data.printsetData.waybill_number)
+    }
+    if(this.data.printsetData.item_name.length>0){
+      strArr1.push('物品名称:' + this.data.printsetData.item_name)
+    }
+    const strArr2 = ['打印时间:' + now, '温度记录如下:', 'println', 'setAlign-c']
+    const strArr = strArr1.concat(strArr2);
+   
     if (this.data.printData.model_type === 'TT') {
       strArr.push('    时间    |温度1 |温度2')
     } else if (this.data.printData.model_type === 'TH') {
@@ -241,7 +304,7 @@ Page({
       })
       const startTime = formatDate(false, this.data.dateTimeArray1, this.data.dateTime1)
       const endTime = formatDate(false, this.data.dateTimeArray2, this.data.dateTime2)
-      const res = await reqPrinter(this.data.devid, this.data.sort, startTime, endTime, this.data.page)
+      const res = await reqPrinter(this.data.devid, this.data.sort, startTime, endTime, this.data.page,this.data.printsetData.chepaihao ,this.data.printsetData.forwarding_unit,this.data.printsetData.receiving_unit,this.data.printsetData.transport_personnel,this.data.printsetData.waybill_number,this.data.printsetData.item_name)
       if (res.data.code === 0) {
         this.setData({
           printData: res.data.data

@@ -21,7 +21,7 @@
 		<swiper-item class="tab-swiper-0">
       <scroll-view refresher-enabled="{{true}}" refresher-triggered="{{isTriggered}}" bindrefresherrefresh="bindrefresherrefresh" scroll-y bindscrolltolower="bindscrolltolower" style="height: calc(100vh - 350rpx);" scroll-with-animation="{{true}}">
 			  <view class="text-center text-gray">您当前绑定的设备总数为<text class="text-blue">{{count1}}</text>台</view>
-        <view class="radius-lg shadow-box margin animation-{{animation1 ? 'slide-bottom' : ''}}" wx:for="{{devList}}" wx:key="index" bindtap="toPage" data-type="redirect" data-page="../device/detail/detail?devid={{item.shebeibianhao}}&isMaster={{item.is_master}}"  style="animation-delay: {{(index+1)*0.1}}s;">
+        <view class="radius-lg shadow-box margin animation-{{animation1 ? 'slide-bottom' : ''}}" wx:for="{{devList}}" wx:key="index" bindtap="toPage" data-type="redirect" data-page="../device/detail/detail?devid={{item.shebeibianhao}}&isMaster={{item.is_master}}" >
           <view class="radius-lg bg-white padding-tb-sm padding-lr">
 
             <view class="flex solids-bottom">

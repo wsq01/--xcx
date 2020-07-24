@@ -92,7 +92,6 @@
 			</view>
 		</swiper-item>
 		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item margin-top-sm">
-			<scroll-view scroll-y  style="height: calc(100vh - 100rpx);" scroll-with-animation="{{true}}">
 			<view class="form-group" wx:for="{{paramsList}}" wx:key="index">
 				<view class="bg-white padding text-bold text-lg text-black solid-top solid-bottom flex justify-between align-center" style="color: #333;">
 					<view>
@@ -122,10 +121,10 @@
 			</view>
 			<view wx:if="{{isMaster === '0' ? true : false}}" class="padding-tb bg-white"></view>
 			<view class="text-center padding-tb-sm text-gray" wx:if="{{isMaster === '0' ? false : true}}">更多设置请前往（中集智冷科技）公众号</view>
-			<view class="text-center bottom-btn"  wx:if="{{isMaster === '0' ? false : true}}">
+			<view class="text-center bottom-btn" style="position: absolute;bottom: 0rpx;" wx:if="{{isMaster === '0' ? false : true}}">
 				<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSaveParams">保存</button>
 			</view>
-			</scroll-view>
+		
 		</swiper-item>
 	</swiper>
 </view>

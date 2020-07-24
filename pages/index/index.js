@@ -1,6 +1,6 @@
 const app = getApp()
 import { reqVerifyRegister, reqOpenid, reqDevList, reqSetParams, reqBluetoothList, reqUnBindDev, reqSetRemarks } from '../../service/service.js'
-
+var canUseReachBottom = true;
 Page({
   data: {
     CustomBar: app.globalData.CustomBar,
@@ -46,7 +46,7 @@ Page({
     isHasAcess: false,
     count1: 0,
     count2: 0,
-    offset1: 5,
+    offset1: 0,
     offset2: 5,
     isShowLoadMore1: false,
     isShowLoadMore2: false,
@@ -57,6 +57,7 @@ Page({
     animation2: false,
     isTriggered: false,
     isutypeb:true,
+    tapTime: '',
   },
   onLoad(options) {
     if (options.id) {
@@ -65,9 +66,11 @@ Page({
     this.reqOpenid()
   },
   bindrefresherrefresh() {
+    canUseReachBottom = true;
     if(this.data.TabCur === 0) {
-      this.setData({ offset1: 0, isLoad1: false })
-      this.getDevList(this.data.openid, this.data.offset1)
+      this.setData({ offset1: 0, isLoad1: false,devList:[] })
+      this.getDevList(this.data.openid, 0)
+     
     } else if(this.data.TabCur === 1) {
       this.setData({ offset2: 0, isLoad2: false })
       this.getBluetoothList(this.data.openid, this.data.offset2)
@@ -123,7 +126,6 @@ Page({
             'tabList[0]':'设备列表'
            });
            let _menulist=this.data.menuList.slice(3);
-           console.log(_menulist)
             this.setData({
               menuList:_menulist
             });
@@ -156,20 +158,32 @@ Page({
     })
   },
   async bindscrolltolower() {
-    if(this.data.TabCur === 0) {
+    if(!canUseReachBottom) return;
+    this.setData({ offset1: this.data.offset1 + 5 })
+    if(this.data.TabCur === 0) { 
       this.setData({ isShowLoadMore1: true })
       let res = await reqDevList(this.data.openid, this.data.offset1)
       let deviceList = res.data.data.data || []
-      this.setData({
-        offset1: this.data.offset1 + 5,
-        devList: this.data.devList.concat(deviceList)
-      })
-      if(deviceList.length === 0) {
-        this.setData({ isLoad1: true })
+      if(deviceList.length < 5&&res.data.data.count<5){
+        this.setData({ isLoad1: true,isShowLoadMore1: true ,devList:deviceList})
+        canUseReachBottom = false;
+      }else if(deviceList.length < 5&&res.data.data.count>5){
+        this.setData({isLoad1: true,isShowLoadMore1:true,devList: this.data.devList.concat(deviceList)})
+        canUseReachBottom = false;
+      }else if(deviceList.length == 0&&res.data.data.count==undefined){
+        this.setData({isLoad1: true,isShowLoadMore1:true,devList: this.data.devList.concat(deviceList)})
+        canUseReachBottom = false;
+      }else{
+        canUseReachBottom = true;
+        this.setData({
+          devList: this.data.devList.concat(deviceList)
+        })
+       
       }
+     
     } else {
       this.setData({ isShowLoadMore2: true })
-      let res = await reqBluetoothList(this.data.openid, this.data.offset2)
+      let res = await reqBluetoothList(this.data.openid, this.data.offset2+5)
       let bluetoothList = res.data.data.data || []
       this.setData({
         offset2: this.data.offset2 + 5,
@@ -179,6 +193,12 @@ Page({
         this.setData({ isLoad2: true })
       }
     }
+  },
+  onHide() {
+    this.setData({
+      offset1: 5,
+      offset2: 5
+    })
   },
   showModal(e) {
     this.setData({

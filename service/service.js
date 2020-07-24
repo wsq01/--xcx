@@ -110,14 +110,20 @@ export const reqJudgeBinded = (mainname, devicenumber) => {
   })
 }
 
-export const reqPrinter = (shebeibianhao, sort, startTime, endTime, page) => wxRequest({
+export const reqPrinter = (shebeibianhao, sort, startTime, endTime, page , chepaihao ,forwarding_unit,receiving_unit,transport_personnel,waybill_number,item_name) => wxRequest({
   url: API.reqPrinter,
   data: {
     shebeibianhao,
     sort,
     startTime,
     endTime,
-    page
+    page,
+    chepaihao,
+    forwarding_unit,
+    receiving_unit,
+    transport_personnel,
+    waybill_number,
+    item_name
   }
 })
 
@@ -225,6 +231,13 @@ export const reqBillList = mainname => wxRequest({
   url: API.reqBillList,
   data: {
     mainname
+  }
+})
+
+export const reqPrintInfo = shebeibianhao => wxRequest({
+  url: API.reqPrintInfo,
+  data: {
+    shebeibianhao
   }
 })
 

@@ -1,5 +1,5 @@
 import { getDateStr, formatTime, multiSelectorList, setOption } from '../../../utils/util.js';
-import { reqDevCharts, reqSetParams, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded } from '../../../service/service.js';
+import { reqDevCharts, reqSetParams, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks } from '../../../service/service.js';
 import * as echarts from '../../../utils/echarts.min.js'
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk')
 var qqmapsdk = new QQMapWX({
@@ -31,17 +31,6 @@ Page({
           // { label: '超温上传时间间隔', value: 'chaowenshangchuanshijianjiange', type: 'input', placeholder: '单位：分钟' },
           // { label: '夜间上传开关', value: 'yejianshangchuankaiguan', type: 'switch', placeholder: '请输入' },
           // { label: '飞行模式开关', value: 'feixingmoshikaiqi', type: 'switch', placeholder: '请输入' }
-        ]
-      },
-       {
-        title: '打印设置',
-        content: [
-          { label: '车牌号', value: 'car_number', type: 'input', placeholder: '请输入车牌号' },
-          { label: '发货单位', value: 'forwarding_unit', type: 'input', placeholder: '请输入发货单位' },
-          { label: '收货单位', value: 'getcommpany_unit', type: 'input', placeholder: '请输入收货单位' },
-          { label: '运输人员', value: 'transport_person', type: 'input', placeholder: '请输入运输人员' },
-          { label: '运单编号', value: 'Transport_num', type: 'input', placeholder: '请输入运单编号' },
-          { label: '物品名称', value: 'goods_name', type: 'input', placeholder: '请输入物品名称' },
         ]
       },
       // {
@@ -280,7 +269,7 @@ Page({
       'paramsData.openid': openid,
       'paramsData.devid': this.data.devid
     })
-    const res = await reqSetParams(this.data.paramsData)
+    const res = await reqSetRemarks(this.data.paramsData)
     if(res.data.code === 0) {
       wx.showToast({
         title: '修改成功!',
