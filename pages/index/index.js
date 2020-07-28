@@ -59,6 +59,10 @@ Page({
     isutypeb:true,
     tapTime: '',
   },
+  onShow(){
+    console.log("66")
+    canUseReachBottom = true;
+  },
   onLoad(options) {
     if (options.id) {
       wx.setStorageSync('devid', options.id)
@@ -70,7 +74,6 @@ Page({
     if(this.data.TabCur === 0) {
       this.setData({ offset1: 0, isLoad1: false,devList:[] })
       this.getDevList(this.data.openid, 0)
-     
     } else if(this.data.TabCur === 1) {
       this.setData({ offset2: 0, isLoad2: false })
       this.getBluetoothList(this.data.openid, this.data.offset2)
@@ -242,6 +245,7 @@ Page({
     }, 1000)
   },
   tabSelect(e) {
+    canUseReachBottom = true
     this.initAnimation(e.currentTarget.dataset.id)
     this.setData({
       TabCur: e.currentTarget.dataset.id

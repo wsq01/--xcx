@@ -121,7 +121,7 @@
 			</view>
 			<view wx:if="{{isMaster === '0' ? true : false}}" class="padding-tb bg-white"></view>
 			<view class="text-center padding-tb-sm text-gray" wx:if="{{isMaster === '0' ? false : true}}">更多设置请前往（中集智冷科技）公众号</view>
-			<view class="text-center bottom-btn" style="position: absolute;bottom: 0rpx;" wx:if="{{isMaster === '0' ? false : true}}">
+			<view class="text-center bottom-btn" style="position: absolute;bottom: 0rpx;" wx:if="{{isMaster === '0' ? false : true||isutypeb}}">
 				<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSaveParams">保存</button>
 			</view>
 		

@@ -23,6 +23,7 @@
     "pages/printer/printer",
     "pages/device/bluetoothDetail/bluetoothDetail",
     "pages/device/bluetoothDetailList/bluetoothDetailList"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
