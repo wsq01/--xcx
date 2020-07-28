@@ -218,6 +218,8 @@ Page({
               wx.showLoading({ title: '正在重新连接...' })
               wx.hideLoading()
               this.connectBluetooth({ currentTarget: { dataset: { id: this.data.device.id, name: this.data.device.name }}})
+            }else{
+              wx.navigateBack({ delta: 2 })
             }
           }
         })

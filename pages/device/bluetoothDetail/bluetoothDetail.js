@@ -29,7 +29,7 @@ Page({
     const { devid, startTime, endTime } = options
     let _startTime=startTime.replace(/-/g,'/')
     let _endTime=endTime.replace(/-/g,'/')
-    console.log(_startTime,_endTime)
+    //console.log(_startTime,_endTime)
     this.setData({
       startTime,
       endTime,
@@ -47,7 +47,6 @@ Page({
   },
   async reqUserDataInfoList() {
     const res = await reqUserDataInfoList(this.data.form)
-    console.log(res)
     if(res.data.code === 0) {
       if(res.data.data.data.length === 0) {
         this.setData({ isLoad: true })
@@ -70,10 +69,10 @@ Page({
     const endTime = formatDate(this.data.dateTimeArray2, this.data.dateTime2)
     const start = new Date(startTime).getTime()
     const end = new Date(endTime).getTime()
-    console.log("startTime",startTime)
-    console.log("endTime",endTime)
-    console.log("start",start)
-    console.log("end",end)
+    // console.log("startTime",startTime)
+    // console.log("endTime",endTime)
+    // console.log("start",start)
+    // console.log("end",end)
     if(start > end) {
       wx.showToast({
         title: '开始时间不得小于结束时间',
@@ -205,9 +204,9 @@ Page({
     const startTime = datetimepickerUtil.getMyDateArry(this.data.form.startTime)
     const endTime = datetimepickerUtil.getMyDateArry(this.data.form.endTime)
     const obj = datetimepickerUtil.dateTimePicker(null, null, startTime, endTime)
-    console.log("startTime",startTime)
-    console.log("endTime",endTime)
-    console.log("obj",obj)
+    // console.log("startTime",startTime)
+    // console.log("endTime",endTime)
+    // console.log("obj",obj)
     this.setData({
       dateTime1: obj.dateTime1,
       dateTimeArray1: obj.dateTimeArray1,
@@ -242,7 +241,6 @@ Page({
       dateTimeArray2: dateArr,
       dateTime2: arr
     })
-    console.log(e.detail.value)
   },
   hideModal() {
     this.setData({ modalName: null, isHideCanvas: false })

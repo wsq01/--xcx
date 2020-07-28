@@ -60,7 +60,6 @@ Page({
     tapTime: '',
   },
   onShow(){
-    console.log("66")
     canUseReachBottom = true;
   },
   onLoad(options) {

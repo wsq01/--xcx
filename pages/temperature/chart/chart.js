@@ -127,23 +127,23 @@ Page({
         name: '温度',
         type: 'line',
         smooth: true,
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [{
-              offset: 0,
-              color: '#1B4CEF' // 0% 处的颜色
-            }, {
-              offset: 1,
-              color: '#fff' // 100% 处的颜色
-            }],
-            global: false // 缺省为 false
-          }
-        },
+        // areaStyle: {
+        //   color: {
+        //     type: 'linear',
+        //     x: 0,
+        //     y: 0,
+        //     x2: 0,
+        //     y2: 1,
+        //     colorStops: [{
+        //       offset: 0,
+        //       color: '#1B4CEF' // 0% 处的颜色
+        //     }, {
+        //       offset: 1,
+        //       color: '#fff' // 100% 处的颜色
+        //     }],
+        //     global: false // 缺省为 false
+        //   }
+        // },
         lineStyle: {
           color: '#1B4CEF',
           shadowColor: '#1B4CEF',
