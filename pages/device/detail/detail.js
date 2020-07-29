@@ -1,5 +1,5 @@
 import { getDateStr, formatTime, multiSelectorList, setOption } from '../../../utils/util.js';
-import { reqDevCharts, reqSetParams, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks } from '../../../service/service.js';
+import { reqDevCharts, reqSetParams, reqDiagram, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks } from '../../../service/service.js';
 import * as echarts from '../../../utils/echarts.min.js'
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk')
 var qqmapsdk = new QQMapWX({
@@ -363,21 +363,37 @@ Page({
       })
     }
   },
+  async newGetDate(shebeibianhao,curveType) {
+    const res = await reqDiagram({
+      shebeibianhao,
+      curveType
+    })
+    console.log(res)
+    if (res.data.code === 0) {
+      let xArr = [], yArr1 = [], yArr2 = []
+      const list = res.data.data.data
+      if(res.data.data.model_type=='TH'){
+        list.forEach((item) => {
+          xArr.push(item.time.substr(5, 11))
+          yArr1.push(item.temperature01)
+          yArr2.push(item.humidity)
+        })
+        this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse(),"TH");
+      }else if(res.data.data.model_type=='TT'){
+        list.forEach((item) => {
+          xArr.push(item.time.substr(5, 11));
+          yArr1.push(item.temperature01)
+          yArr2.push(item.temperature02)
+        })
+        this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse(), "TT");
+      }
+    }
+  },
   changeChart(event) {
     let val = Number(event.currentTarget.dataset.id)
     const devid = this.data.devid
-    const mobile = wx.getStorageSync('mobile')
     this.setData({ checkedRadio: val })
-    if (val == 1) {
-      const fromTime = getDateStr(new Date(), -1)
-      this.initChart(mobile, devid,fromTime)
-    } else if (val == 2) {
-      const fromTime = getDateStr(new Date(), -7)
-      this.initChart(mobile, devid, fromTime)
-    } else {
-      const fromTime = getDateStr(new Date(), -30)
-      this.initChart(mobile, devid, fromTime)
-    }
+    this.newGetDate(devid, val)
   },
   bindPrinter() {
     wx.openBluetoothAdapter({

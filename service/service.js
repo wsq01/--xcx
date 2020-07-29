@@ -31,6 +31,11 @@ export const reqUserDataInfoList = data => wxRequest({
   url: API.reqUserDataInfoList,
   data
 })
+export const reqDiagram = data => wxRequest({
+  url: API.reqDiagram,
+  method: 'post',
+  data
+})
 
 export const reqUserDataList = (shebeibianhao, page) => wxRequest({
   url: API.reqUserDataList,
