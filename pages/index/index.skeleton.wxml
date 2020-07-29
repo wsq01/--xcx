@@ -1,0 +1,126 @@
+
+<view class="sk-container">
+  <view is="components/custom-bar/index">
+    <view class="my-custom bar-index--my-custom" style="height:60px">
+      <view class="my-bar bar-index--my-bar fixed bar-index--fixed none-bg bar-index--none-bg text-white bar-index--text-white bg-img bar-index--bg-img" style="height:60px;padding-top:20px;background-image:url(data:image/png;base64,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)">
+        <view class="action bar-index--action">
+          <view class="flex align-center">
+            <image class="slide sk-image" data-target="drawerModal" mode="aspectfill"></image>
+            <view class="flex align-center" data-page="../add/add">
+              <image class="add margin-right-sm margin-left-lg sk-image"></image><text class="sk-transparent sk-text-14-2857-603 sk-text" style="background-size: 100% 1.3125rem;">添加设备</text></view>
+          </view>
+        </view>
+        <view class="content bar-index--content" style="top:20px"></view>
+      </view>
+    </view>
+  </view>
+  <view>
+    <image class="banner sk-image" mode="aspectfill"></image>
+    <scroll-view scroll-x="true" class="bg-white nav v-nav radius">
+      <view class="flex text-center">
+        <view class="my-item flex-sub text-blue cur sk-transparent sk-text-34-4444-927 sk-text" data-id="0" style="border: none; background-size: 63.8149% 2.8125rem; background-position-x: 50%;">
+          监控宝(GPRS)
+        </view>
+        <view class="my-item flex-sub sk-transparent sk-text-34-4444-415 sk-text" data-id="1" style="background-size: 39.2707% 2.8125rem; background-position-x: 50%;">
+          蓝牙设备
+        </view>
+      </view>
+    </scroll-view>
+    <swiper class="swiper" current="0" style="height: calc(100vh - 175px)">
+      <swiper-item class="tab-swiper-0" style="position: absolute; width: 100%; height: 100%; transform: translate(0%, 0px) translateZ(0px);">
+        <scroll-view scroll-y="true" refresher-enabled="true" scroll-with-animation="true" style="height: calc(100vh - 175px);">
+          <view class="text-center text-gray sk-transparent">您当前绑定的设备总数为<text class="text-blue sk-transparent sk-opacity">1</text>台</view>
+          <view class="radius-lg shadow-box margin animation-slide-bottom" data-page="../device/detail/detail?devid=500318&amp;isMaster=1" data-type="redirect">
+            <view class="radius-lg bg-white padding-tb-sm padding-lr">
+              <view class="flex solids-bottom sk-pseudo sk-pseudo-circle">
+                <view class="flex-sub flex justify-between padding-tb-xs align-center">
+                  <view class="flex-sub padding-right text-cut text-gray sk-transparent sk-text-14-2857-652 sk-text" data-id="500318" data-name="true" style="background-size: 49.5612% 1.225rem;">点击设置昵称</view>
+                  <view class="sk-transparent">
+                    500318 (
+                    <image style="display: inline-block;width: 15px;height: 15px;vertical-align: middle" class="sk-image"></image>
+                    )
+                  </view>
+                </view>
+                <view class="solids-right margin-lr-sm margin-tb-sm sk-pseudo sk-pseudo-circle"></view>
+                <view class="padding-tb-sm text-gray sk-transparent sk-text-14-2857-329 sk-text" style="background-size: 100% 1.225rem;">离线</view>
+              </view>
+              <view class="flex justify-between padding-tb-sm">
+                <view class="flex flex-direction align-center justify-center">
+                  <image style="display: block;width: 9px;height: 21px;" class="sk-image"></image><text class="margin-top-xs sk-transparent sk-text-14-2857-558 sk-text" style="background-size: 99.9709% 1.225rem;">20.8°C</text></view>
+                <view class="flex flex-direction align-center justify-center">
+                  <image style="display: block;width: 21px;height: 21px;" class="sk-image"></image><text class="margin-top-xs sk-transparent sk-text-14-2857-175 sk-text" style="background-size: 99.9791% 1.225rem;">32.3%RH</text></view>
+                <view class="flex flex-direction align-center justify-center">
+                  <image class="power sk-image"></image><text class="margin-top-xs sk-transparent sk-text-14-2857-746 sk-text" style="background-size: 99.9554% 1.225rem;">96%</text></view>
+                <view class="flex flex-direction align-center justify-center">
+                  <image style="display:block;width: 17px;height: 15px;" class="sk-image"></image><text class="margin-top-xs sk-transparent sk-opacity">强</text></view>
+              </view>
+              <view class="padding-top-sm solid-top sk-pseudo sk-pseudo-circle">
+                <view><text class="myIcon-timefill text-blue margin-right-xs sk-pseudo sk-pseudo-circle"></text><text class="sk-transparent sk-text-14-2857-656 sk-text" style="background-size: 100% 1.225rem;">采集时间：2020-02-11 11:42:21</text></view>
+                <view class="flex"><text class="myIcon-locationfill text-blue margin-right-xs sk-pseudo sk-pseudo-circle" style="margin-top: 3px;"></text><text style="min-width: fit-content; background-size: 100% 1.225rem;" class="sk-transparent sk-text-14-2857-73 sk-text">地理位置：</text>
+                  <text
+                    class="sk-transparent sk-text-14-2857-829 sk-text" style="background-size: 100% 1.225rem;">北京市丰台区内环西路汉威国际广场二区内</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class="v-modal my-modal drawer-modal justify-start sk-pseudo sk-pseudo-circle" style="z-index:99999;">
+    <view class="my-dialog basis-xl bg-white" style="height:calc(100vh)">
+      <view class="user-container padding-bottom-lg">
+        <view class="userinfo">
+          <open-data class="userinfo-avatar sk-image" type="userAvatarUrl"></open-data>
+          <open-data class="text-cut sk-transparent sk-text-14-2857-783 sk-text sk-text-14-2857-843" type="userNickName" style="background-size: 99.942% 1.225rem; background-position-x: 50%;">WSQ ༽</open-data>
+        </view>
+      </view>
+      <view class="my-list menu">
+        <view class="my-item animation- margin-tb-sm sk-pseudo sk-pseudo-circle" data-page="../invite/invite" data-type="invite" style="animation-delay: 0.1s;">
+          <view class="content text-left flex align-center">
+            <image class="sk-image"></image><text class="sk-transparent sk-text-18-7500-176 sk-text" style="background-size: 100% 1.5rem;">邀请家人</text></view>
+        </view>
+        <view class="my-item animation- margin-tb-sm sk-pseudo sk-pseudo-circle" data-page="../bill/bill" data-type="bill" style="animation-delay: 0.2s;">
+          <view class="content text-left flex align-center">
+            <image class="sk-image"></image><text class="sk-transparent sk-text-18-7500-369 sk-text" style="background-size: 100% 1.5rem;">待缴账单</text></view>
+        </view>
+        <view class="my-item animation- margin-tb-sm sk-pseudo sk-pseudo-circle" data-page="../mobile/mobile" data-type="mobile" style="animation-delay: 0.30000000000000004s;">
+          <view class="content text-left flex align-center">
+            <image class="sk-image"></image><text class="sk-transparent sk-text-18-7500-615 sk-text" style="background-size: 100% 1.5rem;">账户设置</text></view>
+        </view>
+        <view class="my-item animation- margin-tb-sm sk-pseudo sk-pseudo-circle" data-page="../issue/issue" data-type="issue" style="animation-delay: 0.4s;">
+          <view class="content text-left flex align-center">
+            <image class="sk-image"></image><text class="sk-transparent sk-text-18-7500-582 sk-text" style="background-size: 100% 1.5rem;">常见问题</text></view>
+        </view>
+        <view class="my-item animation- margin-tb-sm sk-pseudo sk-pseudo-circle" data-page="../service/service" data-type="service" style="animation-delay: 0.5s;">
+          <view class="content text-left flex align-center">
+            <image class="sk-image"></image><text class="sk-transparent sk-text-18-7500-443 sk-text" style="background-size: 100% 1.5rem;">联系客服</text></view>
+        </view>
+      </view>
+      <view class="flex justify-center" style="position: absolute;bottom: 20px;left: 40px;right: 40px;">
+        <view class="padding-right-lg solids-right flex align-center sk-pseudo sk-pseudo-circle" data-page="../add/add">
+          <image class="add margin-right-sm sk-image"></image><text class="text-center sk-transparent sk-text-14-2857-192 sk-text" style="background-size: 100% 1.225rem; background-position-x: 50%;">添加设备</text></view>
+        <navigator class="padding-left-lg flex align-center" open-type="exit">
+          <image class="add margin-right-sm sk-image"></image><text class="sk-transparent sk-text-14-2857-154 sk-text" style="background-size: 100% 1.225rem; background-position-x: 50%;">退出</text></navigator>
+      </view>
+    </view>
+  </view>
+  <view class="my-modal sk-pseudo sk-pseudo-circle">
+    <view class="my-dialog">
+      <view class="my-bar bg-white justify-end">
+        <view class="content sk-transparent sk-text-23-3333-969 sk-text" style="background-size: 31.7697% 1.875rem; background-position-x: 50%;">设置昵称</view>
+        <view class="action"><text class="myIcon-close text-red sk-pseudo sk-pseudo-circle"></text></view>
+      </view>
+      <view class="padding-xl">
+        <form>
+          <view class="my-form-group">
+            <view class="title solids-right sk-transparent sk-text-25-0000-395 sk-text sk-pseudo sk-pseudo-circle" style="background-size: 80.2139% 1.875rem;">昵称：</view><input placeholder="请输入昵称" type="text" value="true" class="sk-transparent sk-text-14-2857-973 sk-text" style="background-size: 33.0396% 1.3125rem; background-position-x: 50%;">请输入昵称</input>
+          </view>
+        </form>
+      </view>
+      <view class="my-bar bg-white justify-end">
+        <view class="action"><button class="my-btn line-blue text-blue sk-transparent sk-button sk-pseudo sk-pseudo-circle">取消</button><button class="my-btn bg-blue margin-left sk-transparent sk-button sk-pseudo sk-pseudo-circle">确定</button></view>
+      </view>
+    </view>
+  </view>
+</view>

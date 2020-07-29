@@ -393,6 +393,7 @@ Page({
     if (!isOpenBluetooth) this.modal('openBluetoothAdapterFalsy')
     bluetoothAPI.onBLEConnectionStateChange(res => {
       wx.hideLoading()
+      this.resetCloseTime()
       this.modal('onBLEConnectionStateChangeFalsy')
     })
     const bluetoothList = await bluetoothAPI.startBluetoothDevicesDiscovery()
