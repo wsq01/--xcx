@@ -85,3 +85,23 @@
 		</view>
 	</view>
 </view>
+
+<view class="my-modal {{modalName=='download'?'show':''}}">
+  <view class="my-dialog">
+    <view class="my-bar bg-white justify-end">
+      <view class="content">提示</view>
+      <view class="action" bindtap="hideModal">
+        <text class="myIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      链接已复制，请在浏览器打开
+    </view>
+    <view class="my-bar bg-white justify-end">
+      <view class="action">
+        <button class="my-btn bg-blue margin-left" bindtap="hideModal">确定</button>
+
+      </view>
+    </view>
+  </view>
+</view>

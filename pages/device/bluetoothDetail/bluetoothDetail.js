@@ -130,33 +130,38 @@ Page({
       TabCur: e.detail.current
     })
   },
-  bindExeport(){
-    wx.showLoading({
-      title: '加载中',
-    })
-    var that = this;
+  bindExeport() {
     let _url='http://www.ccsc58.com/tcpdf/pdf/pdf_out.php?s='+this.data.form.shebeibianhao+'&t1='+this.data.startTime+'&t2='+this.data.endTime
-    wx.downloadFile({
-      url: _url,
-      success: function (res) {
-        var filePath = res.tempFilePath
-        wx.openDocument({
-          filePath: filePath,
-          fileType: that.data.type,
-          success: function (res) {
-            console.log("打开文档成功")
-            console.log(res);
-          },
-          fail: function (res) {
-            console.log("fail");
-            console.log(res)
-          },
-          complete: function (res) {
-            wx.hideLoading()
-          }
+    wx.setClipboardData({
+      data: _url,
+      success: res => {
+        this.setData({
+          modalName: 'download'
         })
       }
     })
+    // var that = this;
+    // wx.downloadFile({
+    //   url: _url,
+    //   success: function (res) {
+    //     var filePath = res.tempFilePath
+    //     wx.openDocument({
+    //       filePath: filePath,
+    //       fileType: that.data.type,
+    //       success: function (res) {
+    //         console.log("打开文档成功")
+    //         console.log(res);
+    //       },
+    //       fail: function (res) {
+    //         console.log("fail");
+    //         console.log(res)
+    //       },
+    //       complete: function (res) {
+    //         wx.hideLoading()
+    //       }
+    //     })
+    //   }
+    // })
   },
   async initChart() {
     const obj = { limit: 10000 }
