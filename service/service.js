@@ -246,6 +246,15 @@ export const reqPrintInfo = shebeibianhao => wxRequest({
   }
 })
 
+export const reqShowchart = (shebeibianhao,curveType) => wxRequest({
+  url: API.reqShowchart,
+  method: 'post',
+  data: {
+    shebeibianhao,
+    curveType
+  }
+})
+
 export const reqCheckSmsCode = (phone, code, openid) => wxRequest({
   url: API.reqCheckSmsCode,
   data: {

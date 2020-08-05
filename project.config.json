@@ -13,7 +13,7 @@
 		]
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
@@ -123,6 +123,13 @@
 					"pathName": "pages/index/index",
 					"query": "scene=id=1000022",
 					"scene": 1011
+				},
+				{
+					"id": -1,
+					"name": "pages/pdf/pdf",
+					"pathName": "pages/pdf/pdf",
+					"query": "scene=id=0000000",
+					"scene": null
 				}
 			]
 		}
