@@ -131,14 +131,15 @@ Page({
     })
   },
   bindExeport(){
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this;
-    let _url='http://www.ccsc58.com/tcpdf/pdf/pdf_out.php?s='+this.data.form.shebeibianhao+'&t1='+this.data.startTime+'&t2='+this.data.endTime;
-    console.log(_url)
+    let _url='http://www.ccsc58.com/tcpdf/pdf/pdf_out.php?s='+this.data.form.shebeibianhao+'&t1='+this.data.startTime+'&t2='+this.data.endTime
     wx.downloadFile({
       url: _url,
       success: function (res) {
         var filePath = res.tempFilePath
-        console.log(filePath)
         wx.openDocument({
           filePath: filePath,
           fileType: that.data.type,
@@ -151,12 +152,10 @@ Page({
             console.log(res)
           },
           complete: function (res) {
-            console.log("complete");
-            console.log(res)
+            wx.hideLoading()
           }
         })
-      },
-
+      }
     })
   },
   async initChart() {
