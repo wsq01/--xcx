@@ -1,5 +1,5 @@
 import { getDateStr, formatTime, multiSelectorList, setOption } from '../../../utils/util.js';
-import { reqDevCharts, reqSetParams, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks } from '../../../service/service.js';
+import { reqDevCharts, reqSetParams, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks ,reqShowchart } from '../../../service/service.js';
 import * as echarts from '../../../utils/echarts.min.js'
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk')
 var qqmapsdk = new QQMapWX({
@@ -12,7 +12,7 @@ Page({
     tabList: ['详情', '位置', '数据', '参数'],
     ec: { lazyLoad: true },
     lastYear: '2020',
-    checkedRadio: '',
+    checkedRadio: 1,
     paramsList: [
       { 
         title: '基本信息', 
@@ -119,6 +119,7 @@ Page({
     isShowLoadMore: false,
     isLoad: false,
     isutypeb:true,
+    
   },
   onLoad (options) {
     this.ecComponent = this.selectComponent('#mychart-dom-bar')
@@ -130,7 +131,7 @@ Page({
     })
     const mobile = wx.getStorageSync('mobile')
     this.reqDevParams(mobile, devid)
-    this.initChart(mobile, devid)
+    this.initChart(devid,1)
     this.reqDevData(mobile, devid)
     if(wx.getStorageSync('utype')=="b"){
       this.setData({
@@ -162,20 +163,21 @@ Page({
       this.setData({ isLoad: true })
     }
   },
-  async initChart(mobile, devid, fromTime) {
+  async initChart(devid,num) {
     const endTime = formatTime(new Date(), '-')
-    const res = await reqDevCharts(mobile, devid, endTime, fromTime)
-    if (res.data.code === 10000) {
+   // const res = await reqDevCharts(mobile, devid, endTime, fromTime)
+   const res = await reqShowchart(devid,num)
+    if (res.data.code === 0) {
       let xArr = [], yArr1 = [], yArr2 = []
-      const list = res.data.resultCode === 'null' ? [] : res.data.resultCode
-      if(res.data.model_type=='TH'){
+      const list = res.data.data.data === 'null' ? [] : res.data.data.data
+      if(res.data.data.model_type=='TH'){
         list.forEach((item) => {
           xArr.push(item.time.substr(5, 11));
           yArr1.push(parseFloat(Number(item.temperature01).toFixed(2)))
           yArr2.push(parseFloat(Number(item.humidity).toFixed(2)));
         })
         this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse(),"TH");
-      }else if(res.data.model_type=='TT'){
+      }else if(res.data.data.model_type=='TT'){
         list.forEach((item) => {
           xArr.push(item.time.substr(5, 11));
           yArr1.push(parseFloat(Number(item.temperature01).toFixed(2)))
@@ -370,13 +372,16 @@ Page({
     this.setData({ checkedRadio: val })
     if (val == 1) {
       const fromTime = getDateStr(new Date(), -1)
-      this.initChart(mobile, devid,fromTime)
+      // this.initChart(mobile, devid,fromTime)
+      this.initChart(devid, 1)
     } else if (val == 2) {
       const fromTime = getDateStr(new Date(), -7)
-      this.initChart(mobile, devid, fromTime)
+      // this.initChart(mobile, devid, fromTime)
+      this.initChart(devid, 2)
     } else {
       const fromTime = getDateStr(new Date(), -30)
-      this.initChart(mobile, devid, fromTime)
+      // this.initChart(mobile, devid, fromTime)
+      this.initChart(devid, 3)
     }
   },
   bindPrinter() {

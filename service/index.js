@@ -30,5 +30,6 @@ export default {
   reqUserDataList: httpUrl + '/index/device/userDataList',
   reqUserDataInfoList: httpUrl + '/index/device/userDataInfoList',
   reqSetRemarks:httpUrl+'/index/device/updateDevice',
+  reqShowchart:httpUrl+'/index/device/getDiagram',
   reqPrintInfo:httpUrl+'/index/device/deviceInfo'
 }

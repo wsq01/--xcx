@@ -22,8 +22,8 @@
     "pages/temperature/chart/chart",
     "pages/printer/printer",
     "pages/device/bluetoothDetail/bluetoothDetail",
-    "pages/device/bluetoothDetailList/bluetoothDetailList"
-    
+    "pages/device/bluetoothDetailList/bluetoothDetailList",
+    "pages/pdf/pdf"
   ],
   "window": {
     "backgroundTextStyle": "light",

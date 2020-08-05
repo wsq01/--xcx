@@ -16,19 +16,19 @@
 		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item tab-swiper2 bg-white margin-top-sm">
 			<scroll-view scroll-y bindscrolltolower="bindscrolltolower" style="height: 100%;" scroll-with-animation="{{true}}">
 				<view class="flex justify-between padding solid-bottom">
-					<view class="text-center flex align-center justify-center" style="flex: 0 0 500rpx">
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 400rpx">
 						<image class="time margin-right-xs" src="/images/icon-time@2x.png"></image>
 						<text>(采集时间)</text>
 					</view>
-					<view class="text-center flex align-center justify-center" style="flex: 0 0 150rpx;">
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 300rpx;">
 						<image class="temp margin-right-xs" src="/images/icon-temp@2x.png"></image>
 						<text>(°C)</text>
 					</view>
 				</view>
 
 				<view class="flex justify-between padding solid-bottom" wx:for="{{deviceDataList}}" wx:key="{{index}}">
-					<text class="text-center" style="flex: 0 0 500rpx">{{item.time}}</text>
-					<text class="text-center" style="flex: 0 0 150rpx;">{{item.temperature01}}</text>
+					<text class="text-center" style="flex: 0 0 400rpx">{{item.time}}</text>
+					<text class="text-center" style="flex: 0 0 300rpx;">{{item.temperature01}}</text>
 				</view>
 
 				<view wx:if="{{isShowLoadMore}}" class="my-load {{!isLoad ? 'loading':'over'}}"></view>
@@ -36,8 +36,12 @@
 			</scroll-view>
 		</swiper-item>
 	</swiper>
-	<view class="text-center bottom-btn bg-white">
+	<view class="text-center bottom-btn bg-white" wx:if="{{TabCur==0}}">
 		<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="bindScreen" style="width: 540rpx;height: 90rpx">筛选</button>
+	</view>
+	<view class="text-center bottom-btn bg-white justify-around" style="width:100%;display:flex;padding:0 30rpx"  wx:else>
+		<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="bindScreen" style="width: 270rpx;height: 90rpx">筛选</button>
+		<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="bindExeport" style="width: 270rpx;height: 90rpx">导出</button>
 	</view>
 </view>
 

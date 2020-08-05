@@ -6,7 +6,7 @@ import * as datetimepickerUtil from '../../../utils/datetimepicker.js'
 Page({
   data: {
     TabCur: 0,
-    tabList: ['图表', '列表'],
+    tabList: ['图表', '数据'],
     deviceDataList: [],
     isShowLoadMore: false,
     isLoad: false,
@@ -128,6 +128,35 @@ Page({
   swiperChange(e) {
     this.setData({
       TabCur: e.detail.current
+    })
+  },
+  bindExeport(){
+    var that = this;
+    let _url='http://www.ccsc58.com/tcpdf/pdf/pdf_out.php?s='+this.data.form.shebeibianhao+'&t1='+this.data.startTime+'&t2='+this.data.endTime;
+    console.log(_url)
+    wx.downloadFile({
+      url: _url,
+      success: function (res) {
+        var filePath = res.tempFilePath
+        console.log(filePath)
+        wx.openDocument({
+          filePath: filePath,
+          fileType: that.data.type,
+          success: function (res) {
+            console.log("打开文档成功")
+            console.log(res);
+          },
+          fail: function (res) {
+            console.log("fail");
+            console.log(res)
+          },
+          complete: function (res) {
+            console.log("complete");
+            console.log(res)
+          }
+        })
+      },
+
     })
   },
   async initChart() {
