@@ -61,7 +61,7 @@ export const reqLookDev = devicenumber => wxRequest({
   }
 })
 
-export const reqUpload = (deviceId, data, startTime, endTime) => {
+export const reqUpload = (deviceId, data, startTime, endTime, equipment_type) => {
   return new Promise((resolve, reject) => {
     wx.request({
       url: API.reqUpload,
@@ -70,6 +70,7 @@ export const reqUpload = (deviceId, data, startTime, endTime) => {
         data: data,
         shebeibianhao: deviceId,
         start_time: startTime,
+        equipment_type,
         end_time: endTime
       },
       success(res) {

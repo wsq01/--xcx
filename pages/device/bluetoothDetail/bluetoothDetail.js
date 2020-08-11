@@ -23,7 +23,8 @@ Page({
     },
     startTime: '',
     endTime: '',
-    isHideCanvas: false
+    isHideCanvas: false,
+    dataType: 0
   },
   onLoad(options) {
     const { devid, startTime, endTime } = options
@@ -53,6 +54,7 @@ Page({
         return
       }
       this.setData({
+        dataType: res.data.data.equipment_type,
         deviceDataList: this.data.deviceDataList.concat(...res.data.data.data)
       })
     }
@@ -168,35 +170,58 @@ Page({
     Object.assign(obj, this.data.form)
     const res = await reqUserDataInfoList(obj)
     if(res.data.code === 0) {
-      const xArr = [], yArr1 = []
+      const xArr = [], yArr1 = [], yArr2 = []
       res.data.data.data.forEach((item) => {
         xArr.push(item.time.substr(5, 5) + '\n' + item.time.substr(11, 5))
-        yArr1.push(parseFloat(Number(item.temperature01).toFixed(2)))
+        yArr1.push(parseFloat(Number(item.temperature01)))
+        if(res.data.data.equipment_type === 3) {
+          yArr2.push(parseFloat(Number(item.temperature02)))
+        } else if(res.data.data.equipment_type === 2) {
+          yArr2.push(parseFloat(Number(item.humidity)))
+        }
       })
-      this.initCharts(xArr.reverse(), yArr1.reverse())
+      this.initCharts(xArr.reverse(), yArr1.reverse(), yArr2.reverse())
     }
   },
-  initCharts(xData, seriesData) {
+  initCharts(xData, yArr1, yArr2) {
     this.ecComponent.init((canvas, width, height) => {
       const chart = echarts.init(canvas, null, {
         width,
         height
       })
-      this.setOption(chart, xData, seriesData)
+      this.setOption(chart, xData, yArr1, yArr2)
      
       this.chart = chart
       return chart
     })
   },
-  setOption(chart, xAxis, seriesData) {
+  setOption(chart, xAxis, yArr1, yArr2) {
+    const title = { text: this.data.dataType === 1 ? '温度曲线' : this.data.dataType === 3 ? '双温曲线' : '温湿曲线' }
+    const tooltip = {
+      trigger: 'axis',
+      formatter: this.data.dataType === 1 ? "温度: {c}°C \n时间:{b}" : this.data.dataType === 3 ? "温度1: {c0}°C 温度2：{c1}°C \n时间:{b}" : "温度: {c0}°C 湿度：{c1}%RH \n时间:{b}"
+    }
+    const yAxis = {
+      axisLabel: {
+        formatter: this.data.dataType === 3 ? '{value}°C' : '{value}'
+      }
+    }
+    const legend = {
+      data: []
+    }
+    if (this.data.dataType === '1') {
+      legend.data.push('温度1')
+      legend.data.push('温度2')
+    } else if (this.data.dataType === '2') {
+      legend.data.push('温度')
+      legend.data.push('湿度')
+    } else {
+      legend.data.push('温度')
+    }
     var option = {
-      title: {
-        text: '温度曲线'
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: "温度: {c}°C \n时间:{b}"
-      },
+      title,
+      tooltip,
+      legend,
       grid: {
         bottom: 80,
         left: 40
@@ -204,11 +229,7 @@ Page({
       xAxis: {
         data: xAxis
       },
-      yAxis: {
-        axisLabel: {
-          formatter: '{value}°C'
-        }
-      },
+      yAxis,
       // dataZoom: [{
       //   startValue: xAxis[0]
       // }, {
@@ -216,20 +237,39 @@ Page({
       //   moveOnMouseMove: false,
       //   preventDefaultMouseMove: false
       // }],
-      series: {
-        name: '温度',
+      series: [{
+        name: this.data.dataType === 1 ? '温度' : '温度1',
         type: 'line',
         smooth: true,
         lineStyle: {
-          color: '#1B4CEF',
-          shadowColor: '#1B4CEF',
-          shadowOffsetY: 0
+          color: '#e46161',
+          shadowColor: '#e46161',
+          shadowOffsetY: 10
         },
         itemStyle: {
-          borderColor: '#1B4CEF'
+          borderColor: '#e46161'
         },
-        data: seriesData
-      }
+        data: yArr1,
+        markLine: {
+          silent: true
+        }
+      }, {
+        name: this.data.dataType === 3 ? '温度2' : '湿度',
+        type: 'line',
+        smooth: true,
+        lineStyle: {
+          color: '#42A6FF',
+          shadowColor: '#42A6FF',
+          shadowOffsetY: 10
+        },
+        itemStyle: {
+          borderColor: '#42A6FF'
+        },
+        data: yArr2,
+        markLine: {
+          silent: true
+        }
+      }]
     }
     chart.setOption(option)
   },

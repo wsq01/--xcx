@@ -15,18 +15,28 @@
     <swiper-item catchtouchmove="stopTouchMove" class="swiper-item tab-swiper2 bg-white margin-top-sm">
       <scroll-view scroll-y bindscrolltolower="bindscrolltolower" style="height: calc(100vh - 100rpx);" scroll-with-animation="{{true}}">
 				<view class="flex justify-between padding solid-bottom">
-					<view class="text-center flex align-center justify-center" style="flex: 1">
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 350rpx">
 						<image class="time margin-right-xs" src="/images/icon-time@2x.png"></image>
 						<text>(采集时间)</text>
 					</view>
-					<view class="text-center flex align-center justify-center" style="flex: 0 0 300rpx;">
+					<view class="text-center flex align-center justify-center" style="flex: 0 0 150rpx;">
 						<image class="temp margin-right-xs" src="/images/icon-temp@2x.png"></image>
 						<text>(°C)</text>
 					</view>
+          <view wx:if="{{options.type === '1'}}" class="text-center flex align-center justify-center" style="flex: 0 0 150rpx;">
+						<image class="temp margin-right-xs" src="/images/icon-temp@2x.png"></image>
+						<text>(°C)</text>
+					</view>
+          <view wx:elif="{{options.type === '2'}}" class="text-center flex align-center justify-center" style="flex: 0 0 150rpx;">
+						<image class="temp margin-right-xs" src="/images/icon-humidity@2x.png"></image>
+						<text>(%RH)</text>
+					</view>
 				</view>
         <view class="flex justify-between padding solid-bottom" wx:for="{{deviceDataList}}" wx:key="index">
-          <text class="text-center"style="flex: 1">{{item.time}}</text>
-          <text class="text-center" style="flex: 0 0 300rpx;">{{item.temperature01}}</text>
+          <text class="text-center" style="flex: 0 0 350rpx">{{item.time}}</text>
+          <text class="text-center" style="flex: 0 0 150rpx;">{{item.temperature01}}</text>
+          <text class="text-center" style="flex: 0 0 150rpx;" wx:if="{{options.type === '1'}}">{{item.temperature02}}</text>
+          <text class="text-center" style="flex: 0 0 150rpx;" wx:elif="{{options.type === '2'}}">{{item.humidity}}</text>
         </view>
 
 				<view wx:if="isShowLoadMore" class="my-load {{!isLoad ? 'loading':'over'}}"></view>

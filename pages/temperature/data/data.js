@@ -267,7 +267,7 @@ Page({
             if(res.confirm) {
               const now = new Date()
               const dateArr = [parseInt(now.getFullYear().toString().slice(2)), (now.getMonth() + 1), now.getDate(), now.getDay(), now.getHours(), now.getMinutes(), now.getSeconds()]
-              const deviceParams = [this.data.deviceParams[0], this.data.deviceParams[1], this.data.deviceParams[2], now.getFullYear().toString().slice(2), (now.getMonth() + 1).toString(), now.getDate().toString(), now.getHours().toString(), now.getMinutes().toString(), now.getSeconds().toString(), this.data.deviceParams[9], this.data.deviceParams[10], this.data.deviceParams[11]]
+              const deviceParams = [this.data.deviceParams[0], this.data.deviceParams[1], this.data.deviceParams[2], now.getFullYear().toString().slice(2), (now.getMonth() + 1).toString(), now.getDate().toString(), now.getHours().toString(), now.getMinutes().toString(), now.getSeconds().toString(), this.data.deviceParams[9], this.data.deviceParams[10], this.data.deviceParams[11], this.data.deviceParams[12], this.data.deviceParams[13]]
               this.setData({
                 'tempParams.tempStartTime': formatTime(now),
                 'tempParams.tempEndTime': formatTime(now),
@@ -281,6 +281,7 @@ Page({
         })
         break
       case 'factoryResetSuccess':
+        wx.hideLoading()
         wx.showToast({
           title: '恢复成功!',
           duration: 2000,
@@ -527,16 +528,22 @@ Page({
       case '28':
         this.handle28()
         break
+      case '30':
+        this.handle30(nonceId)
+        break
+      case '31':
+        this.handle31(nonceId)
+        break
       default:
         this.modal('errorOrder')
     }
   },
   // 设备返回参数
   handle20(nonceId) {
-    const code = transformCode(nonceId, [2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2])
+    const code = transformCode(nonceId, [2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2])
     code[4] === '0' ? code[4] = '1' : code[4]
     this.setData({ deviceParams: code })
-    this.judgeIsFirstConnectDevice(code[10])
+    this.judgeIsFirstConnectDevice(code[11])
   },
   handle28() {
     this.hideModal()
@@ -591,7 +598,6 @@ Page({
   },
   // 设备报送设备恢复出厂模式成功
   handle26() {
-    wx.hideLoading()
     this.modal('factoryResetSuccess')
   },
   // 设备报送蓝牙温度计历史数据传输完成
@@ -603,7 +609,7 @@ Page({
     this.setCloseTime()
     this.initDateTimePicker()
     this.initParams()
-    if(this.data.deviceParams[10] === '1') {
+    if(this.data.deviceParams[11] === '1') {
       const now = new Date()
       const dateArr = [parseInt(now.getFullYear().toString().slice(2)), (now.getMonth() + 1) ,now.getDate(), now.getDay(), now.getHours(), now.getMinutes(), now.getSeconds()]
       // 校时
@@ -632,6 +638,19 @@ Page({
       percent: percent > 100 ? 100 : percent
     })
   },
+  handle30(nonceId) {
+    const obj = this.data.historyList
+    console.log(transformCode(nonceId, [2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2]))
+    obj.push(transformCode(nonceId, [2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2]))
+    const percent = (obj.length * 3 / this.data.tempParams.tempDataLength * 100).toFixed(2)
+    this.setData({
+      historyList: obj,
+      percent: percent > 100 ? 100 : percent
+    })
+  },
+  handle31(nonceId) {
+    this.handle30(nonceId)
+  },
   // 进度
   finish() {
     this.hideModal()
@@ -640,7 +659,7 @@ Page({
     this.setCloseTime()
     this.setData({ percent: 0 })
     wx.navigateTo({
-      url: `../chart/chart?endTime=${this.data.tempParams.tempEndTime}&needNum=${this.data.tempParams.tempDataLength}&heigh=${this.data.tempParams.tempAlarmHeigh}&low=${this.data.tempParams.tempAlarmLow}&startTime=${this.data.tempParams.tempStartTime}`
+      url: `../chart/chart?endTime=${this.data.tempParams.tempEndTime}&needNum=${this.data.tempParams.tempDataLength}&heigh=${this.data.tempParams.tempAlarmHeigh}&low=${this.data.tempParams.tempAlarmLow}&startTime=${this.data.tempParams.tempStartTime}&type=${this.data.deviceParams[12]}`
     })
   },
   // 获取openid
@@ -717,8 +736,9 @@ Page({
   },
   bindSaveParams() {
     // 请求总条数
-    if(this.data.isCheckTimeSuccess === 3 || this.data.deviceParams[10] === '0') {
+    if(this.data.isCheckTimeSuccess === 3 || this.data.deviceParams[11] === '0') {
       this.setData({ isClick: true })
+      console.log(generateCode(['7E7E', '03', '02', 'E7E7']))
       this.sendOrder(string2buffer(generateCode(['7E7E', '03', '02', 'E7E7'])))
     } else {
       this.modal('checkingTime')
