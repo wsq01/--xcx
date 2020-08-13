@@ -35,7 +35,7 @@ Page({
   initTHChart() {
     let [yArr1, xArr, i, timeArr, upY1, yArr2, upY2] = [[], [], 0, [], [], [], []]
     this.data.historyList.forEach(item => {
-      for(let j = 0; j < item.length; j+=2) {
+      for(let j = 0; j < item.length; j++) {
         if(j === 0 || j === 1 || j === 2 || j === item.length - 3 || j === item.length - 2 || j === item.length - 1 || i >= this.data.options.needNum) {
           continue
         }
@@ -48,6 +48,7 @@ Page({
         upY1.push(item[j])
         upY2.push(item[j + 1])
         i++
+        j++
       }
     })
     const deviceDataList = []
@@ -66,7 +67,7 @@ Page({
   initTTChart() {
     let [yArr1, xArr, i, timeArr, upY1, yArr2, upY2] = [[], [], 0, [], [], [], []]
     this.data.historyList.forEach(item => {
-      for(let j = 0; j < item.length; j+=2) {
+      for(let j = 0; j < item.length; j++) {
         if(j === 0 || j === 1 || j === 2 || j === item.length - 3 || j === item.length - 2 || j === item.length - 1 || i >= this.data.options.needNum) {
           continue
         }
@@ -79,6 +80,7 @@ Page({
         upY1.push(item[j])
         upY2.push(item[j + 1])
         i++
+        j++
       }
     })
     const deviceDataList = []
