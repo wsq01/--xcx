@@ -16,7 +16,7 @@
 			</view>
 			<view class="text-center" style="font-size: 50rpx;" wx:else>
 				<view>{{deviceParams[9]/10}}°C</view>
-				<view>{{deviceParams[10]}}%RH</view>
+				<view>{{deviceParams[10] / 10}}%RH</view>
 			</view>
 			<text>{{startDate}}</text>
 		</view>

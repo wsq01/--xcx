@@ -44,7 +44,7 @@ Page({
         timeArr.unshift(time1)
         xArr.unshift(time)
         yArr1.push(item[j] / 10)
-        yArr2.push(item[j + 1])
+        yArr2.push(item[j + 1] / 10)
         upY1.push(item[j])
         upY2.push(item[j + 1])
         i++

@@ -15,6 +15,10 @@ swiper-item {
   width: 13rpx;
   height: 33rpx;
 }
+.tab-swiper2 .humidity {
+  width: 29rpx;
+  height: 29rpx;
+}
 
 .bottom-btn {
   position: fixed;
