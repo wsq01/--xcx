@@ -9,16 +9,14 @@
 		<view class="point"></view>
 
 		<view class="flex flex-direction justify-center align-center text-white margin-bottom" style="position: absolute;top: 280rpx;width: 100%;">
-			<text style="font-size: 100rpx;" wx:if="{{deviceParams[12] === '0'}}">{{deviceParams[9]/10}}°C</text>
-			<view class="text-center" style="font-size: 50rpx;" wx:elif="{{deviceParams[12] === '1'}}">
-				<view>{{deviceParams[9]/10}}°C</view>
+			<text style="font-size: {{deviceParams[12] === '0' ? 100 : 50}}rpx;">{{deviceParams[9]/10}}°C</text>
+			<text>{{startDate}}</text>
+			<view class="text-center" style="font-size: 50rpx;" wx:if="{{deviceParams[12] === '1'}}">
 				<view>{{deviceParams[10]/10}}°C</view>
 			</view>
-			<view class="text-center" style="font-size: 50rpx;" wx:else>
-				<view>{{deviceParams[9]/10}}°C</view>
+			<view class="text-center" style="font-size: 50rpx;" wx:elif="{{deviceParams[12] === '2'}}">
 				<view>{{deviceParams[10] / 10}}%RH</view>
 			</view>
-			<text>{{startDate}}</text>
 		</view>
 		<view class="flex justify-between padding text-white" style="position: absolute;bottom: 0;width: 100%;">
 			<text>设备号：{{device.name}}</text>
