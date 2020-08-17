@@ -270,7 +270,8 @@ Page({
               this.setData({
                 'tempParams.tempStartTime': formatTime(now),
                 'tempParams.tempEndTime': formatTime(now),
-                deviceParams
+                deviceParams,
+                startDate: formatTime(now)
               })
               console.log(generateCode(['7E7E', '0A', '00', ...dateArr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0]))
               this.sendOrder(string2buffer(generateCode(['7E7E', '0A', '00', ...dateArr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0])))

@@ -8,7 +8,7 @@
 		<image src="/images/bg@2x.png" style="display: block;width: 534rpx;height: 534rpx;margin: 100rpx auto 0;"></image>
 		<view class="point"></view>
 
-		<view class="flex flex-direction justify-center align-center text-white margin-bottom" style="position: absolute;top: 280rpx;width: 100%;">
+		<view class="flex flex-direction justify-center align-center text-white margin-bottom" style="position: absolute;top: 300rpx;width: 100%;">
 			<text style="font-size: {{deviceParams[12] === '0' ? 100 : 50}}rpx;">{{deviceParams[9]/10}}°C</text>
 			<text>{{startDate}}</text>
 			<view class="text-center" style="font-size: 50rpx;" wx:if="{{deviceParams[12] === '1'}}">
