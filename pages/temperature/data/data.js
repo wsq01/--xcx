@@ -164,7 +164,6 @@ Page({
   },
   // 恢复出厂设置
   bindPasswordSubmit() {
-    
     if(this.data.password === '123') {
       this.sendOrder(string2buffer(generateCode(['7E7E', '03', '04', 'E7E7'])))
       this.hideModal()
@@ -273,6 +272,7 @@ Page({
                 'tempParams.tempEndTime': formatTime(now),
                 deviceParams
               })
+              console.log(generateCode(['7E7E', '0A', '00', ...dateArr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0]))
               this.sendOrder(string2buffer(generateCode(['7E7E', '0A', '00', ...dateArr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0])))
             } else {
               wx.navigateBack({ delta: 1 })
@@ -484,6 +484,7 @@ Page({
         this.setData({
           isSetNameSuccess: this.data.isSetNameSuccess + 1
         })
+        console.log(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0]))
         this.sendOrder(string2buffer(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0])))
       }
     }, 2000)
@@ -613,6 +614,7 @@ Page({
       const now = new Date()
       const dateArr = [parseInt(now.getFullYear().toString().slice(2)), (now.getMonth() + 1) ,now.getDate(), now.getDay(), now.getHours(), now.getMinutes(), now.getSeconds()]
       // 校时
+      console.log(generateCode(['7E7E', '0A', '01', ...dateArr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0]))
       this.sendOrder(string2buffer(generateCode(['7E7E', '0A', '01', ...dateArr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0])))
       const checkTimeTimer = setInterval(() => {
         if(this.data.isCheckTimeSuccess === 3) {
