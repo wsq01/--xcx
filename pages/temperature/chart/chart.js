@@ -43,8 +43,8 @@ Page({
         let time1 = formatTime(new Date(parseInt(this.data.options.endTime) - 1000 * 60 * (i + 1))).slice(0, -3)
         timeArr.unshift(time1)
         xArr.unshift(time)
-        yArr1.push(item[j] / 10)
-        yArr2.push(item[j + 1] / 10)
+        yArr1.push((item[j] / 10).toFixed(1))
+        yArr2.push((item[j + 1] / 10).toFixed(1))
         upY1.push(item[j])
         upY2.push(item[j + 1])
         i++
@@ -75,8 +75,8 @@ Page({
         let time1 = formatTime(new Date(parseInt(this.data.options.endTime) - 1000 * 60 * (i + 1))).slice(0, -3)
         timeArr.unshift(time1)
         xArr.unshift(time)
-        yArr1.push(item[j] / 10)
-        yArr2.push(item[j + 1] / 10)
+        yArr1.push((item[j] / 10).toFixed())
+        yArr2.push((item[j + 1] / 10).toFixed())
         upY1.push(item[j])
         upY2.push(item[j + 1])
         i++
@@ -107,7 +107,7 @@ Page({
         let time1 = formatTime(new Date(parseInt(this.data.options.endTime) - 1000 * 60 * (i + 1))).slice(0, -3)
         timeArr.unshift(time1)
         xArr.unshift(time)
-        yArr.push(sItem / 10)
+        yArr.push((sItem / 10).toFixed())
         upY.push(sItem)
         i++
       })
