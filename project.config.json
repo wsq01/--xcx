@@ -80,7 +80,7 @@
 					"id": 0,
 					"name": "蓝牙",
 					"pathName": "pages/bluetooth/bluetooth",
-					"query": "scene=id=1008888",
+					"query": "scene=id=1008886",
 					"scene": 1011
 				},
 				{
