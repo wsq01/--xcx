@@ -45,9 +45,9 @@ Page({
   },
   
   updatecph: function (e) {
-      this.setData({
-        'printsetData.chepaihao':e.detail.value
-      })
+    this.setData({
+      'printsetData.chepaihao':e.detail.value
+    })
   },
   updatefhdw: function (e) {
     this.setData({
@@ -253,7 +253,6 @@ Page({
     wx.showLoading({ title: '打印中...' })
     const now = formatTime(new Date())
     const mobile = wx.getStorageSync('mobile')
-    //, ,,, ,
     const strArr1 = ['println', 'setSize(2, 2)', this.data.printData.gongsimingcheng, 'setSize(1, 1)', '用户名:' + mobile, 'ID号:' + this.data.devid]
     if(this.data.printData.chepaihao.length>0){
       strArr1.push( '车牌号:' + this.data.printData.chepaihao)
@@ -315,6 +314,8 @@ Page({
       }
     }
     if (count === (page - 1) * 1000 + listLength) {
+      const strArr = ['println', 'setAlign-c', '签字：', 'println', 'println', 'println', 'println', 'println']
+      this.writeBLECharacteristicValue(strArr, ++this.data.page)
       wx.hideLoading()
       wx.showToast({ title: '打印完成' })
     }

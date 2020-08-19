@@ -68,8 +68,6 @@ Page({
     },
     password: '',
     getTotalSuccess: false,
-    isSetNameSuccess: 0,
-    setNameTimer: null,
     isCheckTimeSuccess: 0,
     checkTimeTimer: null,
     closeTimeTimer: null,
@@ -99,10 +97,13 @@ Page({
     alarmLow: 0,
     isOpenLocation: true,
     isadmin:false,
+    instructTimer: null,
+    connectTime: 30,
+    connectDeviceTimer: null
   },
   onUnload() {
     clearInterval(this.data.checkTimeTimer)
-    clearTimeout(this.data.setNameTimer)
+    clearTimeout(this.data.instructTimer)
     clearInterval(this.data.closeTimeTimer)
     wx.offBLEConnectionStateChange(() => {})
     wx.closeBLEConnection({ deviceId: this.data.device.id })
@@ -170,6 +171,18 @@ Page({
       wx.showLoading({ title: '恢复中...' })
       this.resetCloseTime()
       this.setCloseTime()
+      const instructTimer = setInterval(() => {
+        if(this.data.isAcceptSuccess === 3) {
+          clearInterval(this.data.instructTimer)
+          this.modal('setInstructFail')
+        } else {
+          this.setData({
+            isAcceptSuccess: this.data.isAcceptSuccess + 1
+          })
+          this.sendOrder(string2buffer(generateCode(['7E7E', '03', '04', 'E7E7'])))
+        }
+      }, 5000)
+      this.setData({ instructTimer })
     } else {
       this.modal('passwordError')
     }
@@ -247,6 +260,9 @@ Page({
       case 'beforeConnect':
         wx.showLoading({ title: '正在连接设备' })
         break
+      case 'loading':
+          wx.showLoading({ title: '拼命加载中...' })
+          break
       case 'sendOrderFail':
         wx.showToast({ title: '指令设置失败!', icon: 'none' })
         break
@@ -273,8 +289,22 @@ Page({
                 deviceParams,
                 startDate: formatTime(now)
               })
+              this.modal('loading')
               console.log(generateCode(['7E7E', '0A', '00', ...dateArr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0]))
               this.sendOrder(string2buffer(generateCode(['7E7E', '0A', '00', ...dateArr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0])))
+              const instructTimer = setInterval(() => {
+                if(this.data.isAcceptSuccess === 3) {
+                  clearInterval(this.data.instructTimer)
+                  this.modal('setInstructFail')
+                } else {
+                  this.setData({
+                    isAcceptSuccess: this.data.isAcceptSuccess + 1
+                  })
+                  console.log(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0]))
+                  this.sendOrder(string2buffer(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0])))
+                }
+              }, 5000)
+              this.setData({ instructTimer })
             } else {
               wx.navigateBack({ delta: 1 })
             }
@@ -315,6 +345,9 @@ Page({
         break
       case 'addDeviceFail':
         wx.showToast({ title: msg, icon: 'none' })
+        break
+      case 'setInstructFail':
+        wx.showToast({ title: '设置失败，请稍候重试', icon: 'none' })
         break
       case 'unLogin':
         wx.showModal({
@@ -390,6 +423,7 @@ Page({
   },
   // 初始化蓝牙
   async initBluetooth() {
+    this.setConnectTime()
     wx.showLoading({ title: '正在搜索设备' })
     const isOpenBluetooth = await bluetoothAPI.openBluetoothAdapter()
     if (!isOpenBluetooth) this.modal('openBluetoothAdapterFalsy')
@@ -417,6 +451,7 @@ Page({
   },
   // 连接蓝牙
   async connectBluetooth () {
+    clearInterval(this.data.connectDeviceTimer)
     this.modal('beforeConnect')
     wx.offBluetoothDeviceFound()
     wx.stopBluetoothDevicesDiscovery()
@@ -441,7 +476,20 @@ Page({
     if(this.data.device.name === '0000000') {
       this.setData({ modalName: 'setName' })
     } else {
+      this.modal('loading')
       this.sendOrder(string2buffer(generateCode(this.data.instructs.instruct_05)))
+      const instructTimer = setInterval(() => {
+        if(this.data.isAcceptSuccess === 3) {
+          clearInterval(this.data.instructTimer)
+          this.modal('setInstructFail')
+        } else {
+          this.setData({
+            isAcceptSuccess: this.data.isAcceptSuccess + 1
+          })
+          this.sendOrder(string2buffer(generateCode(this.data.instructs.instruct_05)))
+        }
+      }, 5000)
+      this.setData({ instructTimer })
     }
   },
   // 输入设备名
@@ -476,20 +524,21 @@ Page({
     for(let i = 0; i < res.length; i = i + 2) {
       arr.push(res[i] + res[i + 1])
     }
+    this.modal('loading')
+    console.log(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0]))
     this.sendOrder(string2buffer(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0])))
-    const setNameTimer = setInterval(() => {
-      if(this.data.isSetNameSuccess === 3) {
-        clearInterval(this.data.setNameTimer)
-        this.modal('connectFail')
+    const instructTimer = setInterval(() => {
+      if(this.data.isAcceptSuccess === 3) {
+        clearInterval(this.data.instructTimer)
+        this.modal('setInstructFail')
       } else {
         this.setData({
-          isSetNameSuccess: this.data.isSetNameSuccess + 1
+          isAcceptSuccess: this.data.isAcceptSuccess + 1
         })
-        console.log(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0]))
         this.sendOrder(string2buffer(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0])))
       }
-    }, 2000)
-    this.setData({ setNameTimer })
+    }, 5000)
+    this.setData({ instructTimer })
   },
   hideModal() {
     this.setData({ modalName: null })
@@ -542,6 +591,7 @@ Page({
   },
   // 设备返回参数
   handle20(nonceId) {
+    this.bindInstructTimer()
     const code = transformCode(nonceId, [2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2])
     code[4] === '0' ? code[4] = '1' : code[4]
     this.setData({ deviceParams: code })
@@ -568,8 +618,14 @@ Page({
       this.showIndex()
     }
   },
+  bindInstructTimer() {
+    clearInterval(this.data.instructTimer)
+    wx.hideLoading()
+    this.setData({ isShowLoading: false, isAcceptSuccess: 0 })
+  },
   // 设备报送蓝牙温度计数据记录总条数
   handle21(nonceId) {
+    this.bindInstructTimer()
     const code = transformCode(nonceId, [2, 1, 1, 4, 1, 1, 2])
     this.setData({ totalNum: code[3] })
     if(this.data.isClick) {
@@ -582,11 +638,26 @@ Page({
   },
   // 设备报送设置设备名称成功
   handle27() {
-    clearInterval(this.data.setNameTimer)
     this.hideModal()
-    this.setData({ isShowLoading: false, isSetNameSuccess: 0 })
+    this.bindInstructTimer()
     this.modal('setNameSuccess')
+    setTimeout(() => {
+      wx.hideLoading()
+    }, 1500)
+    console.log(generateCode(this.data.instructs.instruct_05))
     this.sendOrder(string2buffer(generateCode(this.data.instructs.instruct_05)))
+    const instructTimer = setInterval(() => {
+      if(this.data.isAcceptSuccess === 3) {
+        clearInterval(this.data.instructTimer)
+        this.modal('setInstructFail')
+      } else {
+        this.setData({
+          isAcceptSuccess: this.data.isAcceptSuccess + 1
+        })
+        this.sendOrder(string2buffer(generateCode(this.data.instructs.instruct_05)))
+      }
+    }, 5000)
+    this.setData({ instructTimer })
   },
   // 设备报送校时时间设备接收成功
   handle25() {
@@ -596,10 +667,12 @@ Page({
   },
   // 设备报送开始记录时间设备接收成功
   handle24() {
+    this.bindInstructTimer()
     this.showIndex()
   },
   // 设备报送设备恢复出厂模式成功
   handle26() {
+    this.bindInstructTimer()
     this.modal('factoryResetSuccess')
   },
   // 设备报送蓝牙温度计历史数据传输完成
@@ -683,6 +756,20 @@ Page({
     clearInterval(this.data.closeTimeTimer)
     this.setData({ closeTime: 120 })
   },
+  setConnectTime() {
+    clearInterval(this.data.connectDeviceTimer)
+    const connectDeviceTimer = setInterval(() => {
+      this.setData({
+        connectTime: this.data.connectTime - 1
+      })
+      if(this.data.connectTime <= 0) {
+        clearInterval(this.data.connectDeviceTimer)
+        wx.hideLoading()
+        this.modal('connectFail')
+      }
+    }, 1000)
+    this.setData({ connectDeviceTimer })
+  },
   // 超时设置
   setCloseTime() {
     clearInterval(this.data.closeTimeTimer)
@@ -741,8 +828,21 @@ Page({
     // 请求总条数
     if(this.data.isCheckTimeSuccess === 3 || this.data.deviceParams[11] === '0') {
       this.setData({ isClick: true })
+      this.modal('loading')
       console.log(generateCode(['7E7E', '03', '02', 'E7E7']))
       this.sendOrder(string2buffer(generateCode(['7E7E', '03', '02', 'E7E7'])))
+      const instructTimer = setInterval(() => {
+        if(this.data.isAcceptSuccess === 3) {
+          clearInterval(this.data.instructTimer)
+          this.modal('setInstructFail')
+        } else {
+          this.setData({
+            isAcceptSuccess: this.data.isAcceptSuccess + 1
+          })
+          this.sendOrder(string2buffer(generateCode(['7E7E', '03', '02', 'E7E7'])))
+        }
+      }, 5000)
+      this.setData({ instructTimer })
     } else {
       this.modal('checkingTime')
     }
