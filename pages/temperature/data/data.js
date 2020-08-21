@@ -231,6 +231,7 @@ Page({
             if (res.confirm) {
               wx.showLoading({ title: '正在重新连接...' })
               wx.hideLoading()
+              this.setData({ modalName: null })
               this.connectBluetooth({ currentTarget: { dataset: { id: this.data.device.id, name: this.data.device.name }}})
             }else{
               wx.navigateBack({ delta: 2 })
