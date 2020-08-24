@@ -303,8 +303,7 @@ Page({
                   this.setData({
                     isAcceptSuccess: this.data.isAcceptSuccess + 1
                   })
-                  console.log(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0]))
-                  this.sendOrder(string2buffer(generateCode(['7E7E', '07', '06', ...arr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 0])))
+                  this.sendOrder(string2buffer(generateCode(['7E7E', '0A', '00', ...dateArr, 'E7E7'], [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0])))
                 }
               }, 5000)
               this.setData({ instructTimer })
