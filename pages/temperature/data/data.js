@@ -349,7 +349,15 @@ Page({
         wx.showToast({ title: msg, icon: 'none' })
         break
       case 'setInstructFail':
-        wx.showToast({ title: '设置失败，请稍候重试', icon: 'none' })
+        wx.showModal({
+          content: '设置失败，请重新连接',
+          showCancel: false,
+          success: res => {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        })
         break
       case 'unLogin':
         wx.showModal({
