@@ -107,7 +107,7 @@ Page({
         let time1 = formatTime(new Date(parseInt(this.data.options.endTime) - 1000 * 60 * (i + 1))).slice(0, -3)
         timeArr.unshift(time1)
         xArr.unshift(time)
-        yArr.push((sItem / 10).toFixed())
+        yArr.push((sItem / 10).toFixed(1))
         upY.push(sItem)
         i++
       })

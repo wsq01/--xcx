@@ -253,6 +253,7 @@ Page({
           showCancel: false,
           content: '连接失败，请重新连接',
           success () {
+            wx.hideLoading()
             wx.navigateBack({ delta: 1 })
           }
         })
