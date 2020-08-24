@@ -105,7 +105,7 @@ Page({
     wx.hideLoading()
     clearInterval(this.data.checkTimeTimer)
     clearInterval(this.data.connectDeviceTimer)
-    clearTimeout(this.data.instructTimer)
+    clearInterval(this.data.instructTimer)
     clearInterval(this.data.closeTimeTimer)
     wx.offBLEConnectionStateChange(() => {})
     wx.closeBLEConnection({ deviceId: this.data.device.id })
