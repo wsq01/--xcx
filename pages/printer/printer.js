@@ -203,7 +203,7 @@ Page({
     wx.stopBluetoothDevicesDiscovery()
     const res1 = await bluetoothAPI.createBLEConnection(e.currentTarget.dataset.id)
     let res2
-    if(e.currentTarget.dataset.id === '58HB6') {
+    if(e.currentTarget.dataset.id === 'cccc58') {
       res2 = await bluetoothAPI.getNotifyBLECharacteristicValue2(e.currentTarget.dataset.id)
     } else {
       res2 = await bluetoothAPI.getNotifyBLECharacteristicValue(e.currentTarget.dataset.id)
