@@ -95,7 +95,6 @@ Page({
     }],
     alarmHeigh: 0,
     alarmLow: 0,
-    isOpenLocation: true,
     isadmin:false,
     instructTimer: null,
     connectTime: 30,
@@ -112,7 +111,6 @@ Page({
     wx.closeBluetoothAdapter()
   },
   onLoad(options) {
-    this.initSetBluetoothName()
     let personadmin=[{
       name:"王久海",phone:"18911910456"},
       {name:"张园",phone:"19142641086"},
@@ -137,8 +135,7 @@ Page({
       //无权限恢复出厂
       this.setData({ isadmin:false })
     }
-    this.judgeIsOpenLocation()
-    if(this.data.isOpenLocation) {
+    this.judgeIsOpenLocation(() => {
       if (options.id) {
         this.setData({ 
           'device.name': options.id
@@ -150,10 +147,15 @@ Page({
       } else {
         this.modal('noDeviceId')
       }
-    }
+    })
   },
   initSetBluetoothName() {
-    const name = wx.getStorageSync('setBluetoothName') || ''
+    let name = wx.getStorageSync('setBluetoothName')
+    if(name) {
+      name = name - 0 + 1 + ''
+    } else {
+      name = ''
+    }
     this.setData({ 'device.name': name })
   },
   bindShowParams() {
@@ -426,13 +428,14 @@ Page({
         break
     }
   },
-  judgeIsOpenLocation() {
+  judgeIsOpenLocation(callback) {
     try {
       const res = wx.getSystemInfoSync()
       if(!res.locationEnabled) {
-        this.setData({ isOpenLocation: false })
         wx.hideLoading()
         this.modal('openLocation')
+      } else {
+        typeof callback === 'function' && callback()
       }
     } catch (e) {
       
@@ -491,6 +494,7 @@ Page({
   // 判断是否是0000设备
   judgIsNewDevice() {
     if(this.data.device.name === '0000000') {
+      this.initSetBluetoothName()
       this.setData({ modalName: 'setName' })
     } else {
       this.modal('loading')
