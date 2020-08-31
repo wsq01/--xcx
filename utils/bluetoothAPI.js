@@ -118,11 +118,11 @@ const getNotifyBLECharacteristicValue2 = (deviceId) => {
         console.log(res1)
         wx.getBLEDeviceCharacteristics({
           deviceId,
-          serviceId: res1.services[0].uuid,
+          serviceId: res1.services[6].uuid,
           success: (res2) => {
             console.log(res2)
             let obj = {
-              serviceId: res1.services[0].uuid,
+              serviceId: res1.services[6].uuid,
               writeId: '0000FF00-0000-1000-8000-00805F9B34FB',
               notifyId: '0000FF02-0000-1000-8000-00805F9B34FB'
             }
