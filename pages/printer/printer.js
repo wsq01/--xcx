@@ -43,7 +43,11 @@ Page({
     })
     wx.closeBluetoothAdapter()
   },
-  
+  updatesbh: function (e) {
+    this.setData({
+      devid:e.detail.value
+    })
+  },
   updatecph: function (e) {
     this.setData({
       'printsetData.chepaihao':e.detail.value
@@ -194,6 +198,7 @@ Page({
     })
   },
   async bindClickBluetooth(e) {
+    console.log(e)
     this.modal('beforeConnect')
     this.setData({
       customBarText: '设置打印参数',
@@ -203,7 +208,7 @@ Page({
     wx.stopBluetoothDevicesDiscovery()
     const res1 = await bluetoothAPI.createBLEConnection(e.currentTarget.dataset.id)
     let res2
-    if(e.currentTarget.dataset.id === 'cccc58') {
+    if(e.currentTarget.dataset.name === 'cccc58') {
       res2 = await bluetoothAPI.getNotifyBLECharacteristicValue2(e.currentTarget.dataset.id)
     } else {
       res2 = await bluetoothAPI.getNotifyBLECharacteristicValue(e.currentTarget.dataset.id)
@@ -319,7 +324,7 @@ Page({
       }
     }
     if (count === (page - 1) * 1000 + listLength) {
-      const strArr = ['println', 'setAlign-c', '签字：', 'println', 'println', 'println', 'println', 'println']
+      const strArr = ['println', 'setAlign-c', '签字：']
       this.writeBLECharacteristicValue(strArr, ++this.data.page)
       wx.hideLoading()
       wx.showToast({ title: '打印完成' })

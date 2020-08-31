@@ -17,6 +17,10 @@
 <view wx:elif="{{showPage === 'params'}}">
 	<form>
 		<view class="my-form-group">
+			<view class="title">设备号</view>
+			<input type="text" placeholder="请输入设备号" bindinput="updatesbh" class="nickname_input" placeholder-class="nickname_placeholder" value="{{devid}}"></input>
+		</view>
+		<view class="my-form-group">
 			<view class="title">起始时间</view>
 			<picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
 				<view class="picker">

@@ -1,7 +1,7 @@
 
 import * as bluetoothAPI from '../../../utils/bluetoothAPI'
 import { formatTime } from '../../../utils/util.js'
-import { reqBindDev, reqOpenid, reqJudgeBluetoothName } from '../../../service/service.js'
+import { reqBindDev, reqOpenid, reqJudgeBluetoothName, reqBluetoothNameExist } from '../../../service/service.js'
 import * as datetimepickerUtil from '../../../utils/datetimepicker.js'
 import {
   string2buffer,
@@ -121,6 +121,7 @@ Page({
       {name:"唐经理",phone:"18101282980"},
       {name:"孙总",phone:"13520357219"},
       {name:"郭志强",phone:"17718500803"},
+      {name:"长波",phone:"18519773728"},
     ]
     const mobile = wx.getStorageSync('mobile') || '';
     let _result = personadmin.some(function(item) {
@@ -507,7 +508,21 @@ Page({
   bindInputName(e) {
     this.setData({ 'device.name': e.detail.value })
   },
+  async reqBluetoothNameExist() {
+    console.log("cz")
+    const mobile = wx.getStorageSync('mobile') || ''
+    const res = await reqBluetoothNameExist(this.data.device.name, mobile)
+    if(res.data.code === 0) {
+      this.reqJudgeBluetoothName()
+    } else {
+      wx.showToast({
+        title: res.data.data
+      })
+    }
+
+  },
   async reqJudgeBluetoothName() {
+    console.log("bcz")
     if(this.data.device.name.length !== 7) {
       this.modal('setDeviceNameFalsy')
       return 
@@ -760,7 +775,7 @@ Page({
     if (!mobile) {
       this.modal('unLogin')
     } else {
-      this.getBindDev()
+      this.isexist()
     }
   },
   resetCloseTime() {
@@ -794,6 +809,15 @@ Page({
       }
     }, 1000)
     this.setData({ closeTimeTimer })
+  },
+  //验证是否存在
+  async isexist() {
+    let isres = await reqIsBindDev(mobile, this.data.device.name, 'lywdj')   
+    if (isres.data.code === 0) {
+      this.getBindDev()
+    } else {
+      this.modal('addDeviceFail', res.data.message)
+    }
   },
   // 绑定设备
   async getBindDev() {
