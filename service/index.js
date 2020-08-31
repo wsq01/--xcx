@@ -27,6 +27,7 @@ export default {
   reqBluetoothList: httpUrl + '/index/device/device_blue_tooth_list',
   reqPrinter: httpUrl + '/index/device/printingInfo',
   reqJudgeBluetoothName: httpUrl + '/index/device/bandEquipment',
+  reqBluetoothNameExist: httpUrl + '/index/Device/bandEquipmentCheck',
   reqUserDataList: httpUrl + '/index/device/userDataList',
   reqUserDataInfoList: httpUrl + '/index/device/userDataInfoList',
   reqSetRemarks:httpUrl+'/index/device/updateDevice',

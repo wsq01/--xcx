@@ -53,7 +53,7 @@ Page({
     })
     const deviceDataList = []
     for(let i = 0; i < xArr.length; i++) {
-      deviceDataList.unshift({ time: timeArr[i], temperature01: yArr1[i] + '°C', humidity: yArr2[i] + '%RH'})
+      deviceDataList.unshift({ time: timeArr[i], temperature01: yArr1[i], humidity: yArr2[i]})
     }
     if (this.data.options.needNum > 1000) {
       deviceDataList.length = 1000
@@ -107,7 +107,7 @@ Page({
         let time1 = formatTime(new Date(parseInt(this.data.options.endTime) - 1000 * 60 * (i + 1))).slice(0, -3)
         timeArr.unshift(time1)
         xArr.unshift(time)
-        yArr.push((sItem / 10).toFixed(1))
+        yArr.push((sItem / 10))
         upY.push(sItem)
         i++
       })

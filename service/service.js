@@ -146,6 +146,14 @@ export const reqJudgeBluetoothName = (shebeibianhao, admin_user) => wxRequest({
   }
 })
 
+export const reqBluetoothNameExist = (shebeibianhao, admin_user) => wxRequest({
+  url: API.reqBluetoothNameExist,
+  data: {
+    shebeibianhao,
+    admin_user
+  }
+})
+
 export const reqSmsCode = phone => wxRequest({
   url: API.reqSendCode,
   data: { phone }
@@ -191,6 +199,8 @@ export const reqBindDev = (mainname, devicenumber, bandType) => wxRequest({
     bandType
   }
 })
+
+
 
 export const reqUnBindDev = (mainname, devicenumber) => wxRequest({
   url: API.reqUnbindDev,

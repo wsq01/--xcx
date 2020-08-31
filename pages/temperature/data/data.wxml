@@ -175,13 +175,13 @@
 			<form>
 				<view class="my-form-group">
 					<view class="title solids-right">设备名称：</view>
-					<input type="number" placeholder="请输入7位设备名称" maxlength="7" minlength="7" bindinput="bindInputName"></input>
+					<input type="number" placeholder="请输入7位设备名称" maxlength="7" minlength="7" value="{{device.name}}" bindinput="bindInputName"></input>
 				</view>
 			</form>
 		</view>
 		<view class="my-bar bg-white justify-end">
 			<view class="action">
-				<button class="my-btn bg-blue" bindtap="reqJudgeBluetoothName" loading="{{isShowLoading}}">确定</button>
+				<button class="my-btn bg-blue" bindtap="reqBluetoothNameExist" loading="{{isShowLoading}}">确定</button>
 			</view>
 		</view>
 	</view>

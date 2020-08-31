@@ -123,8 +123,8 @@ const getNotifyBLECharacteristicValue2 = (deviceId) => {
             console.log(res2)
             let obj = {
               serviceId: res1.services[6].uuid,
-              writeId: '0000FF00-0000-1000-8000-00805F9B34FB',
-              notifyId: '0000FF02-0000-1000-8000-00805F9B34FB'
+              writeId: '0000FF02-0000-1000-8000-00805F9B34FB',
+              notifyId: '0000FF01-0000-1000-8000-00805F9B34FB'
             }
             // for (var i = 0; i < res2.characteristics.length; i++) {
             //   var model = res2.characteristics[i]
