@@ -141,7 +141,6 @@ Page({
           'device.name': options.id
         })
         wx.setStorageSync('bluetoothDeviceName', options.id)
-
         this.initBluetooth()
         this.getOpenId()
       } else {
@@ -476,7 +475,7 @@ Page({
     wx.offBluetoothDeviceFound()
     wx.stopBluetoothDevicesDiscovery()
     const res1 = await bluetoothAPI.createBLEConnection(this.data.device.id)
-    const deviceConfig = await bluetoothAPI.getNotifyBLECharacteristicValue2(this.data.device.id)
+    const deviceConfig = await bluetoothAPI.getNotifyBLECharacteristicValue3(this.data.device.id)
     if(!res1 || !deviceConfig) {
       wx.hideLoading()
       this.modal('connectFail')

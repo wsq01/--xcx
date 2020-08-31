@@ -116,15 +116,67 @@ const getNotifyBLECharacteristicValue2 = (deviceId) => {
       deviceId,
       success: (res1) => {
         console.log(res1)
+        if(!res1.services[6]) {
+          resolve(false)
+        } else {
+          wx.getBLEDeviceCharacteristics({
+            deviceId,
+            serviceId: res1.services[6].uuid,
+            success: (res2) => {
+              console.log(res2)
+              let obj = {
+                serviceId: res1.services[6].uuid,
+                writeId: '0000FF02-0000-1000-8000-00805F9B34FB',
+                notifyId: '0000FF01-0000-1000-8000-00805F9B34FB'
+              }
+              // for (var i = 0; i < res2.characteristics.length; i++) {
+              //   var model = res2.characteristics[i]
+              //   if (model.properties.notify == true) {
+              //     obj.notifyId = model.uuid
+              //   }
+              //   if (model.properties.write == true) {
+              //     obj.writeId = model.uuid
+              //   }
+              // }
+              console.log(obj)
+              wx.notifyBLECharacteristicValueChange({
+                state: true,
+                deviceId,
+                serviceId: obj.serviceId,
+                characteristicId: obj.notifyId,
+                success(res3) {
+                  console.log(res3)
+                  resolve(obj)
+                },
+                fail(err) {
+                  console.log('notifyBLECharacteristicValueChange fail', err)
+                  resolve(false)
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  })
+}
+
+const getNotifyBLECharacteristicValue3 = (deviceId) => {
+  return new Promise((resolve, reject) => {
+    wx.getBLEDeviceServices({
+      deviceId,
+      success: (res1) => {
+        console.log(res1)
+        
         wx.getBLEDeviceCharacteristics({
           deviceId,
-          serviceId: res1.services[6].uuid,
+          serviceId: res1.services[1].uuid,
           success: (res2) => {
             console.log(res2)
             let obj = {
-              serviceId: res1.services[6].uuid,
-              writeId: '0000FF02-0000-1000-8000-00805F9B34FB',
-              notifyId: '0000FF01-0000-1000-8000-00805F9B34FB'
+              serviceId: res1.services[1].uuid,
+              writeId: '0000FFF2-0000-1000-8000-00805F9B34FB',
+              notifyId: '0000FFF1-0000-1000-8000-00805F9B34FB'
             }
             // for (var i = 0; i < res2.characteristics.length; i++) {
             //   var model = res2.characteristics[i]
@@ -156,7 +208,6 @@ const getNotifyBLECharacteristicValue2 = (deviceId) => {
     })
   })
 }
-
 // 断开设备
 const closeBLEConnection = (deviceId) => {
   return new Promise((resove, reject) => {
@@ -195,5 +246,6 @@ export {
   getNotifyBLECharacteristicValue,
   closeBLEConnection,
   sendOrder,
-  getNotifyBLECharacteristicValue2
+  getNotifyBLECharacteristicValue2,
+  getNotifyBLECharacteristicValue3
 }
