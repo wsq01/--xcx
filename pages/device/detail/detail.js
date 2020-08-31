@@ -304,7 +304,6 @@ Page({
       this.setData({
         deviceDataList: res.data.resultCode === 'null' ? [] : res.data.resultCode
       })
-      console.log(res.data.resultCode[0],1000)
       if(res.data.resultCode[0]&&res.data.resultCode[0]!='n') {
         const lastYear = res.data.resultCode[0].time.slice(0, 4)
         this.setData({ lastYear })

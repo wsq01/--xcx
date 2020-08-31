@@ -112,7 +112,6 @@ Page({
     wx.closeBluetoothAdapter()
   },
   onLoad(options) {
-    this.initSetBluetoothName()
     let personadmin=[{
       name:"王久海",phone:"18911910456"},
       {name:"张园",phone:"19142641086"},
@@ -144,6 +143,11 @@ Page({
           'device.name': options.id
         })
         wx.setStorageSync('bluetoothDeviceName', options.id)
+        if(options.id === '0000000') {
+
+        } else {
+          this.initSetBluetoothName()
+        }
 
         this.initBluetooth()
         this.getOpenId()
@@ -153,7 +157,8 @@ Page({
     }
   },
   initSetBluetoothName() {
-    const name = wx.getStorageSync('setBluetoothName') || ''
+    let name = wx.getStorageSync('setBluetoothName') || ''
+    name = name - 0 + 1 + ''
     this.setData({ 'device.name': name })
   },
   bindShowParams() {
@@ -473,7 +478,7 @@ Page({
     wx.offBluetoothDeviceFound()
     wx.stopBluetoothDevicesDiscovery()
     const res1 = await bluetoothAPI.createBLEConnection(this.data.device.id)
-    const deviceConfig = await bluetoothAPI.getNotifyBLECharacteristicValue2(this.data.device.id)
+    const deviceConfig = await bluetoothAPI.getNotifyBLECharacteristicValue3(this.data.device.id)
     if(!res1 || !deviceConfig) {
       wx.hideLoading()
       this.modal('connectFail')
