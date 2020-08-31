@@ -112,6 +112,7 @@ Page({
     wx.closeBluetoothAdapter()
   },
   onLoad(options) {
+    this.initSetBluetoothName()
     let personadmin=[{
       name:"王久海",phone:"18911910456"},
       {name:"张园",phone:"19142641086"},
@@ -150,6 +151,10 @@ Page({
         this.modal('noDeviceId')
       }
     }
+  },
+  initSetBluetoothName() {
+    const name = wx.getStorageSync('setBluetoothName') || ''
+    this.setData({ 'device.name': name })
   },
   bindShowParams() {
     this.setData({ isOpen: !this.data.isOpen })
@@ -522,7 +527,6 @@ Page({
 
   },
   async reqJudgeBluetoothName() {
-    console.log("bcz")
     if(this.data.device.name.length !== 7) {
       this.modal('setDeviceNameFalsy')
       return 
@@ -544,6 +548,7 @@ Page({
   // 设置设备名
   bindSetName() {
     this.setData({ isShowLoading: true })
+    wx.setStorageSync('setBluetoothName', this.data.device.name)
     // 0010 0000 0003 0002
     const res = (parseInt(this.data.device.name)).toString(16).padStart(8, '0')
     const arr = []
