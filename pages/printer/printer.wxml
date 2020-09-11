@@ -65,7 +65,7 @@
 			<input type="text" placeholder="请输入物品名称" class="nickname_input" bindinput="updatewpmc" placeholder-class="nickname_placeholder" value="{{printsetData.item_name}}"></input>
 		</view>
 	</form>
-	<view class="text-center" style="position: absolute;bottom: 50rpx;width: 100%;">
+	<view class="text-center">
 		<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSendOrder" loading="{{isDisabled}}" disabled="{{isDisabled}}">开始打印</button>
 	</view>
 

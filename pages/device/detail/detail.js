@@ -1,6 +1,6 @@
 import { formatTime, multiSelectorList, setOption } from '../../../utils/util.js';
 
-import { reqDiagram, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks ,reqShowchart } from '../../../service/service.js';
+import { reqDiagram, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks ,reqShowchart,reqSetParams  } from '../../../service/service.js';
 import * as echarts from '../../../utils/echarts.min.js'
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk')
 var qqmapsdk = new QQMapWX({
@@ -120,11 +120,14 @@ Page({
     isShowLoadMore: false,
     isLoad: false,
     isutypeb:true,
+    isTriggered: true,
+    message:'暂无数据'
     
   },
   onLoad (options) {
     this.ecComponent = this.selectComponent('#mychart-dom-bar')
     const {devid, isMaster } = options
+    console.log(options)
     this.setData({
       devid,
       isMaster,
@@ -134,6 +137,7 @@ Page({
     this.reqDevParams(mobile, devid)
     this.initChart(devid,1)
     this.reqDevData(mobile, devid)
+    
     if(wx.getStorageSync('utype')=="b"){
       this.setData({
         isutypeb:false
@@ -161,8 +165,19 @@ Page({
       list = list.concat(res.data.resultCode)
       this.setData({ deviceDataList: list })
     } else if (res.data.code === 10000 && res.data.resultCode == 'null') {
-      this.setData({ isLoad: true })
+      this.setData({ isLoad: true  })
     }
+  },
+  bindrefresherrefresh(){
+    const devid = this.data.devid
+    const mobile = wx.getStorageSync('mobile')
+    const endTime = formatTime(new Date(), '-');
+    this.setData({ startNo: 0,deviceDataList:[],isTriggered:false ,message:'更新中' })
+    setTimeout(()=>{
+      this.reqDevData(mobile, devid)
+      },1500)
+
+   
   },
   async initChart(devid,num) {
     const endTime = formatTime(new Date(), '-')
@@ -272,10 +287,18 @@ Page({
       'paramsData.openid': openid,
       'paramsData.devid': this.data.devid
     })
-    const res = await reqSetRemarks(this.data.paramsData)
+    let obj={}
+    obj.openid=openid
+    obj.devid=this.data.devid
+    obj.yejianshangchuankaiguan=this.data.paramsData.yejianshangchuankaiguan
+    obj.caiji_jiange_minute=this.data.paramsData.caiji_jiange_minute
+    obj.fasong_jiange_minute=this.data.paramsData.fasong_jiange_minute
+    obj.UserP=this.data.paramsData.UserP
+    obj.GPS_Start=this.data.paramsData.GPS_Start
+    const res = await reqSetParams(obj)
     if(res.data.code === 0) {
       wx.showToast({
-        title: '修改成功!',
+        title: '设置成功!',
         icon: 'success',
         duration: 2000
       })
@@ -302,7 +325,8 @@ Page({
     console.log(res)
     if (res.data.code === 10000) {
       this.setData({
-        deviceDataList: res.data.resultCode === 'null' ? [] : res.data.resultCode
+        deviceDataList: res.data.resultCode === 'null' ? [] : res.data.resultCode,
+        message: res.data.resultCode === 'null' ? '暂无数据' : '加载中'
       })
       if(res.data.resultCode[0]&&res.data.resultCode[0]!='n') {
         const lastYear = res.data.resultCode[0].time.slice(0, 4)
