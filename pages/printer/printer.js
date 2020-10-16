@@ -198,7 +198,7 @@ Page({
     })
   },
   async bindClickBluetooth(e) {
-    console.log(e)
+    console.log(e,333)
     this.modal('beforeConnect')
     this.setData({
       customBarText: '设置打印参数',
@@ -207,7 +207,7 @@ Page({
     wx.offBluetoothDeviceFound()
     wx.stopBluetoothDevicesDiscovery()
     const res1 = await bluetoothAPI.createBLEConnection(e.currentTarget.dataset.id)
-    let res2= await bluetoothAPI.getNotifyBLECharacteristicValue2(e.currentTarget.dataset.id)
+    let res2= await bluetoothAPI.getNotifyBLECharacteristicValue3(e.currentTarget.dataset.id)//getNotifyBLECharacteristicValue2
     if(!res2) {
       res2 = await bluetoothAPI.getNotifyBLECharacteristicValue(e.currentTarget.dataset.id)
     }

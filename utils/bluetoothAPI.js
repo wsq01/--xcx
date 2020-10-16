@@ -51,6 +51,7 @@ const onBluetoothDeviceFound = (callback) => {
 }
 // 连接设备
 const createBLEConnection = (deviceId) => {
+  console.log(deviceId)
   return new Promise((resolve, reject) => {
     wx.createBLEConnection({
       deviceId,
@@ -91,11 +92,12 @@ const getNotifyBLECharacteristicValue = (deviceId) => {
               }
             }
             wx.notifyBLECharacteristicValueChange({
+             
               state: true,
               deviceId,
               serviceId: obj.serviceId,
               characteristicId: obj.notifyId,
-              success(res3) {
+              success(res3) {               
                 console.log(res3)
                 resolve(obj)
               },
@@ -167,7 +169,6 @@ const getNotifyBLECharacteristicValue3 = (deviceId) => {
       deviceId,
       success: (res1) => {
         console.log(res1)
-        
         wx.getBLEDeviceCharacteristics({
           deviceId,
           serviceId: res1.services[1].uuid,
