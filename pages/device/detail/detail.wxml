@@ -62,7 +62,7 @@
 				<view class="flex justify-between padding solid-bottom">
 					<view class="text-center flex align-center justify-center" style="flex: 0 0 350rpx">
 						<image class="time margin-right-xs" src="/images/icon-time@2x.png"></image>
-						<text>(采集时间)</text>
+						<text>(最新数据)</text>
 					</view>
 					<view class="text-center flex align-center justify-center" style="flex: 0 0 150rpx;">
 						<image class="temp margin-right-xs" src="/images/icon-temp@2x.png"></image>
@@ -88,8 +88,9 @@
 				<view wx:if="{{isShowLoadMore}}" class="my-load {{!isLoad ? 'loading':'over'}}"></view>
 				<view wx:if="{{deviceDataList.length === 0}}" class="text-center text-gray margin-tb">{{message}}</view>
 			</scroll-view>
-			<view class="text-center bottom-btn bg-white">
-				<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="bindPrinter" style="width: 540rpx;height: 90rpx">蓝牙打印</button>
+			<view class="text-center bottom-btn bg-white" style="display:flex;justify-content:space-around;">
+				<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="chooseShowModal" style="width: 270rpx;height: 90rpx">历史数据</button>
+				<button class="my-btn bg-blue margin-tb-lg round text-lg" bindtap="bindPrinter" style="width: 270rpx;height: 90rpx">蓝牙打印</button>
 			</view>
 		</swiper-item>
 		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item margin-top-sm">
@@ -128,4 +129,40 @@
 		
 		</swiper-item>
 	</swiper>
+	<view class="my-modal {{modalChoose=='bind'?'show':''}}">
+  <view class="my-dialog">
+    <view class="my-bar bg-white justify-end">
+      <view class="content">请选择查询时间段</view>
+      <view class="action" bindtap="hideModal">
+        <text class="myIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <form>
+				<view class="my-form-group">
+			<view class="title">起始时间</view>
+			<picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+				<view class="picker">
+					{{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}:{{dateTimeArray1[5][dateTime1[5]]}}
+				</view>
+			</picker>
+		</view>
+		<view class="my-form-group">
+			<view class="title">结束时间</view>
+			<picker mode="multiSelector" value="{{dateTime2}}" bindchange="changeDateTime2" bindcolumnchange="changeDateTimeColumn2" range="{{dateTimeArray2}}">
+				<view class="picker">
+					{{dateTimeArray2[0][dateTime2[0]]}}-{{dateTimeArray2[1][dateTime2[1]]}}-{{dateTimeArray2[2][dateTime2[2]]}} {{dateTimeArray2[3][dateTime2[3]]}}:{{dateTimeArray2[4][dateTime2[4]]}}:{{dateTimeArray2[5][dateTime2[5]]}}
+				</view>
+			</picker>
+		</view>
+      </form>
+    </view>
+    <view class="my-bar bg-white justify-end">
+      <view class="action">
+        <button class="my-btn line-blue text-blue" bindtap="hideModal">取消</button>
+        <button class="my-btn bg-blue margin-left" bindtap="addDev">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
 </view>

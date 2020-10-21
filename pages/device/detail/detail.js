@@ -121,7 +121,8 @@ Page({
     isLoad: false,
     isutypeb:true,
     isTriggered: true,
-    message:'暂无数据'
+    message:'暂无数据',
+    modalChoose: null,
     
   },
   onLoad (options) {
@@ -423,19 +424,49 @@ Page({
     this.newGetDate(devid, val)
   },
   bindPrinter() {
-    wx.openBluetoothAdapter({
-      success: res => {
-        wx.navigateTo({
-          url: '../../printer/printer?devid=' + this.data.devid
-        })
-      },
-      fail(err) {
-        wx.showToast({
-          title: '请开启蓝牙',
-          icon: 'none'
-        })
-      }
-    })
+    let that=this
+    wx.showModal({
+      title: '提示',
+      content: '请选择当前打印机型号？',
+      cancelText: "中集冷云", //默认是“取消”
+      cancelColor: 'skyblue', //取消文字的颜色
+      confirmText: "中集智冷", //默认是“确定”
+      confirmColor: 'skyblue', //确定文字的颜色
+      success: function (sm) {
+        if (sm.confirm) {
+            // 用户点击了确定 可以调用删除方法了
+            wx.openBluetoothAdapter({
+              success: res => {
+                wx.navigateTo({
+                  url: '../../printer/printer?devid=' + that.data.devid+'&curtype='+1
+                })
+              },
+              fail(err) {
+                wx.showToast({
+                  title: '请开启蓝牙',
+                  icon: 'none'
+                })
+              }
+            })
+          } else if (sm.cancel) {
+            console.log('用户点击取消')
+            wx.openBluetoothAdapter({
+              success: res => {
+                wx.navigateTo({
+                  url: '../../printer/printer?devid=' + that.data.devid+'&curtype='+0
+                })
+              },
+              fail(err) {
+                wx.showToast({
+                  title: '请开启蓝牙',
+                  icon: 'none'
+                })
+              }
+            })
+          }
+        }
+      })
+
   },
   addFormItem() {
     let obj = [];
@@ -456,6 +487,15 @@ Page({
   },
   stopTouchMove() {
     return false
+  },
+
+  //打开时间选择
+  chooseShowModal() {
+    this.setData({ modalChoose: 'bind' })
+  },
+  //关闭时间选择
+  hideModal() {
+    this.setData({ modalChoose: null })
   },
   onShareAppMessage: function () {
     return {

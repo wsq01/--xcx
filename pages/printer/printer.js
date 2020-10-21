@@ -24,7 +24,8 @@ Page({
     page: 1,
     delay: 0,
     isLoad: false,
-    customBarText: '搜索打印机'
+    customBarText: '搜索打印机',
+    curtype:0
   },
   onLoad(options) {
     if (options.devid) {
@@ -32,6 +33,12 @@ Page({
         devid: options.devid
       })
     }
+
+      this.setData({
+        curtype: options.curtype
+      })
+     
+    
     this.initPicker()
     this.initBluetooth()
     this.reqPrintInfo()
@@ -199,6 +206,7 @@ Page({
   },
   async bindClickBluetooth(e) {
     console.log(e,333)
+    console.log(this.data.curtype,555)
     this.modal('beforeConnect')
     this.setData({
       customBarText: '设置打印参数',
@@ -207,7 +215,12 @@ Page({
     wx.offBluetoothDeviceFound()
     wx.stopBluetoothDevicesDiscovery()
     const res1 = await bluetoothAPI.createBLEConnection(e.currentTarget.dataset.id)
-    let res2= await bluetoothAPI.getNotifyBLECharacteristicValue3(e.currentTarget.dataset.id)//getNotifyBLECharacteristicValue2
+    if(this.data.curtype==1){
+      var res2= await bluetoothAPI.getNotifyBLECharacteristicValue2(e.currentTarget.dataset.id)
+    }else{
+      var res2= await bluetoothAPI.getNotifyBLECharacteristicValue3(e.currentTarget.dataset.id)
+    }
+    //getNotifyBLECharacteristicValue2
     if(!res2) {
       res2 = await bluetoothAPI.getNotifyBLECharacteristicValue(e.currentTarget.dataset.id)
     }
@@ -361,6 +374,7 @@ Page({
     }
   },
   async sendOrder(buffer) {
+    console.log(this.data.deviceConfig.id, this.data.deviceConfig.serviceId, this.data.deviceConfig.writeId, buffer)
     const res = await bluetoothAPI.sendOrder(this.data.deviceConfig.id, this.data.deviceConfig.serviceId, this.data.deviceConfig.writeId, buffer)
     if (!res) this.modal('sendOrderFail')
   },
