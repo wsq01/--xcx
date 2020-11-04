@@ -7,6 +7,7 @@ import { reqPrinter , reqPrintInfo } from '../../service/service'
 const PrinterJobs = require('../../utils/printer/printerjobs')
 const printerUtil = require('../../utils/printer/printerutil')
 import * as datetimepickerUtil from '../../utils/datetimepicker'
+
 Page({
   data: {
     bluetoothList: [],

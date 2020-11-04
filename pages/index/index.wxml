@@ -21,7 +21,30 @@
 	<swiper style="height: calc(100vh - 350rpx)" class='swiper' bindchange='swiperChange' current="{{TabCur}}">
 		<swiper-item class="tab-swiper-0">
       <scroll-view refresher-enabled="{{true}}" refresher-triggered="{{isTriggered}}" bindrefresherrefresh="bindrefresherrefresh" scroll-y bindscrolltolower="bindscrolltolower" style="height: calc(100vh - 350rpx);" scroll-with-animation="{{true}}">
-			  <view class="text-center text-gray">您当前绑定的设备总数为<text class="text-blue">{{count1}}</text>台</view>
+        <view class="text-center text-gray" wx:if="{{!inputVal.length > 0}}">您当前绑定的设备总数为<text class="text-blue">{{count1}}</text>台 </view>
+        <view class="text-center text-gray" wx:else>您当前查询到设备数为<text class="text-blue">{{count1}}</text>台</view>
+        <view class="weui-search-bar">
+          <view class="weui-search-bar__form">
+          <!--点击之后，出现input框 -->
+          <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="16" color='#0000ff' bindtap="querydevice"></icon>
+          <input type="text" class="weui-search-bar__input" placeholder="按昵称或设备号搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+          <!--输入款字数大于0，则显示清除按钮 -->
+          <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+          <icon type="clear" size="16"></icon>
+          </view>
+          </view>
+          <!--没点击之前，只是一些文字和图标 -->
+          <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+          <icon class="weui-icon-search" type="search" size="16"></icon>
+          <view class="weui-search-bar__text">按昵称或设备号搜索</view>
+          </label>
+          </view>
+          <!--动态出现的“取消”键 -->
+          <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+        </view>
+
+
         <view class="radius-lg shadow-box margin animation-{{animation1 ? 'slide-bottom' : ''}}" wx:for="{{devList}}" wx:key="index" bindtap="toPage" data-type="redirect" data-page="../device/detail/detail?devid={{item.shebeibianhao}}&isMaster={{item.is_master}}" >
           <view class="radius-lg bg-white padding-tb-sm padding-lr">
 

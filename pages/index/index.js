@@ -71,7 +71,7 @@ Page({
   bindrefresherrefresh() {
     canUseReachBottom = true;
     if(this.data.TabCur === 0) {
-      this.setData({ offset1: 0, isLoad1: false,devList:[] })
+      this.setData({ offset1: 0, isLoad1: false,devList:[],inputVal:'' })
       this.getDevList(this.data.openid, 0)
     } else if(this.data.TabCur === 1) {
       this.setData({ offset2: 0, isLoad2: false })
@@ -85,6 +85,64 @@ Page({
       wx.navigateTo({ url: e.currentTarget.dataset.page })
     }
   },
+  showInput: function () {
+      this.setData({
+      inputShowed: true
+      });
+  },
+  hideInput: function () {
+    this.setData({
+     inputVal: "",
+     inputShowed: false
+    });
+    // getList(this);
+    },
+    clearInput: function () {
+    this.setData({
+    inputVal: "",
+    devList: [],
+    offset1:0,
+    isShowLoadMore1:false
+    });
+   
+    this.getDevList(this.data.openid, this.data.offset1)
+    canUseReachBottom = true;
+    },
+    inputTyping: function (e) {
+    //搜索数据
+    // getList(this, e.detail.value);
+      this.setData({
+      inputVal: e.detail.value
+      });
+     
+    },
+    async querydevice(){
+      this.setData({
+        offset1: 0
+      });
+      let vague=this.data.inputVal
+      const res = await reqOpenid()
+    
+      const openid = JSON.parse(res.data.data).openid
+      if(vague==''){ 
+           
+         this.setData({
+          devList: []
+        })
+        this.onLoad('')
+      }else{
+        let res = await reqDevList(openid, this.data.offset1,vague)
+        this.setData({
+          devList: res.data.data.data || [],
+          count1: res.data.data.count || 0,
+          isTriggered: false
+        })
+        let deviceList = res.data.data.data || []
+        console.log(deviceList,556)
+      }
+     
+    },
+    
   toPageWidthVerify(e) {
     const type = e.currentTarget.dataset.type
     const pagePath = e.currentTarget.dataset.page
@@ -154,10 +212,28 @@ Page({
   async getDevList(openid, offset = 0) {
     let res = await reqDevList(openid, offset)
     this.setData({
-      devList: res.data.data.data || [],
+     // devList: res.data.data.data || [],
       count1: res.data.data.count || 0,
       isTriggered: false
     })
+    let deviceList = res.data.data.data || []
+      if(deviceList.length < 5&&res.data.data.count<5){
+        this.setData({ isLoad1: true,isShowLoadMore1: true ,devList:deviceList})
+        canUseReachBottom = false;
+      }else if(deviceList.length < 5&&res.data.data.count>5){
+        this.setData({isLoad1: true,isShowLoadMore1:true,devList: this.data.devList.concat(deviceList)})
+        canUseReachBottom = false;
+      }else if(deviceList.length == 0&&res.data.data.count==undefined){
+        this.setData({isLoad1: true,isShowLoadMore1:true,devList: this.data.devList.concat(deviceList)})
+        canUseReachBottom = false;
+      }else{
+        canUseReachBottom = true;
+        this.setData({
+          devList: this.data.devList.concat(deviceList)
+        })
+       
+      }
+    
   },
   async bindscrolltolower() {
     if(!canUseReachBottom) return;

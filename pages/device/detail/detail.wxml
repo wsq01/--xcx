@@ -160,7 +160,7 @@
     <view class="my-bar bg-white justify-end">
       <view class="action">
         <button class="my-btn line-blue text-blue" bindtap="hideModal">取消</button>
-        <button class="my-btn bg-blue margin-left" bindtap="addDev">确定</button>
+        <button class="my-btn bg-blue margin-left" bindtap="querytime">查询</button>
       </view>
     </view>
   </view>

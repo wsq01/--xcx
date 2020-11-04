@@ -19,11 +19,12 @@ const wxRequest = ({ url, method = 'get', data }) => {
     })
   })
 }
-export const reqDevList = (openid, offset = 0) => wxRequest({
+export const reqDevList = (openid, offset = 0,vague='') => wxRequest({
   url: API.reqDevList,
   data: {
     openid,
     offset,
+    vague,
     hour: 3
   }
 })
@@ -287,7 +288,7 @@ export const reqDevParams = (mobile, devid) => wxRequest({
   method: 'post'
 })
 
-export const reqDevData = (mobile, devid, startNo, endTime) => wxRequest({
+export const reqDevData = (mobile, devid, startNo,startime, endTime) => wxRequest({
   url: API.reqDevData,
   method: 'post',
   data: {
@@ -295,7 +296,7 @@ export const reqDevData = (mobile, devid, startNo, endTime) => wxRequest({
     UserP: 'W',
     admin_user: mobile,
     admin_pass: '123456',
-    StartTime: '2010-08-26 00:00:00',
+    StartTime: startime,
     StartNo: startNo,
     Length: 20,
     EndTime: endTime,

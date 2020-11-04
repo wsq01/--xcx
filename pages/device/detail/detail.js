@@ -1,12 +1,12 @@
 import { formatTime, multiSelectorList, setOption } from '../../../utils/util.js';
-
+import * as datetimepickerUtil from '../../../utils/datetimepicker.js'
 import { reqDiagram, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks ,reqShowchart,reqSetParams  } from '../../../service/service.js';
 import * as echarts from '../../../utils/echarts.min.js'
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk')
 var qqmapsdk = new QQMapWX({
   key: "TEMBZ-BB4K2-M7GUC-C6LM4-PZLEO-AWBOF" // 必填
 })
-
+var app = getApp();
 Page({
   data: {
     TabCur: 0,
@@ -123,7 +123,10 @@ Page({
     isTriggered: true,
     message:'暂无数据',
     modalChoose: null,
-    
+    dateTime1: '',
+    dateTime2: '',
+    dateTimeArray1: [],
+    dateTimeArray2: [],
   },
   onLoad (options) {
     this.ecComponent = this.selectComponent('#mychart-dom-bar')
@@ -144,6 +147,46 @@ Page({
         isutypeb:false
       })
     }
+    this.initPicker()
+  },
+  initPicker() {
+    const obj = datetimepickerUtil.dateTimePickerWithS(2010)
+    this.setData({
+      dateTime1: obj.dateTime1,
+      dateTimeArray1: obj.dateTimeArray1,
+      dateTime2: obj.dateTime2,
+      dateTimeArray2: obj.dateTimeArray2
+    })
+  },
+  changeDateTime1(e) {
+    this.setData({
+      dateTime1: e.detail.value
+    })
+  },
+  changeDateTimeColumn1(e) {
+    var arr = this.data.dateTime1,
+      dateArr = this.data.dateTimeArray1
+    arr[e.detail.column] = e.detail.value
+    dateArr[2] = datetimepickerUtil.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]])
+    this.setData({
+      dateTimeArray1: dateArr,
+      dateTime1: arr
+    })
+  },
+  changeDateTime2(e) {
+    this.setData({
+      dateTime2: e.detail.value
+    })
+  },
+  changeDateTimeColumn2(e) {
+    var arr = this.data.dateTime2
+    var dateArr = this.data.dateTimeArray2
+    arr[e.detail.column] = e.detail.value
+    dateArr[2] = datetimepickerUtil.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]])
+    this.setData({
+      dateTimeArray2: dateArr,
+      dateTime2: arr
+    })
   },
   async bindscrolltolower() {
     this.setData({ isShowLoadMore: true })
@@ -160,7 +203,8 @@ Page({
       startNo: this.data.startNo + 20
     })
     const endTime = formatTime(new Date(), '-');
-    const res = await reqDevData(mobile, this.data.devid, this.data.startNo, endTime)
+    let startTime='2010-08-26 00:00:00';
+    const res = await reqDevData(mobile, this.data.devid, this.data.startNo,startTime, endTime)
     if (res.data.code === 10000 && res.data.resultCode != 'null') {
       let list = this.data.deviceDataList
       list = list.concat(res.data.resultCode)
@@ -258,6 +302,26 @@ Page({
       ['paramsData.' + e.currentTarget.dataset.key]: value
     })
   },
+  async querytime(){
+    this.setData({ deviceDataList: []})
+     let startTime = formatDate(this.data.dateTimeArray1, this.data.dateTime1)
+     let endTime = formatDate(this.data.dateTimeArray2, this.data.dateTime2)
+     console.log(startTime,endTime)
+     var mobile = wx.getStorageSync('mobile')
+      const res = await reqDevData(mobile, this.data.devid, this.data.startNo,startTime, endTime)
+      console.log(res)
+      this.setData({ modalChoose: null })
+    if (res.data.code === 10000 && res.data.resultCode != 'null') {
+      let list = this.data.deviceDataList
+      list = list.concat(res.data.resultCode)
+      this.setData({ deviceDataList: list })
+    } else if (res.data.code === 10000 && res.data.resultCode == 'null') {
+      this.setData({ isLoad: false, deviceDataList: [], message: res.data.resultCode === 'null' ? '暂无数据' : '加载中'  })
+ 
+    }else{
+      this.setData({ deviceDataList: [] })
+    }
+  },
   async bindSaveParams() {
     if (this.data.paramsData.flow_type === '1' && this.data.paramsData.fasong_jiange_minute < 5) {
       wx.showToast({
@@ -322,7 +386,8 @@ Page({
   },
   async reqDevData(mobile, devid) {
     const endTime = formatTime(new Date(), '-')
-    const res = await reqDevData(mobile, devid, this.data.startNo, endTime)
+    let startTime='2010-08-26 00:00:00';
+    const res = await reqDevData(mobile, devid, this.data.startNo,startTime, endTime)
     console.log(res)
     if (res.data.code === 10000) {
       this.setData({
@@ -429,9 +494,9 @@ Page({
       title: '提示',
       content: '请选择当前打印机型号？',
       cancelText: "中集冷云", //默认是“取消”
-      cancelColor: 'skyblue', //取消文字的颜色
+      cancelColor: '#333', //取消文字的颜色
       confirmText: "中集智冷", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
+      confirmColor: '#576B95', //确定文字的颜色
       success: function (sm) {
         if (sm.confirm) {
             // 用户点击了确定 可以调用删除方法了
@@ -468,6 +533,7 @@ Page({
       })
 
   },
+
   addFormItem() {
     let obj = [];
     if (this.data.paramsData.dingshifasong) {
@@ -496,26 +562,10 @@ Page({
   //关闭时间选择
   hideModal() {
     this.setData({ modalChoose: null })
-  },
-  onShareAppMessage: function () {
-    return {
-        title: '鲜盾管家',
-        path: '/pages/index/index',
-        // imageUrl: '../../images/qrcode-app.jpg',
-　　　　success: function(res){
-　　　　　　// 转发成功之后的回调
-　　　　　　if(res.errMsg == 'shareAppMessage:ok'){
-　　　　　　}
-　　　　},
-　　　　fail: function(){
-　　　　　　// 转发失败之后的回调
-　　　　　　if(res.errMsg == 'shareAppMessage:fail cancel'){
-　　　　　　　　// 用户取消转发
-　　　　　　}else if(res.errMsg == 'shareAppMessage:fail'){
-　　　　　　　　// 转发失败，其中 detail message 为详细失败信息
-　　　　　　}
-　　　　},
-       
-    }
-  },
+  }
+  
 })
+function formatDate(dateTimeArray, dateTime) {
+  return dateTimeArray[0][dateTime[0]] + '/' + dateTimeArray[1][dateTime[1]] + '/' + dateTimeArray[2][dateTime[2]] + ' ' + dateTimeArray[3][dateTime[3]] + ':' + dateTimeArray[4][dateTime[4]] + ':00'
+ 
+}
