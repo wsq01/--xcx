@@ -1,0 +1,74 @@
+.fixedbar{
+  position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+}
+.choosedevice{
+  margin-top: 304rpx;
+  height: auto;
+  border-top: 1px solid #eee;
+}
+.checkbox-group-content{
+  width: 100%;
+  height: 760rpx;
+  overflow: scroll;
+}
+.checkbox-group-content .deviceline{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 84rpx;
+  line-height: 84rpx;
+  padding-right: 4rpx;
+}
+.checkbox-group-content .deviceline .num{
+ display: inline-block;
+ width: 110rpx;
+ height: auto;
+ margin-right: 10rpx;
+}
+.checkbox-group-content .deviceline .remarks{
+  display: inline-block;
+  width: auto;
+  height: auto;
+ }
+ .my-form-group .listleft{
+  display: flex;
+  height: 100rpx;
+  align-items: center;
+ }
+ .my-form-group .searchbox{
+  display: flex;
+  width: 380rpx;
+  height: 50rpx;
+  align-items: center;
+  margin-left: 40rpx;
+  position: relative;
+  background: url('data:image/png;base64,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') no-repeat;
+  background-size: 100% 100%;
+ }
+ .my-form-group .searchbox .searchbtn{
+   position: absolute;
+   right: 10rpx;
+   display: flex;
+   z-index: 999;
+ }
+ .searchbox .searchbtn image{
+   width: 28rpx;
+   height: 28rpx;
+ }
+ .searchbox  input {
+  flex: 1;
+  font-size: 26rpx;
+  color: #555;
+  padding-right: 20rpx;
+  padding-left: 20rpx;
+}
+.searchbtn text{
+  margin:0 10rpx;
+  font-size: 24rpx;
+}
+.checkbox-group-content .hidden{
+  display: none;
+}

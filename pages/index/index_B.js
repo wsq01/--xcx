@@ -1,5 +1,5 @@
 const app = getApp()
-import { reqVerifyRegister, reqOpenid, reqDevList, reqSetParams, reqBluetoothList, reqUnBindDev, reqSetRemarks,reqLogout } from '../../service/service.js'
+import { reqVerifyRegister, reqOpenid, reqDevList, reqSetParams, reqBluetoothList, reqUnBindDev, reqSetRemarks,reqLogout,reqDevListVb,reqDertList } from '../../service/service.js'
 var canUseReachBottom = true;
 Page({
   data: {
@@ -7,6 +7,31 @@ Page({
     modalName: null,
     TabCur: 0,
     tabList: ['监控宝(GPRS)', '蓝牙设备'],
+    idx:0,
+    project:[
+      {
+        id: 0,
+        val: '全部'
+      },
+      {
+        id: 1,
+        val: '在线'
+      },
+      {
+        id: 2,
+        val: '离线'
+      },
+      {
+        id: 3,
+        val: '到期'
+      }
+    ],
+    toView: 'yellow',
+    scrollLeft: 0,
+    //滚动的数组
+    scrolls: [
+      
+    ],
     menuList: [
       {
         type: 'invite',
@@ -58,7 +83,9 @@ Page({
     isTriggered: false,
     isutypeb:true,
     tapTime: '',
-    daoqitotal:0
+    daoqitotal:0,
+    inputVal:'',
+    activeval:''
   },
   onShow(){
     canUseReachBottom = true;
@@ -68,17 +95,28 @@ Page({
       wx.setStorageSync('devid', options.id)
     }
     this.reqOpenid()
+    this.querydert()
   },
+
   bindrefresherrefresh() {
     canUseReachBottom = true;
     if(this.data.TabCur === 0) {
-      this.setData({ offset1: 0, isLoad1: false,devList:[],inputVal:'' })
-      this.getDevList(this.data.openid, 0)
+      this.setData({ offset1: 0, isLoad1: false,devList:[] })
+      this.querydev()
     } else if(this.data.TabCur === 1) {
       this.setData({ offset2: 0, isLoad2: false })
       this.getBluetoothList(this.data.openid, this.data.offset2)
     }
   },
+  // 改变下拉选项
+  bindPickerChange: function (event){
+    this.setData({   //给变量赋值
+      idx: event.detail.value,
+    })
+    this.querydev()
+  },
+
+
   toPage(e) {
     if(e.currentTarget.dataset.type === 'redirect') {
       wx.redirectTo({ url: e.currentTarget.dataset.page })
@@ -86,6 +124,27 @@ Page({
       // wx.navigateTo({ url: e.currentTarget.dataset.page })
       wx.redirectTo({ url: e.currentTarget.dataset.page })
     }
+  },
+  scrollToRed:function(e)
+  {
+    this.setData({
+      toView: 'green'
+    })
+  },
+  scrollTo100: function (e) {
+    this.setData({
+      scrollLeft: 100
+    })
+  },
+  
+  upper: function (e) {
+    console.log('滚动到顶部')
+  },
+  lower: function (e) {
+    console.log('滚动到底部')
+  },
+  scroll: function (e) {
+    console.log(e)
   },
   bindDaoqi(){
     wx.showModal({
@@ -100,14 +159,14 @@ Page({
   },
   hideInput: function () {
     this.setData({
-     inputVal: "",
+
      inputShowed: false
     });
     // getList(this);
     },
     clearInput: function () {
     this.setData({
-    inputVal: "",
+ 
     devList: [],
     offset1:0,
     isShowLoadMore1:false
@@ -123,6 +182,35 @@ Page({
       inputVal: e.detail.value
       });
      
+     
+    },
+    async querydev(){
+      const mobile = wx.getStorageSync('mobile')
+     
+      let res = await reqDevListVb(mobile, this.data.offset1,5,this.data.activeval,this.data.idx,this.data.inputVal)
+      this.setData({
+        devList: res.data.data.data || [],
+        count1: res.data.data.count || 0,
+        daoqicount: res.data.data.daoqi_count || 0,
+        isTriggered: false
+      })
+      let deviceList = res.data.data.data || []
+      if(deviceList.length < 5&&res.data.data.count<5){
+        this.setData({ isLoad1: true,isShowLoadMore1: true ,devList:deviceList})
+        canUseReachBottom = false;
+      }else if(deviceList.length < 5&&res.data.data.count>5){
+        this.setData({isLoad1: true,isShowLoadMore1:true,devList: this.data.devList.concat(deviceList)})
+        canUseReachBottom = false;
+      }else if(deviceList.length == 0&&res.data.data.count==undefined){
+        this.setData({isLoad1: true,isShowLoadMore1:true,devList: this.data.devList.concat(deviceList)})
+        canUseReachBottom = false;
+      }else{
+        canUseReachBottom = true;
+        this.setData({
+          devList: this.data.devList.concat(deviceList)
+        })
+       
+      }
     },
     async querydevice(){
       this.setData({
@@ -130,7 +218,7 @@ Page({
       });
       let vague=this.data.inputVal
       const res = await reqOpenid()
-    
+      const mobile = wx.getStorageSync('mobile')
       const openid = JSON.parse(res.data.data).openid
       if(vague==''){ 
            
@@ -139,7 +227,7 @@ Page({
         })
         this.onLoad('')
       }else{
-        let res = await reqDevList(openid, this.data.offset1,vague)
+        let res = await reqDevListVb(mobile, this.data.offset1,5,this.data.suoshujigou,this.data.status,this.data.inputVal)
         this.setData({
           devList: res.data.data.data || [],
           count1: res.data.data.count || 0,
@@ -147,10 +235,41 @@ Page({
           isTriggered: false
         })
         let deviceList = res.data.data.data || []
-        console.log(deviceList,556)
+       
       }
      
     },
+    async handleJumpPage(e){
+      let id = e.currentTarget.dataset.id;
+      　　//  id 即为要获取的值
+      console.log(id)
+      this.setData({
+        activeval:id
+      })
+      this.querydev()
+
+    },
+    async querydert(){
+      const mobile = wx.getStorageSync('mobile')
+      let res=await reqDertList(mobile)
+      if(res.data.code==0){
+        let arr=res.data.data.departments
+        this.setData({
+          activeval:res.data.data.departments[0].number
+        })
+        var newArr = arr.map(function (item, idnex) {
+          return {
+            gongsimingcheng: item.gongsimingcheng,
+            number: item.number
+          }
+         })
+         this.setData({
+          scrolls:newArr
+         })
+      }
+
+    },
+ 
     
   toPageWidthVerify(e) {
     const type = e.currentTarget.dataset.type
@@ -185,23 +304,19 @@ Page({
       if (res.data.data.phone) {
         wx.setStorageSync('mobile', res.data.data.phone)
         wx.setStorageSync('utype',res.data.data.uType)
-        
         if(res.data.data.uType=='b'){
-          wx.redirectTo({
-            url: '../index/index_B'
-            })
-          //  this.setData({
-          //   isutypeb:false
-          //  })
-          //  this.data.tabList.splice(1,1);
-          //  this.setData({
-          //   tabList:this.data.tabList,
-          //   'tabList[0]':'设备列表'
-          //  });
-          //  let _menulist=this.data.menuList.slice(3);
-          //   this.setData({
-          //     menuList:_menulist
-          //   });
+           this.setData({
+            isutypeb:false
+           })
+           this.data.tabList.splice(1,1);
+           this.setData({
+            tabList:this.data.tabList,
+            'tabList[0]':'设备列表'
+           });
+           let _menulist=this.data.menuList.slice(3);
+            this.setData({
+              menuList:_menulist
+            });
         }
         
         this.setData({ isHasAcess: true })
@@ -223,7 +338,9 @@ Page({
     }
   },
   async getDevList(openid, offset = 0) {
-    let res = await reqDevList(openid, offset,this.data.inputVal)
+    const mobile = wx.getStorageSync('mobile')
+    let vague=this.data.inputVal
+    let res = await reqDevListVb(mobile, this.data.offset1,5,this.data.suoshujigou,this.data.status,this.data.inputVal)
     this.setData({
      // devList: res.data.data.data || [],
       count1: res.data.data.count || 0,
@@ -250,11 +367,14 @@ Page({
     
   },
   async bindscrolltolower() {
+    console.log(111)
+    const mobile = wx.getStorageSync('mobile')
     if(!canUseReachBottom) return;
     this.setData({ offset1: this.data.offset1 + 5 })
     if(this.data.TabCur === 0) { 
       this.setData({ isShowLoadMore1: true })
-      let res = await reqDevList(this.data.openid, this.data.offset1,this.data.inputVal)
+      let vague=this.data.inputVal
+      let res = await reqDevListVb(mobile, this.data.offset1,5,this.data.suoshujigou,this.data.idx,this.data.inputVal)
       let deviceList = res.data.data.data || []
       if(deviceList.length < 5&&res.data.data.count<5){
         this.setData({ isLoad1: true,isShowLoadMore1: true ,devList:deviceList})

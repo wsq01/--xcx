@@ -73,7 +73,7 @@ const getNotifyBLECharacteristicValue = (deviceId) => {
     wx.getBLEDeviceServices({
       deviceId,
       success: (res1) => {
-        console.log(res1)
+        console.log(res1,1)
         wx.getBLEDeviceCharacteristics({
           deviceId,
           serviceId: res1.services[0].uuid,
@@ -117,7 +117,7 @@ const getNotifyBLECharacteristicValue2 = (deviceId) => {
     wx.getBLEDeviceServices({
       deviceId,
       success: (res1) => {
-        console.log(res1)
+        console.log(res1,2)
         if(!res1.services[6]) {
           resolve(false)
         } else {
@@ -168,7 +168,7 @@ const getNotifyBLECharacteristicValue3 = (deviceId) => {
     wx.getBLEDeviceServices({
       deviceId,
       success: (res1) => {
-        console.log(res1)
+        console.log(res1,3)
         wx.getBLEDeviceCharacteristics({
           deviceId,
           serviceId: res1.services[1].uuid,

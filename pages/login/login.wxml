@@ -1,0 +1,41 @@
+<!--pages/login.wxml-->
+<view class="container">  
+ <view class="tittle">
+    <text>登录</text>
+ </view>
+ <view class="login-from"> 
+  <form>
+  <view class="my-form-group flex-line">
+    <view class="title">账号</view>
+    <input id='mobile' type='text'  bindinput='inputMobile' value="{{mobile}}" disabled="{{isDisabled}}"  placeholder='{{mobileData.placeholder}}'></input>
+  </view>
+  <view class="my-form-group flex-line">
+    <view class="title">密码</view>
+    <input id='mobile' type='password'  bindinput='inputpsd' value="{{password}}"  placeholder='请输入密码'></input>
+    <!-- <input id='smsCode' type='number' bindinput='inputSms' maxlength='4' placeholder='{{smsData.placeholder}}'></input>
+    <button class="my-btn  shadow " disabled='{{isSend}}' bindtap='getSmsCode'>{{smsText}}</button> -->
+  </view>
+</form>
+   <view class="chart-btn">
+      <checkbox-group class="flex">
+        <view bindtap='changeChart' data-id="1">
+          <checkbox class="blue" style="transform: scale(.6)" checked="{{checkedRadio === 1}}"></checkbox><text class="text-sm">个人</text>
+        </view>
+        <view bindtap='changeChart' data-id="2" style="margin-left:30rpx">
+          <checkbox class="blue" style="transform: scale(.6)" checked="{{checkedRadio === 2}}"></checkbox><text class="text-sm">企业</text>
+        </view>
+      
+      </checkbox-group>
+    </view>
+
+    <view class="text-center" style="width: 100%;margin-top:60rpx">
+      <button class="my-btn bg-blue margin-tb-lg round text-lg {{!(mobile && password) ? 'submit-disabled' : ''}}" disabled='{{!(mobile && password)}}' style="width: 620rpx;height: 90rpx" bindtap="submitForm">提交</button>
+    </view>
+
+ </view> 
+  <view class="footer">
+    <!-- 还没有账号？请先注册 -->
+    <text bindtap="gozhuce">个人注册</text><text bindtap="goforget">忘记密码</text>
+  </view>
+</view>
+

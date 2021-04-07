@@ -5,16 +5,50 @@
 		<view class="my-load load-icon {{!isLoad?'loading':'over'}}"></view>
 	</view>
 </custom-bar>
+<wxs module="utils">
+  module.exports.max = function(n1, n2) {
+  return Math.max(n1, n2)
+  }
+  module.exports.len = function(arr) {
+  arr = arr || [];
+  return arr.length;
+  }
+</wxs>
 
-<view class="my-list menu" wx:if="{{showPage === 'list'}}">
-	<view class="my-item" wx:for="{{bluetoothList}}" wx:key="index" bindtap="bindClickBluetooth" data-id="{{item.deviceId}}" data-name="{{item.name}}" wx:if="{{item.name}}">
-		<view class="content flex align-center">
-			<image class="margin-right-sm" style="width: 30rpx;height: 30rpx;display: block" src="/images/bluetooth@2x.png"></image>
-			<text>{{item.name}}</text>
+<view class="container">
+  <view class="page-section">
+		<view class="my-list menu" wx:if="{{showPage === 'list'}}">
+		<view class="btn-area text-center">
+      <button class="my-btn bg-blue  text-lg" style="width: 100%;height: 90rpx" bindtap="openBluetoothAdapter">开始扫描</button>
+      <button bindtap="stopBluetoothDevicesDiscovery" style="width: 100%;height: 90rpx;margin-top:10rpx" class="my-btn bg-blue text-lg">停止扫描</button>
 		</view>
-	</view>
-</view>
-<view wx:elif="{{showPage === 'params'}}">
+		<view class="page-section connected-area" wx:if="{{lastDevice}}">
+    <text style="font-size: 30rpx">最近连接的设备</text>
+    <view>{{lastDevice}}</view>
+    <view class="btn-area text-center">
+      <button class="my-btn bg-blue  round text-lg" style="width: 540rpx;height: 90rpx" bindtap="createBLEConnectionWithDeviceId">直接连接</button>
+    </view>
+  </view>
+  <!-- <view class="page-section connected-area" wx:if="{{connected}}">
+    <view class="connected-info">
+      <text style="font-size: 30rpx">已连接到 {{name}}</text>
+      <view wx:for="{{chs}}" wx:key="index">
+        <view>特性UUID: {{item.uuid}}</view>
+        <view>特性值: {{item.value}}</view>
+      </view>
+    </view>
+   
+  </view> -->
+		<!-- <view class="devices-summary">已发现 {{devices.length}} 个外围设备：</view> -->
+	
+			<view class="my-item" wx:for="{{devices}}" wx:key="index" bindtap="createBLEConnection" data-id="{{item.deviceId}}" data-device-id="{{item.deviceId}}" data-name="{{item.name || item.localName}}" data-name="{{item.name}}" wx:if="{{item.name}}">
+				<view class="content flex align-center">
+					<image class="margin-right-sm" style="width: 30rpx;height: 30rpx;display: block" src="/images/bluetooth@2x.png"></image>
+					<text>{{item.name}}</text>
+				</view>
+			</view>
+		</view>
+		<view wx:elif="{{showPage === 'params'}}">
 	<form>
 		<view class="my-form-group">
 			<view class="title">设备号</view>
@@ -66,8 +100,14 @@
 		</view>
 	</form>
 	<view class="text-center">
-		<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSendOrder" loading="{{isDisabled}}" disabled="{{isDisabled}}">开始打印</button>
+		<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSendOrder" loading="{{isDisabled}}" disabled="{{isDisabled}}" wx:if="{{canWrite}}">开始打印</button>
+		<button class="my-btn bg-blue  round text-lg" style="width: 540rpx;height: 90rpx" bindtap="closeBLEConnection">断开连接</button>
 	</view>
 
 </view>
-<view wx:else></view>
+  </view>
+
+</view>
+
+
+

@@ -1,14 +1,48 @@
 <form>
+ <view class="fixedbar">
+
   <view class="my-form-group solids-top">
     <view class="title">账号</view>
-    <input placeholder="请输入手机号" value="{{member.phone}}"  disabled="true"></input>
+    <input placeholder="请输入手机号"  value="{{member.phone}}" bindinput="bindInputMobile"></input>
   </view>
   <view class="my-form-group">
     <view class="title">昵称</view>
-    <input placeholder="请输入昵称" value="{{member.relation_name}}" disabled="true"></input>
+    <input placeholder="请输入昵称"  value="{{member.relation_name}}" bindinput="bindInputName"></input>
   </view>
+  <view class="device-content" style="border-top:1px solid #eee">
+      <view class="title my-form-group">
+        <view class="listleft">
+          <text>设备列表</text>
+          <view class="searchbox">
+              <input type="text" placeholder="按设备号或昵称搜索" bindinput='queryval'/>
+              <view class="searchbtn" bindtap="requeryadev">
+                <image src="../../../images/searchicon.png"></image>
+                <text>搜索</text>
+              </view>
+          </view>
+        </view>
+        <view>全选 <checkbox  bindtap="selectall" class="blue" style="transform: scale(.6)"/></view>
+      </view>
+    </view>
+  </view>
+      <view class="my-form-group choosedevice">
+        <checkbox-group bindchange="checkboxChange" class="checkbox-group-content">
+          <view wx:for="{{listData}}" wx:key="{{index}}">  
+                  <view  class='deviceline {{item.ishow? "show" : "hidden"}}'>    
+                    <view>
+                  <text class="num">{{item.shebeibianhao}}</text>
+                  <text class="remarks" wx:if="{{item.beizhu!=''}}">({{item.beizhu}})</text>
+                 </view>        
+            
+                <checkbox value="{{item.shebeibianhao}}"  class="blue" style="transform: scale(.6)" checked="{{item.shared}}" /> 
+              </view>   
+            </view>
+        </checkbox-group>
+      </view>
+
+
 </form>
-<view class="text-center" style="width: 100%;position: absolute;bottom: 50rpx;">
-  <button class="my-btn bg-blue margin-top round text-lg" style="width: 540rpx;height: 90rpx" bindtap="editItem">编辑</button>
-  <button class="my-btn bg-blue margin-tb round text-lg" style="width: 540rpx;height: 90rpx" bindtap="deleteItem">删除</button>
+<view class="text-center btnbox">
+  <button class="my-btn bg-blue margin-tb-lg round lg" style="width: 270rpx;" bindtap="bindsubmit">提交</button>
+  <button class="my-btn margin-tb-lg round lg" style="width: 270rpx;color:#fff" bindtap="deleteItem">删除此账号</button>
 </view>

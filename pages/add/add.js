@@ -1,4 +1,4 @@
-import { reqBindDev } from '../../service/service.js'
+import { reqBindDev,reqBindDevice } from '../../service/service.js'
 Page({
   data: {
     modalName: null,
@@ -34,7 +34,7 @@ Page({
   },
   async addDev() {
     const mobile = wx.getStorageSync('mobile')
-    const res = await reqBindDev(mobile, this.data.deviceId)
+    const res = await reqBindDevice(mobile, this.data.deviceId)
     if (res.data.code === 0) {
       wx.showToast({ title: '添加成功!' })
       this.hideModal()

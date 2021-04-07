@@ -1,6 +1,10 @@
 
 const httpUrl = 'https://www.zjcoldcloud.com/xiandun/public/index.php'
+const httpUrlapi = 'https://www.zjcoldcloud.com/xiandun/api'
+const httpUrlback = 'https://www.zjcoldcloud.com/xiandun_back/public/index.php'
 export default {
+  reqDevData: httpUrlapi+'/01_00_tb_history_data.php',
+  reqDevCharts: httpUrlapi+'/09_00_tb_draw_line.php',
   reqUnbindDev: httpUrl + '/index/Device/remove_bind',
   reqUnbind: httpUrl + '/index/register/unbundle',
   reqDevList: httpUrl + '/index/device/device_list',
@@ -8,18 +12,18 @@ export default {
   reqAddMember: httpUrl + '/index/share',
   reqMemberList: httpUrl + '/index/share/membersList',
   reqSendCode: httpUrl + '/index/register/sendCode',
+  reqSendCodeLogin: httpUrl + '/index/login/sendCode',
   reqRegister: httpUrl + '/index/register/add',
   reqOpenid: httpUrl,
   reqLogin: httpUrl + '/index/login',
   reqBindDev: httpUrl + '/index/Device/bind_device',
+  reqBindDevice: httpUrl + '/index/device/xiandun_bind_device',
   reqVerifyRegister: httpUrl + '/index/register/verify_user',
   reqBillList: httpUrl + '/index/pay_bill',
   reqEditMember: httpUrl + '/index/share/edit',
   reqDeleteMember: httpUrl + '/index/share/delete',
-  reqDevData: 'https://www.zjcoldcloud.com/xiandun/api/01_00_tb_history_data.php',
-  reqDevParams: 'https://www.zjcoldcloud.com/xiandun/public/index.php/index/device/get_device_param',
-  reqSetParams: httpUrl + '/index/device/update_device',
-  reqDevCharts: 'https://www.zjcoldcloud.com/xiandun/api/09_00_tb_draw_line.php',
+  reqDevParams: httpUrl+'/index/device/get_device_param',
+  reqSetParams: httpUrlback + '/index/device/update_device',
   reqCheckSmsCode: httpUrl + '/index/register/yanzheng_code',
   reqJudgeBinded: httpUrl + '/index/device/remove_scend_device',
   reqUpdateMobile: httpUrl + '/index/register/xiaochengxu_update_phone',
@@ -33,5 +37,13 @@ export default {
   reqSetRemarks:httpUrl+'/index/device/updateDevice',
   reqDiagram: httpUrl + '/index/device/getDiagram',
   reqShowchart:httpUrl+'/index/device/getDiagram',
-  reqPrintInfo:httpUrl+'/index/device/deviceInfo'
+  reqPrintInfo:httpUrl+'/index/device/deviceInfo',
+  reqLogin:httpUrl+'/index/login/appletslogin',
+  reqLogout:httpUrl+'/index/login/appletsLogout',
+  reqForgetpwd:httpUrl+'/index/register/forget_pwd',
+  reqDevShare:httpUrl+'/index/device/device_list_for_share',
+  reqAddSharemember:httpUrl+'/index/share/add_member',
+  reqEditSharemember:httpUrl+'/index/share/edit',
+  reqDevListVb:httpUrlback+'/index/device/device_list_v1',
+  reqDertList:httpUrlback+'/index/department/my_department'
 }

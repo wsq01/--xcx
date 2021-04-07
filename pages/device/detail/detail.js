@@ -330,23 +330,23 @@ Page({
       })
       return
     }
-    if(this.data.deviceParams.model_type === 'TH') {
-      if((this.data.paramsData.baojingwendu_shangxian < this.data.paramsData.baojingwendu_xiaxian) || (this.data.paramsData.chaodishidubaojingfazhi > this.data.paramsData.chaogaoshidubaojingfazhi)) {
-        wx.showToast({
-          title: '下限不得高于上限',
-          icon: 'none'
-        })
-        return
-      }
-    } else if(this.data.deviceParams.model_type === 'TT') {
-      if((this.data.paramsData.baojingwendu_shangxian < this.data.paramsData.baojingwendu_xiaxian) || (this.data.paramsData.baojingwendu_two_xiaxian > this.data.paramsData.baojingwendu_two_shangxian)) {
-        wx.showToast({
-          title: '下限不得高于上限',
-          icon: 'none'
-        })
-        return
-      }
-    }
+    // if(this.data.deviceParams.model_type === 'TH') {
+    //   if((this.data.paramsData.baojingwendu_shangxian < this.data.paramsData.baojingwendu_xiaxian) || (this.data.paramsData.chaodishidubaojingfazhi > this.data.paramsData.chaogaoshidubaojingfazhi)) {
+    //     wx.showToast({
+    //       title: '下限不得高于上限',
+    //       icon: 'none'
+    //     })
+    //     return
+    //   }
+    // } else if(this.data.deviceParams.model_type === 'TT') {
+    //   if((this.data.paramsData.baojingwendu_shangxian < this.data.paramsData.baojingwendu_xiaxian) || (this.data.paramsData.baojingwendu_two_xiaxian > this.data.paramsData.baojingwendu_two_shangxian)) {
+    //     wx.showToast({
+    //       title: '下限不得高于上限',
+    //       icon: 'none'
+    //     })
+    //     return
+    //   }
+    // }
     const openid = wx.getStorageSync('openid')
     this.setData({
       'paramsData.openid': openid,
@@ -360,6 +360,10 @@ Page({
     obj.fasong_jiange_minute=this.data.paramsData.fasong_jiange_minute
     obj.UserP=this.data.paramsData.UserP
     obj.GPS_Start=this.data.paramsData.GPS_Start
+    let utype = wx.getStorageSync('utype')
+    if(utype=='b'){
+      obj.userType='tb'
+    }
     const res = await reqSetParams(obj)
     if(res.data.code === 0) {
       wx.showToast({
@@ -489,49 +493,21 @@ Page({
     this.newGetDate(devid, val)
   },
   bindPrinter() {
-    let that=this
-    wx.showModal({
-      title: '提示',
-      content: '请选择当前打印机型号？',
-      cancelText: "中集冷云", //默认是“取消”
-      cancelColor: '#333', //取消文字的颜色
-      confirmText: "中集智冷", //默认是“确定”
-      confirmColor: '#576B95', //确定文字的颜色
-      success: function (sm) {
-        if (sm.confirm) {
-            // 用户点击了确定 可以调用删除方法了
-            wx.openBluetoothAdapter({
-              success: res => {
-                wx.navigateTo({
-                  url: '../../printer/printer?devid=' + that.data.devid+'&curtype='+1
-                })
-              },
-              fail(err) {
-                wx.showToast({
-                  title: '请开启蓝牙',
-                  icon: 'none'
-                })
-              }
-            })
-          } else if (sm.cancel) {
-            console.log('用户点击取消')
-            wx.openBluetoothAdapter({
-              success: res => {
-                wx.navigateTo({
-                  url: '../../printer/printer?devid=' + that.data.devid+'&curtype='+0
-                })
-              },
-              fail(err) {
-                wx.showToast({
-                  title: '请开启蓝牙',
-                  icon: 'none'
-                })
-              }
-            })
-          }
-        }
-      })
-
+    let that=this 
+    // 用户点击了确定 可以调用删除方法了
+    wx.openBluetoothAdapter({
+      success: res => {
+        wx.navigateTo({
+          url: '../../printer/printer?devid=' + that.data.devid+'&curtype='+1
+        })
+      },
+      fail(err) {
+        wx.showToast({
+          title: '请开启蓝牙',
+          icon: 'none'
+        })
+      }
+    })
   },
 
   addFormItem() {

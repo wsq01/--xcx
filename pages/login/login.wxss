@@ -1,0 +1,177 @@
+/* pages/login.wxss */
+page{ 
+  height: 100%; 
+ }   
+ .container { 
+  height: 100%; 
+  display: flex; 
+  flex-direction: column; 
+  padding: 0 70rpx; 
+  box-sizing: border-box; 
+  background-color: #FFFFFF
+ } 
+ .tittle{
+   margin: 180rpx 0 80rpx;
+ }
+ .my-form-group input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #555;
+  padding-right: 20rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  width: 90%;
+
+}
+ .my-form-group .title {
+  text-align: justify;
+  padding-right: 30rpx;
+  font-size: 32rpx;
+  position: relative;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #000;
+}
+ .tittle text{
+
+  font-size: 60rpx;
+ }  
+ .flex-line{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+ }
+ .my-form-group+.my-form-group{
+  border: none;
+}
+ .my-form-group{
+   padding: 0;
+   min-height: 120rpx;
+   border-bottom:1px solid #eee!important;
+  
+ }
+ .my-form-group .my-btn{
+   border: 1px solid #1B4CEF;
+   color: #1B4CEF;
+   background: #fff!important;
+ }
+ 
+ /*登录图片*/
+ .login-icon{ 
+  flex: none; 
+  text-align: center;
+ } 
+ .login-img{ 
+   margin: 100rpx auto;
+  width: 160rpx;
+  height: 160rpx;
+ } 
+   
+ /*表单内容*/
+ .login-from { 
+  margin-top: 20px; 
+  flex: auto; 
+  height:100%; 
+ } 
+   
+ .inputView { 
+  background-color: #fff; 
+  line-height: 44px; 
+  display: flex;
+  align-items: center;
+  height: 44px;
+    margin-bottom: 5px;
+ } 
+ /*输入框*/
+ .nameImage, .keyImage { 
+  margin-left: 15px; 
+  width: 24px; 
+  height: 24px
+ } 
+   
+ .loginLab { 
+  margin: 15px 10px 15px 0px; 
+  color: #545454; 
+  font-size: 14px
+ } 
+ .inputText { 
+  flex: block; 
+  float: right; 
+  text-align: left; 
+  margin-right: 22px; 
+  
+  color: #cccccc; 
+  font-size: 14px
+ } 
+   
+ .line { 
+  width: 100%; 
+  height: 1px; 
+  /* background-color: #cccccc;  */
+  margin-top: 1px; 
+ } 
+ /*按钮*/
+ .loginBtnView { 
+  width: 100%; 
+  height: auto; 
+  background-color: #f2f2f2; 
+  margin-top: 0px; 
+  margin-bottom: 0px; 
+  padding-bottom: 0px; 
+ } 
+ .chart-btn{
+   margin: 30rpx 0 -15px;
+ }  
+ .loginBtn { 
+  width: 100%; 
+  margin-top: 30px; 
+ }
+  
+ .registerBtn { 
+  width: 100%; 
+  margin-top: 5px; 
+ }
+ radio .wx-radio-input.wx-radio-input-checked {
+  border-color: #03a9f4;
+  background: #03a9f4;
+}
+/* 自定义样式.... */
+radio .wx-radio-input {
+  height: 30rpx;/* 对勾大小 */
+  width: 30rpx;
+  margin-top: -4rpx;
+  border-radius: 50%;
+  border: 2rpx solid #2ea7e0;
+  background: transparent;
+}
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked::before {
+  border-radius: 50%; /* 圆角 */
+  width: 30rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 30rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  line-height: 30rpx;/* 选中后对勾的垂直方向，等于radio的高度 */
+  text-align: center;
+  font-size: 24rpx; /* 对勾大小 30rpx */
+  color: #fff; /* 对勾颜色 白色 */
+  background: #2ea7e0;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+.submit-disabled {
+  background: #ccc !important;
+  color: #fff !important;
+}
+.footer{
+  color: #999999;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.footer text{
+  margin-left: 20rpx;
+  color: #1B4CEF;
+}

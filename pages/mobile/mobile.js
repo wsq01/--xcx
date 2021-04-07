@@ -7,7 +7,7 @@ Page({
   },
   toVerify(e) {
     wx.navigateTo({
-      url: './verify/verify?handle=' + e.currentTarget.dataset.name
+      url: './verify/verify?handle=' + e.currentTarget.dataset.name+'&type=change'
     })
   },
   onShareAppMessage: function () {

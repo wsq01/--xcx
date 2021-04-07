@@ -17,7 +17,7 @@ Page({
   },
   toPay() {
     wx.showModal({
-      content: '请前往（中集智冷科技）公众号进行缴费',
+      content: '请前往（中集智冷科技）公众号，并登录云平台缴费',
       showCancel: false
     })
   }

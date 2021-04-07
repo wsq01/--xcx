@@ -19,7 +19,7 @@ Page({
     isFirstShow: true,
     servicesUUID: '',
     deviceId: '',
-    characteristicId: '0000FFF1-0000-1000-8000-00805F9B34FB', // notify uuid
+    characteristicId: 'BFFB1B5C-EC59-122B-1EB4-050D115BE462', // notify uuid
     time: 60,
     startDate: '',
     ec: {

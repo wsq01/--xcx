@@ -196,3 +196,64 @@
   right: 0px;
   position: absolute;
 }
+.xiala{
+  display: inline-block;
+  width: 20rpx;
+  height: 14rpx;
+}
+.searchimg{
+  display: inline-block;
+  width: 30rpx;
+  height: 30rpx;
+}
+.marginB{
+  margin: 30rpx 15rpx -15rpx 15rpx;
+}
+.marginB:last-child{
+  margin-bottom: 30rpx;
+}
+.my-load {
+  margin: 30rpx auto 0rem!important;
+  display: block;
+  line-height: 3em;
+  text-align: center;
+  
+}
+.searchbox{
+  width: 470rpx;
+    text-align: left;
+    padding-left: 30rpx;
+    border-right: 1px solid #ccc;
+    margin-right: 30rpx;
+}
+.swiper-wrapper-left{
+  background: #ffffff;
+  max-width:160rpx;
+}
+.swiper-wrapper{
+  width:160rpx;
+  height: calc(100vh - 193px)
+}   
+.swiper-item view{
+  height: 100rpx;
+  width: 160rpx;
+  line-height: 100rpx;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  font-size: 24rpx;
+}
+.myaddress{
+  min-height:114rpx
+}
+.padding-lr {
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+}
+.swiper-wrapper-left .swiper-wrapper .swiper-item-active{
+  background:#1B4CEF;
+  color: #fff;
+  
+}

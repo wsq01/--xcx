@@ -155,9 +155,23 @@ export const reqBluetoothNameExist = (shebeibianhao, admin_user) => wxRequest({
   }
 })
 
-export const reqSmsCode = phone => wxRequest({
+export const reqSmsCode = (phone, action) => wxRequest({
   url: API.reqSendCode,
+  data: { 
+    phone,
+    action
+  }
+})
+
+export const reqSendCodeLogin = phone => wxRequest({
+  url: API.reqSendCodeLogin,
   data: { phone }
+})
+
+export const reqLogout = username => wxRequest({
+  url: API.reqLogout,
+  method: 'post',
+  data: { username }
 })
 
 export const reqRegister = (openid, phone, code, pwd) => wxRequest({
@@ -198,6 +212,14 @@ export const reqBindDev = (mainname, devicenumber, bandType) => wxRequest({
     mainname,
     devicenumber,
     bandType
+  }
+})
+
+export const reqBindDevice = (mainname, devicenumber) => wxRequest({
+  url: API.reqBindDevice,
+  data: {
+    mainname,
+    devicenumber
   }
 })
 
@@ -310,5 +332,81 @@ export const reqUpdateMobile = (old_phone, new_phone) => wxRequest({
   data: {
     old_phone,
     new_phone
+  }
+})
+// export const reqLogin = (username,password) => wxRequest({
+//   url: API.reqLogin,
+//   method: 'post',
+//   data: {
+//     username,
+//     password
+//   }
+// })
+export const reqLogin = (username, password,openid,type) => wxRequest({
+  url: API.reqLogin,
+  method: 'post',
+  data: {
+    username,
+    password,
+    openid,
+    type
+  }
+})
+export const reqForgetpwd = (phone, code,new_pwd) => wxRequest({
+  url: API.reqForgetpwd,
+  method: 'post',
+  data: {
+    phone,
+    code,
+    new_pwd
+  }
+})
+export const reqDevShare = (phone, phone_main,vague) => wxRequest({
+  url: API.reqDevShare,
+  method: 'post',
+  data: {
+    phone,
+    phone_main,
+    vague
+  }
+})
+export const reqAddSharemember = (mainname, aftername,nickname,devices) => wxRequest({
+  url: API.reqAddSharemember,
+  method: 'post',
+  data: {
+    mainname,
+    aftername,
+    nickname,
+    devices
+  }
+})
+export const reqEditSharemember = (mainname, aftername,nickname,devices) => wxRequest({
+  url: API.reqEditSharemember,
+  method: 'post',
+  data: {
+    mainname,
+    aftername,
+    nickname,
+    devices
+  }
+})
+export const reqDevListVb = (userName, offset,pagesize,suoshujigou,status,vague) => wxRequest({
+  url: API.reqDevListVb,
+  method: 'post',
+  data: {
+    userName,
+    offset,
+    pagesize,
+    suoshujigou,
+    status,
+    vague
+  }
+})
+export const reqDertList = (user) => wxRequest({
+  url: API.reqDertList,
+  method: 'post',
+  data: {
+    user,
+    pagesize: 1000
   }
 })

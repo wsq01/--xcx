@@ -30,23 +30,25 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
+    "useMultiFrameRuntime": true,
     "useApiHook": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "bundle": true,
+    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true
+    "minifyWXSS": true,
+    "useApiHostProcess": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.11.2",
+  "libVersion": "2.14.0",
   "appid": "wx28db04fa5b729118",
   "projectname": "xiandun",
   "debugOptions": {
@@ -56,17 +58,10 @@
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
     "plugin": {
       "list": []
     },
     "game": {
-      "currentL": -1,
       "list": []
     },
     "gamePlugin": {
@@ -103,10 +98,9 @@
           "scene": null
         },
         {
-          "id": -1,
           "name": "打印机",
           "pathName": "pages/printer/printer",
-          "query": "",
+          "query": "devid=500314&curtype=0",
           "scene": null
         },
         {
@@ -128,6 +122,18 @@
           "name": "pages/pdf/pdf",
           "pathName": "pages/pdf/pdf",
           "query": "scene=id=0000000",
+          "scene": null
+        },
+        {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "id=516887",
+          "scene": 1011
+        },
+        {
+          "name": "pages/printer/printer",
+          "pathName": "pages/printer/printer",
+          "query": "devid=500314&curtype=0",
           "scene": null
         }
       ]

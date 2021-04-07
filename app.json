@@ -1,6 +1,7 @@
 {
-  "pages": [
+  "pages": [  
     "pages/index/index",
+    "pages/index/index_B",
     "pages/issue/issue",
     "pages/service/service",
     "pages/mobile/verify/verify",
@@ -23,7 +24,8 @@
     "pages/printer/printer",
     "pages/device/bluetoothDetail/bluetoothDetail",
     "pages/device/bluetoothDetailList/bluetoothDetailList",
-    "pages/pdf/pdf"
+    "pages/pdf/pdf",
+    "pages/login/login"
   ],
   "window": {
     "backgroundTextStyle": "light",

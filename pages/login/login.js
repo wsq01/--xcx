@@ -1,10 +1,11 @@
-import { reqSmsCode, reqRegister, reqUnbind, reqCheckSmsCode } from '../../../service/service.js';
+import { reqSendCodeLogin, reqRegister, reqUnbind, reqCheckSmsCode,reqLogin } from '../../service/service.js';
+var md5 = require('../../utils/md5.js');
 
 Page({
   data: {
     mobileData: {
       title: '手机号',
-      placeholder: '请输入手机号'
+      placeholder: '请输入账号'
     },
     smsData: {
       title: '验证码',
@@ -17,17 +18,12 @@ Page({
     smsCode: '',
     handle: 'bind',
     isDisabled: false,
-    gotype:true
+    checkedRadio:1,
+    password:''
   },
   onLoad(options) {
     if(options.handle === 'unbind') {
       this.setData({ isDisabled: true })
-    }
-    if(options.type === 'change' ) {
-      this.setData({ gotype: false })    
-    }
-    if(options.handle === 'reset' ) {
-      this.setData({ gotype: false,handle:'reset' })    
     }
     this.setData({
       handle: options.handle,
@@ -35,43 +31,58 @@ Page({
     })
   },
   async submitForm() {
-    if (this.data.handle === 'bind') {
       const openid = wx.getStorageSync('openid')
-      const res = await reqCheckSmsCode(this.data.mobile, this.data.smsCode,openid)
-      if (res.data.code === 0&&res.data.data.length==0) {
-        wx.navigateTo({
-          url: '../pwd/pwd?mobile=' + this.data.mobile + '&code=' + this.data.smsCode+'&handle=bind'
-        })
-      }if (res.data.code === 0&&res.data.data.type=='b') {
-        wx.setStorageSync('mobile', this.data.mobile)
-        wx.setStorageSync('utype', "b")
-        wx.navigateTo({
-          url: '../../index/index'
-        })
-      }  else {
-        wx.showToast({
-          title: res.data.message=='success'?'验证成功':'验证不正确',
-          icon: 'none'
-        })
-      }
-    }else if (this.data.handle === 'reset') {
-      const openid = wx.getStorageSync('openid')
-      const res = await reqCheckSmsCode(this.data.mobile, this.data.smsCode,openid)
-      if (res.data.code === 0&&res.data.data.length==0) {
-        wx.navigateTo({
-          url: '../pwd/pwd?mobile=' + this.data.mobile + '&code=' + this.data.smsCode+'&handle=reset'
-        })
+      let type=this.data.checkedRadio==1?'c':'b'
+      let psw= md5.md5(this.data.password).toLowerCase();
+      console.log(psw,1)
+      let _password=''
+      if(type=='c'){
+        _password= md5.md5(psw).toLowerCase()
+        console.log(_password,2)
       }else{
+        _password=psw.toLowerCase()
+      }
+      const res = await reqLogin(this.data.mobile, _password,openid,type)
+      console.log(res);
+       if (res.data.code === 0) {
+        wx.setStorageSync('mobile', this.data.mobile)
+        if(type=='c'){
+          wx.setStorageSync('utype', "c")
+          wx.redirectTo({
+            url: '../index/index'
+          })
+        }else{
+          wx.setStorageSync('utype', "b")
+          wx.redirectTo({
+            url: '../index/index_B'
+          })
+        }
+        
+       
+      }  else {
         wx.showToast({
           title: res.data.message,
           icon: 'none'
         })
       }
-    } else {
-      wx.navigateTo({
-        url: './update/update?mobile=' + this.data.mobile
-      })
-    }
+     
+  },
+  gozhuce(){
+    wx.redirectTo({
+      url: '../mobile/verify/verify?handle=bind&type=register'
+    })
+  },
+  goforget(){
+    wx.redirectTo({
+      url: '../mobile/verify/verify?handle=reset'
+    })
+  },
+  changeChart(event) {
+    let val = Number(event.currentTarget.dataset.id)
+    console.log(val)
+    // const devid = this.data.devid
+     this.setData({ checkedRadio: val })
+    // this.newGetDate(devid, val)
   },
   inputMobile(e) {
     this.setData({ mobile: e.detail.value })
@@ -84,25 +95,15 @@ Page({
     this.setData({ smsCode: e.detail.value })
     this.checkForm()
   },
+  inputpsd: function (e) {
+    this.setData({ password: e.detail.value })
+  },
   async getSmsCode() {
-    if(this.data.gotype){
-      const res = await reqSmsCode(this.data.mobile,'regist')
-      if(res.data.code === 0) {
-        count_down(this, 60 * 1000)
-        wx.showToast({ title: '发送成功！' })
-      }else{
-        wx.showToast({ title:res.data.message, icon: 'none' })
-      }
-    }else{
-      const res = await reqSmsCode(this.data.mobile,'')
-      if(res.data.code === 0) {
-        count_down(this, 60 * 1000)
-        wx.showToast({ title: '发送成功！' })
-      }else{
-        wx.showToast({ title:res.data.message, icon: 'none' })
-      }
+    const res = await reqSendCodeLogin(this.data.mobile)
+    if(res.data.code === 0) {
+      count_down(this, 60 * 1000)
+      wx.showToast({ title: '发送成功！' })
     }
-   
   },
   checkForm() {
     if (this.data.mobile.length == 11 && this.data.smsCode.length == 4) {
@@ -112,6 +113,7 @@ Page({
     }
   }
 })
+
 function count_down(that, total_micro_second) {
   if (total_micro_second <= 0) {
     that.setData({
@@ -140,3 +142,9 @@ function date_format(micro_second) {
 function fill_zero_prefix(num) {
   return num < 10 ? "0" + num : num
 }
+
+ 
+
+
+ 
+  
