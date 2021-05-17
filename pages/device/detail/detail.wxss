@@ -42,3 +42,76 @@ radio {
   width: 100%;
   z-index: 100
 }
+.warning_list {
+  height: auto;
+  box-sizing: content-box;
+
+}
+.shadow-box {
+  box-shadow: 0 0 14rpx 12rpx var(--blueShadow);
+}
+.warning_list .warntitle {
+  display: flex;
+  align-items: center;
+  /* padding: 20rpx 30rpx; */
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+.warntitle .left {
+  display: flex;
+  align-items: center;
+}
+.warntitle image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
+}
+
+.list-content .warnline {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  color: #333333;
+}
+.list-content .warnline text {
+  display: inline-block;
+  width: 50%;
+  text-align: left;
+}
+.warnIcon{
+  display: inline-block;
+  width: 28rpx;
+  height: 28rpx;
+}
+.warnaddress{
+  display: inline-block;
+  width: 50rpx;
+  height: 42rpx;
+  padding-top: 5px;
+  margin-right: 3px;
+}
+.warnTemp{
+  width: 18rpx;
+  height: 30rpx;
+  margin-right: 15rpx;
+  margin-left: 3rpx;
+}
+.warnpowerIcon{
+  width: 20rpx;
+  height: 26rpx;
+  margin-left: 2px;
+  margin-right: 14rpx;
+}
+.warnhumidity{
+  margin-right: 10rpx;
+  width: 26rpx;
+  height: 26rpx;
+}
+.warnType{
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 4rpx;
+}
+.brack{
+  color: #000;
+}

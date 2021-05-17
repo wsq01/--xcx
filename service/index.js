@@ -7,7 +7,7 @@ export default {
   reqDevCharts: httpUrlapi+'/09_00_tb_draw_line.php',
   reqUnbindDev: httpUrl + '/index/Device/remove_bind',
   reqUnbind: httpUrl + '/index/register/unbundle',
-  reqDevList: httpUrl + '/index/device/device_list',
+  reqDevList: httpUrlback + '/index/device/device_list',
   reqLookDev: httpUrl + '/index/index/look_device',
   reqAddMember: httpUrl + '/index/share',
   reqMemberList: httpUrl + '/index/share/membersList',
@@ -44,6 +44,7 @@ export default {
   reqDevShare:httpUrl+'/index/device/device_list_for_share',
   reqAddSharemember:httpUrl+'/index/share/add_member',
   reqEditSharemember:httpUrl+'/index/share/edit',
-  reqDevListVb:httpUrlback+'/index/device/device_list_v1',
-  reqDertList:httpUrlback+'/index/department/my_department'
+  reqDevListVb:httpUrl+'/index/device/device_list_v1',
+  reqDertList:httpUrl+'/index/department/my_department',
+  reqWarningList:httpUrl+'/index/alarm/device_list'
 }

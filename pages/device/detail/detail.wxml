@@ -1,7 +1,7 @@
 <view class="container">
 	<scroll-view scroll-x class="bg-white nav v-nav radius">
 		<view class="flex text-center">
-			<view class="my-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabList}}" wx:key="{{index}}" bindtap="tabSelect" data-id="{{index}}">
+			<view class="my-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabList}}" wx:key="{{index}}" bindtap="tabSelect" data-id="{{model_type=='TPA'?index+3:index}}">
 				{{item}}
 			</view>
 		</view>
@@ -95,7 +95,8 @@
 			</view>
 		</swiper-item>
 		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item margin-top-sm">
-			<view class="form-group" wx:for="{{paramsList}}" wx:key="index">
+			<scroll-view  refresher-enabled="{{true}}" refresher-triggered="{{isTriggered}}" scroll-y  style="height: calc(100vh - 100rpx);" scroll-with-animation="{{true}}">
+			<view class="form-group" wx:for="{{paramsList}}" wx:key="index">		
 				<view class="bg-white padding text-bold text-lg text-black solid-top solid-bottom flex justify-between align-center" style="color: #333;">
 					<view>
 						<text class="myIcon-title text-blue"></text>
@@ -122,12 +123,63 @@
 					</view>
 				</form>
 			</view>
-			<view wx:if="{{isMaster === '0' ? true : false}}" class="padding-tb bg-white"></view>
-			<view class="text-center padding-tb-sm text-gray" wx:if="{{isMaster === '0' ? false : true}}">更多设置请前往（中集智冷科技）公众号</view>
-			<view class="text-center bottom-btn" style="position: absolute;bottom: 0rpx;" wx:if="{{isMaster === '0' ? false : true||isutypeb}}">
+			<!-- <view wx:if="{{isMaster === '0' ? true : false}}" class="padding-tb bg-white"></view> -->		
+			<view class="text-center" wx:if="{{isMaster === '0' ? false : true||isutypeb}}">
 				<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSaveParams">保存</button>
 			</view>
-		
+		</scroll-view>
+		</swiper-item>
+		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item margin-top-sm">
+			<scroll-view  refresher-enabled="{{true}}" refresher-triggered="{{isTriggered}}" scroll-y  style="height: calc(100vh - 100rpx);" scroll-with-animation="{{true}}" bindscrolltolower="bindwarnscrolltolower">
+			<view class="bg-white">
+				<view class="margin-lr" wx:if="{{warnMessList.length!=0}}">
+				<view class="warning_list margin-bottom padding-tb-xs padding-lr radius-lg shadow-box" wx:for="{{warnMessList}}">
+								<view class="justify-between flex solids-bottom padding-tb-sm  align-center warntitle">
+									<view class="left">
+										<image src="../../../images/warning.png" class="warningImg"></image>
+										<text class="brack">{{item.shebeibianhao}}</text>
+									</view>
+									<view class="worktime solids-left padding-left-sm brack">
+									{{item.time}}
+									</view>
+								</view>
+								<view class="list-content padding-top-xs">
+									<view class="justify-between flex  padding-tb-xs align-center ">
+								   	<view class="flex align-center"><image src="../../../images/warnAlarm.png" class="warnType"></image>报警类型：{{item.alarm}}</view>
+									</view>
+									<view class="justify-between flex  padding-tb-xs align-center" wx:if="{{model_type!='TPA'}}">
+										 <view class="flex align-start">
+											 <image src="../../../images/warnaddress.png" class="warnaddress"></image>
+											<text>报警位置：{{item.position}}</text>
+										</view>
+									</view>
+									<view class="justify-between flex  padding-tb-xs align-center " wx:if="{{model_type!='TPA'}}">
+								   	<view><image src="../../../images/temp@2x.png" class="warnTemp"></image>温度：{{item.temperature01}}℃</view>
+									  <text class="tempLimit">温度阈值：{{item.baojingwendu_xiaxian}}~{{item.baojingwendu_shangxian}}℃</text>
+									</view>
+									<view class="justify-between flex  padding-tb-xs  align-center " wx:if="{{model_type=='TT'}}">
+										<view><image src="../../../images/temp@2x.png" class="warnTemp"></image>温度2：{{item.temperature02}}℃</view>
+										<text class="temp2Limit">	温度阈值：{{item.baojingwendu_two_xiaxian}}~{{item.baojingwendu_two_shangxian}}℃</text>
+									</view>
+									<view class="justify-between flex  padding-tb-xs  align-center " wx:elif="{{model_type=='TPA'}}">
+									
+									</view>
+									<view class="justify-between flex  padding-tb-xs  align-center " wx:else>
+										<view><image src="../../../images/humidity@2x.png" class="warnhumidity"></image>湿度：{{item.humidity}}%RH</view>
+										<text class="humiditylimit">湿度阈值：{{item.chaodishidubaojingfazhi}}~{{item.chaogaoshidubaojingfazhi}}%RH</text>
+									</view>
+									<view class="justify-between flex  padding-tb-xs  align-center"  wx:if="{{model_type!='TPA'}}">
+										<view><image src="../../../images/power2@2x.png" class="warnpowerIcon"></image>电量：{{item.power}}%</view>
+										<text class="powerLimit">	电量阈值：{{item.dianliang_xiaxian}}%</text>
+									</view>
+							</view>
+						</view>
+					</view>
+						<view class="padding text-center" wx:else>
+						    <text>暂无报警信息，该设备或未设置报警</text>
+						</view>
+			</view>
+		 </scroll-view>
 		</swiper-item>
 	</swiper>
 	<view class="my-modal {{modalChoose=='bind'?'show':''}}">

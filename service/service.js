@@ -410,3 +410,16 @@ export const reqDertList = (user) => wxRequest({
     pagesize: 1000
   }
 })
+export const reqWarningList = (admin_user,SheBeiBianHao,StartNo) => wxRequest({
+  url: API.reqWarningList,
+  method: 'post',
+  data: {
+    admin_permit:'zjly8888',
+    UserP: 'w',
+    admin_user,
+    SheBeiBianHao,  
+    admin_pass:'',
+    StartNo,
+    Length:20
+  }
+})

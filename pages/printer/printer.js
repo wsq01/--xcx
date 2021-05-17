@@ -603,8 +603,10 @@ Page({
         this.modal('error', res.data.message)
       }
     }
-    if (count === (page - 1) * 1000 + listLength) {    
-      const strArr = ['println', 'setAlign-l', '','签字:','','']
+    if (count === (page - 1) * 1000 + listLength) { 
+      const strArr1 = ['setSize(1, 1)', '最高温度:' +  this.data.printData.statistics[0].max_temperature01, '最低温度:' +  this.data.printData.statistics[0].min_temperature01, '平均温度:' +  this.data.printData.statistics[0].avg_temperature01]   
+      const strArr2 = ['println', 'setAlign-l', '','签字:','','']
+      const strArr=strArr1.concat(strArr2);
       this.writeBLECharacteristicValue(strArr, ++this.data.page)
       wx.hideLoading()
       wx.showToast({ title: '打印完成' })

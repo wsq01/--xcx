@@ -1,6 +1,6 @@
 import { formatTime, multiSelectorList, setOption } from '../../../utils/util.js';
 import * as datetimepickerUtil from '../../../utils/datetimepicker.js'
-import { reqDiagram, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks ,reqShowchart,reqSetParams  } from '../../../service/service.js';
+import { reqDiagram, reqDevParams, reqDevData, reqUnBindDev, reqJudgeBinded ,reqSetRemarks ,reqShowchart,reqSetParams,reqWarningList  } from '../../../service/service.js';
 import * as echarts from '../../../utils/echarts.min.js'
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk')
 var qqmapsdk = new QQMapWX({
@@ -10,7 +10,7 @@ var app = getApp();
 Page({
   data: {
     TabCur: 0,
-    tabList: ['详情', '位置', '数据', '参数'],
+    tabList: ['详情', '位置', '数据', '参数','报警'],
     ec: { lazyLoad: true },
     lastYear: '2020',
     checkedRadio: 1,
@@ -24,80 +24,80 @@ Page({
         ]
       },
       {
-        title: '基本参数设置',
+        title: '参数设置',
         content: [
           { label: '采集间隔', value: 'caiji_jiange_minute', type: 'input', placeholder: '单位：分钟' },
           { label: '上传间隔', value: 'fasong_jiange_minute', type: 'input', placeholder: '单位：分钟' },
-          // { label: '超温储存时间间隔', value: 'chaowenchucunshijianjiange', type: 'input', placeholder: '单位：分钟' },
-          // { label: '超温上传时间间隔', value: 'chaowenshangchuanshijianjiange', type: 'input', placeholder: '单位：分钟' },
-          // { label: '夜间上传开关', value: 'yejianshangchuankaiguan', type: 'switch', placeholder: '请输入' },
-          // { label: '飞行模式开关', value: 'feixingmoshikaiqi', type: 'switch', placeholder: '请输入' }
+          { label: '设备排序', value: 'sort', type: 'input', placeholder: '请输入排序号' },
+         
         ]
       },
       // {
-      //   title: '电量设置',
-      //   content: [
-      //     { label: '电量下限报警开关', value: 'dianliang_xiaxian_baojing', type: 'switch', placeholder: '请输入' },
-      //     { label: '电量下限', value: 'dianliang_xiaxian', type: 'input', placeholder: '请输入' }
-      //   ]
-      // },
-      // {
       //   title: '推送设置',
       //   content: [
-      //     { label: '微信推送报警', value: 'weixintuisong_baojing', type: 'switch', placeholder: '请输入' },
       //     { label: '短信推送报警', value: 'duanxingtuisong_baojing', type: 'switch', placeholder: '请输入' },
       //     { label: '短信推送报警手机号', value: 'duanxingtuisong', type: 'input', placeholder: '请输入' },
       //   ]
-      // },
-      // {
-      //   title: '定时推送时间',
-      //   content: [
-      //     { value: 'dingshifasong', type: 'mulitPicker' }
-      //   ]
-      // }
-      
+      // },   
     ],
     paramsListTHItem: [
-      // {
-      //   title: '温度设置',
-      //   content: [
-      //     { label: '温度报警上限开关', value: 'baojingwendu_shangxian_baojing', type: 'switch', placeholder: '请输入' },
-      //     { label: '温度报警下限开关', value: 'baojingwendu_xiaxian_baojing', type: 'switch', placeholder: '请输入' },
-      //     { label: '温度报警上限', value: 'baojingwendu_shangxian', type: 'digit', placeholder: '请输入' },
-      //     { label: '温度报警下限', value: 'baojingwendu_xiaxian', type: 'digit', placeholder: '请输入' },
-      //   ]
-      // },
-      // {
-      //   title: '湿度设置',
-      //   content: [
-      //     { label: '湿度超低报警', value: 'chaodishidubaojing', type: 'switch', placeholder: '请输入' },
-      //     { label: '湿度超高报警', value: 'chaogaoshidubaojing', type: 'switch', placeholder: '请输入' },
-      //     { label: '湿度超低报警阈值', value: 'chaodishidubaojingfazhi', type: 'digit', placeholder: '请输入' },
-      //     { label: '湿度超高报警阈值', value: 'chaogaoshidubaojingfazhi', type: 'digit', placeholder: '请输入' }
-      //   ]
-      // }
+      {
+        title: '报警设置',
+        content: [
+          { label: '温度上限开关', value: 'baojingwendu_shangxian_baojing', type: 'switch', placeholder: '请输入' },
+          { label: '温度上限阈值', value: 'baojingwendu_shangxian', type: 'digit', placeholder: '请输入' },
+          { label: '温度下限开关', value: 'baojingwendu_xiaxian_baojing', type: 'switch', placeholder: '请输入' },        
+          { label: '温度下限阈值', value: 'baojingwendu_xiaxian', type: 'digit', placeholder: '请输入' },
+          { label: '湿度上限开关', value: 'chaogaoshidubaojing', type: 'switch', placeholder: '请输入' },
+          { label: '湿度上限阈值', value: 'chaogaoshidubaojingfazhi', type: 'digit', placeholder: '请输入' },
+          { label: '湿度下限开关', value: 'chaodishidubaojing', type: 'switch', placeholder: '请输入' },        
+          { label: '湿度下限阈值', value: 'chaodishidubaojingfazhi', type: 'digit', placeholder: '请输入' },
+          { label: '电量下限开关', value: 'dianliang_xiaxian_baojing', type: 'switch', placeholder: '请输入' },
+          { label: '电量下限阈值', value: 'dianliang_xiaxian', type: 'input', placeholder: '请输入' },
+          { label: '微信报警', value: 'weixintuisong_baojing', type: 'switch', placeholder: '请输入' },
+          { label: '电话报警', value: 'is_open', type: 'switch', placeholder: '请输入' }
+        ]
+      },
+
     ],
     paramsListTTItem: [
-      // {
-      //   title: '温度设置',
-      //   content: [
-      //     { label: '温度1报警上限开关', value: 'baojingwendu_shangxian_baojing', type: 'switch', placeholder: '请输入' },
-      //     { label: '温度1报警下限开关', value: 'baojingwendu_xiaxian_baojing', type: 'switch', placeholder: '请输入' },
-      //     { label: '温度1报警上限', value: 'baojingwendu_shangxian', type: 'digit', placeholder: '请输入' },
-      //     { label: '温度1报警下限', value: 'baojingwendu_xiaxian', type: 'digit', placeholder: '请输入' },
-      //     { label: '温度2报警下限开关', value: 'baojingwendu_two_xiaxian_baojing', type: 'switch', placeholder: '请输入' },
-      //     { label: '温度2报警上限开关', value: 'baojingwendu_two_shangxian_baojing', type: 'switch', placeholder: '请输入' },
-      //     { label: '温度2报警下限', value: 'baojingwendu_two_xiaxian', type: 'digit', placeholder: '请输入' },
-      //     { label: '温度2报警上限', value: 'baojingwendu_two_shangxian', type: 'digit', placeholder: '请输入' }
-      //   ]
-      // }
+      {
+        title: '报警参数设置',
+        content: [
+          { label: '温度1上限开关', value: 'baojingwendu_shangxian_baojing', type: 'switch', placeholder: '请输入' },
+          { label: '温度1上限阈值', value: 'baojingwendu_shangxian', type: 'digit', placeholder: '请输入' },
+          { label: '温度1下限开关', value: 'baojingwendu_xiaxian_baojing', type: 'switch', placeholder: '请输入' },         
+          { label: '温度1下限阈值', value: 'baojingwendu_xiaxian', type: 'digit', placeholder: '请输入' },
+          { label: '温度2上限开关', value: 'baojingwendu_two_shangxian_baojing', type: 'switch', placeholder: '请输入' },
+          { label: '温度2上限阈值', value: 'baojingwendu_two_shangxian', type: 'digit', placeholder: '请输入' },
+          { label: '温度2下限开关', value: 'baojingwendu_two_xiaxian_baojing', type: 'switch', placeholder: '请输入' },
+          { label: '温度2下限阈值', value: 'baojingwendu_two_xiaxian', type: 'digit', placeholder: '请输入' },  
+          { label: '电量下限开关', value: 'dianliang_xiaxian_baojing', type: 'switch', placeholder: '请输入' },
+          { label: '电量下限阈值', value: 'dianliang_xiaxian', type: 'input', placeholder: '请输入' },
+          { label: '微信报警', value: 'weixintuisong_baojing', type: 'switch', placeholder: '请输入' },
+          { label: '电话报警', value: 'is_open', type: 'switch', placeholder: '请输入' },
+        ]
+      }
+    ],
+    paramsListTPAItem: [
+      {
+        title: '报警设置',
+        content: [
+          { label: '微信报警', value: 'weixintuisong_baojing', type: 'switch', placeholder: '请输入' },
+          { label: '电话报警', value: 'is_open', type: 'switch', placeholder: '请输入' }
+        ]
+      },
+
     ],
     paramsData: {},
     isRequested: false,
     deviceDataList: [],
+    warnMessList:[],
     deviceParams: {},
     startNo: 0,
+    startwarnNo: 0,
     devid: '',
+    model_type:'',
     multiSelectorList: [],
     latitude: 24.4795100000,
     longitude: 118.0894800000,
@@ -130,23 +130,34 @@ Page({
   },
   onLoad (options) {
     this.ecComponent = this.selectComponent('#mychart-dom-bar')
-    const {devid, isMaster } = options
+    const {devid, isMaster,model_type } = options
     console.log(options)
     this.setData({
       devid,
       isMaster,
+      model_type,
       multiSelectorList: multiSelectorList()
     })
+    if(model_type=="TPA"){
+      let arr=this.data.tabList
+      let arr2= arr.splice(3,2)
+      console.log(arr)
+      this.setData({
+        tabList:arr2,
+        TabCur:3
+      })
+    }
     const mobile = wx.getStorageSync('mobile')
     this.reqDevParams(mobile, devid)
     this.initChart(devid,1)
     this.reqDevData(mobile, devid)
+    this.reqWarningList(mobile,devid,this.data.startwarnNo)
     
-    if(wx.getStorageSync('utype')=="b"){
-      this.setData({
-        isutypeb:false
-      })
-    }
+    // if(wx.getStorageSync('utype')=="b"){
+    //   this.setData({
+    //     isutypeb:false
+    //   })
+    // }
     this.initPicker()
   },
   initPicker() {
@@ -157,6 +168,16 @@ Page({
       dateTime2: obj.dateTime2,
       dateTimeArray2: obj.dateTimeArray2
     })
+  },
+  bindwarnscrolltolower(){
+    const mobile = wx.getStorageSync('mobile')
+    console.log(2)
+    let startwarn=this.data.startwarnNo
+    startwarn=startwarn+20
+    this.setData({
+      startwarnNo: startwarn
+    })
+    this.reqWarningList(mobile,this.data.devid)
   },
   changeDateTime1(e) {
     this.setData({
@@ -330,23 +351,31 @@ Page({
       })
       return
     }
-    // if(this.data.deviceParams.model_type === 'TH') {
-    //   if((this.data.paramsData.baojingwendu_shangxian < this.data.paramsData.baojingwendu_xiaxian) || (this.data.paramsData.chaodishidubaojingfazhi > this.data.paramsData.chaogaoshidubaojingfazhi)) {
-    //     wx.showToast({
-    //       title: '下限不得高于上限',
-    //       icon: 'none'
-    //     })
-    //     return
-    //   }
-    // } else if(this.data.deviceParams.model_type === 'TT') {
-    //   if((this.data.paramsData.baojingwendu_shangxian < this.data.paramsData.baojingwendu_xiaxian) || (this.data.paramsData.baojingwendu_two_xiaxian > this.data.paramsData.baojingwendu_two_shangxian)) {
-    //     wx.showToast({
-    //       title: '下限不得高于上限',
-    //       icon: 'none'
-    //     })
-    //     return
-    //   }
-    // }
+    if(this.data.paramsData.baojingwendu_shangxian_baojing == 1 && this.data.paramsData.baojingwendu_xiaxian_baojing == 1 && parseInt(this.data.paramsData.baojingwendu_shangxian) < parseInt(this.data.paramsData.baojingwendu_xiaxian)) {
+      wx.showToast({
+        title: '温度1下限不能高于上限',
+        icon: 'none'
+      })
+      return
+    }
+    if(this.data.deviceParams.model_type === 'TH') {
+      if(this.data.paramsData.chaogaoshidubaojing == 1 && this.data.paramsData.chaodishidubaojing == 1 && parseInt(this.data.paramsData.chaogaoshidubaojingfazhi) < parseInt(this.data.paramsData.chaodishidubaojingfazhi)) {
+        wx.showToast({
+          title: '湿度下限不能高于上限',
+          icon: 'none'
+        })
+        return false;
+      }
+
+    } else if(this.data.deviceParams.model_type === 'TT') {
+      if(this.data.paramsData.baojingwendu_shangxian_baojing == 1 && this.data.paramsData.baojingwendu_xiaxian_baojing == 1 && parseInt(this.data.paramsData.baojingwendu_two_shangxian) < parseInt(this.data.paramsData.baojingwendu_two_xiaxian)) {
+        wx.showToast({
+          title: '温度2下限不能高于上限',
+          icon: 'none'
+        })
+        return false;
+      }
+    }
     const openid = wx.getStorageSync('openid')
     this.setData({
       'paramsData.openid': openid,
@@ -360,6 +389,28 @@ Page({
     obj.fasong_jiange_minute=this.data.paramsData.fasong_jiange_minute
     obj.UserP=this.data.paramsData.UserP
     obj.GPS_Start=this.data.paramsData.GPS_Start
+    if(this.data.deviceParams.model_type === 'TH'){
+      obj.chaogaoshidubaojing=this.data.paramsData.chaogaoshidubaojing
+      obj.chaogaoshidubaojingfazhi=this.data.paramsData.chaogaoshidubaojingfazhi
+      obj.chaodishidubaojing=this.data.paramsData.chaodishidubaojing
+      obj.chaodishidubaojingfazhi=this.data.paramsData.chaodishidubaojingfazhi
+    }else{
+      obj.baojingwendu_two_shangxian=this.data.paramsData.baojingwendu_two_shangxian
+      obj.baojingwendu_two_shangxian_baojing=this.data.paramsData.baojingwendu_two_shangxian_baojing
+      obj.baojingwendu_two_xiaxian=this.data.paramsData.baojingwendu_two_xiaxian
+      obj.baojingwendu_two_xiaxian_baojing=this.data.paramsData.baojingwendu_two_xiaxian_baojing
+    }
+    obj.baojingwendu_shangxian_baojing=this.data.paramsData.baojingwendu_shangxian_baojing
+		obj.baojingwendu_shangxian=this.data.paramsData.baojingwendu_shangxian
+    obj.baojingwendu_xiaxian=this.data.paramsData.baojingwendu_xiaxian
+    obj.baojingwendu_xiaxian_baojing=this.data.paramsData.baojingwendu_xiaxian_baojing
+    obj.dianliang_xiaxian=this.data.paramsData.dianliang_xiaxian
+    obj.dianliang_xiaxian_baojing=this.data.paramsData.dianliang_xiaxian_baojing
+    obj.duanxingtuisong_baojing=this.data.paramsData.dianliang_xiaxian_baojing
+    obj.weixintuisong_baojing=this.data.paramsData.weixintuisong_baojing
+    obj.sort=this.data.paramsData.sort
+    obj.is_open=this.data.paramsData.is_open
+    obj.warn_time= ""
     let utype = wx.getStorageSync('utype')
     if(utype=='b'){
       obj.userType='tb'
@@ -382,6 +433,7 @@ Page({
     this.setData({
       TabCur: e.currentTarget.dataset.id
     })
+  
   },
   swiperChange(e) {
     this.setData({
@@ -413,15 +465,32 @@ Page({
         paramsData: res.data.resultCode,
         deviceParams: res.data.resultCode
       })
-      this.initForm(res.data.resultCode.model_type)
+      this.initForm(this.data.model_type)
+    }
+  },
+  async reqWarningList(mobile,devid, startwarnNo) {
+    const res = await reqWarningList(mobile, devid,this.data.startwarnNo)
+    console.log(res)
+    if (res.data.code === 10000&&res.data.message=='nodata') {
+      this.setData({ warnMessList: [] })     
+    }else if(res.data.code === 10000&&res.data.message=='success'){
+      let list = this.data.warnMessList
+      list = list.concat(res.data.resultCode)
+      this.setData({ warnMessList: list })
+    }else{
+      
     }
   },
   initForm(type) {
     const paramsList = this.data.paramsList
+    
     if(type === 'TH') {
       paramsList.splice(2, 0, ...this.data.paramsListTHItem)
     } else if(type === 'TT') {
       paramsList.splice(2, 0, ...this.data.paramsListTTItem)
+    }else if(type === 'TPA') {
+      paramsList.splice(0, 2, ...this.data.paramsListTPAItem)
+      console.log(paramsList)
     }
     this.setData({ paramsList })
   },

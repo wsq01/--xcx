@@ -14,12 +14,13 @@
 			<image src="/images/qrcode@2x.png" show-menu-by-longpress="true" style="width: 248rpx;height: 248rpx;"></image>
 			<text class="text-blue margin-xl">长按保存二维码</text>
 		</view>
-		<view class="solid-bottom solid-top padding-lg margin-bottom" wx:if="{{isShowAccount}}">
+		<view class="solid-bottom solid-top padding-lg margin-bottom">
 			<text class="myIcon-weixin text-green text-xl margin-right-sm"></text>
 			<text>公众号</text>
 		</view>
 		<view class="flex justify-center flex-direction align-center">
-			<official-account bindload="bindLoad" style="width: calc(80vw);" class="text-blue"></official-account>
+			<official-account></official-account>
+			<!-- <official-account bindload="bindLoad" style="width: calc(80vw);" class="text-blue"></official-account> -->
 		</view>
 	</view>
 </view>

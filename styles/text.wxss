@@ -55,6 +55,11 @@
 .text-right {
 	text-align: right;
 }
+.text-green,
+.line-green,
+.lines-green {
+	color: var(--green);
+}
 
 .text-red,
 .line-red,
@@ -66,12 +71,6 @@
 .line-olive,
 .lines-olive {
 	color: var(--olive);
-}
-
-.text-green,
-.line-green,
-.lines-green {
-	color: var(--green);
 }
 
 .text-cyan,
