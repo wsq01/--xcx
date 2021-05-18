@@ -1,7 +1,7 @@
 <view class="container">
 	<scroll-view scroll-x class="bg-white nav v-nav radius">
 		<view class="flex text-center">
-			<view class="my-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabList}}" wx:key="{{index}}" bindtap="tabSelect" data-id="{{model_type=='TPA'?index+3:index}}">
+			<view class="my-item flex-sub {{model_type=='TPA'?index+3==TabCur?'text-blue cur':'':index==TabCur?'text-blue cur':''}}" wx:for="{{tabList}}" wx:key="{{index}}" bindtap="tabSelect" data-id="{{model_type=='TPA'?index+3:index}}">
 				{{item}}
 			</view>
 		</view>
@@ -154,7 +154,7 @@
 										</view>
 									</view>
 									<view class="justify-between flex  padding-tb-xs align-center " wx:if="{{model_type!='TPA'}}">
-								   	<view><image src="../../../images/temp@2x.png" class="warnTemp"></image>温度：{{item.temperature01}}℃</view>
+								   	<view class="flex align-center"><image src="../../../images/temp@2x.png" class="warnTemp"></image>温度：{{item.temperature01}}℃</view>
 									  <text class="tempLimit">温度阈值：{{item.baojingwendu_xiaxian}}~{{item.baojingwendu_shangxian}}℃</text>
 									</view>
 									<view class="justify-between flex  padding-tb-xs  align-center " wx:if="{{model_type=='TT'}}">

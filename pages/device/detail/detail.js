@@ -40,7 +40,7 @@ Page({
       //   ]
       // },   
     ],
-    paramsListTHItem: [
+    THItem: [
       {
         title: '报警设置',
         content: [
@@ -60,7 +60,7 @@ Page({
       },
 
     ],
-    paramsListTTItem: [
+    TTItem: [
       {
         title: '报警参数设置',
         content: [
@@ -79,7 +79,7 @@ Page({
         ]
       }
     ],
-    paramsListTPAItem: [
+    TPAItem: [
       {
         title: '报警设置',
         content: [
@@ -295,8 +295,9 @@ Page({
         longitude: hisdata.jingdu
       },
       success:(res) => {
+        console.log(res)
         let tempinfo = ''
-        if (res.model_type == "TT") {
+        if (this.data.model_type == "TT") {
           tempinfo = res.result.address + '\n' + '温度1:' + hisdata.temperature01 + '℃ / 温度2:' + hisdata.temperature02 + '℃' + '\n' + '时间' + hisdata.time
         } else {
           tempinfo = res.result.address + '\n' + '温度:' + hisdata.temperature01 + '℃ / 湿度:' + hisdata.humidity + '%RH' + '\n' + '时间' + hisdata.time
@@ -465,6 +466,7 @@ Page({
         paramsData: res.data.resultCode,
         deviceParams: res.data.resultCode
       })
+      console.log(this.data.model_type,99)
       this.initForm(this.data.model_type)
     }
   },
@@ -483,16 +485,17 @@ Page({
   },
   initForm(type) {
     const paramsList = this.data.paramsList
-    
+    let arr=[]
     if(type === 'TH') {
-      paramsList.splice(2, 0, ...this.data.paramsListTHItem)
+      // paramsList(2, 0, ...this.data.paramsListTHItem)
+      arr= paramsList.concat(this.data.THItem)
     } else if(type === 'TT') {
-      paramsList.splice(2, 0, ...this.data.paramsListTTItem)
+      // paramsList.splice(2, 0, ...this.data.paramsListTTItem)
+      arr=paramsList.concat(this.data.TTItem)
     }else if(type === 'TPA') {
-      paramsList.splice(0, 2, ...this.data.paramsListTPAItem)
-      console.log(paramsList)
+      arr=this.data.TPAItem
     }
-    this.setData({ paramsList })
+    this.setData({ paramsList:arr })
   },
   bindUnBind() {
     wx.showModal({

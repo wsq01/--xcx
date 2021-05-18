@@ -79,11 +79,11 @@
             </view>
             <view class="flex justify-between padding-tb-sm" wx:else>
               <view class="flex flex-direction align-center justify-center">
-                <image style="display: block;width: 56rpx;height: 48rpx;" src="{{!item.is_line ? '/images/temp-off.png' : ((item.baojingwendu_shangxian_baojing === 1 && item.last_temperature01 >= item.baojingwendu_shangxian) || (item.baojingwendu_xiaxian_baojing === 1 && item.baojingwendu_xiaxian >= item.item.last_temperature01)) ? '/images/temp-high.png' : '/images/temp.png'}}"></image>
+                <image style="display: block;width: 56rpx;height: 48rpx;" src="{{!item.is_line ? '/images/temp-off@2x.png' : ((item.baojingwendu_shangxian_baojing === 1 && item.last_temperature01 >= item.baojingwendu_shangxian) || (item.baojingwendu_xiaxian_baojing === 1 && item.baojingwendu_xiaxian >= item.item.last_temperature01)) ? '/images/temp-high@2x.png' : '/images/temp@2x.png'}}"></image>
                 <text class="margin-top-xs">{{item.last_temperature01}}°C</text>
               </view>
               <view wx:if="{{item.model_type==='TT'}}" class="flex flex-direction align-center justify-center">
-                <image style="display: block;width: 18rpx;height: 42rpx;" src="{{!item.is_line ? '/images/temp-off@2x.png' : ((item.baojingwendu_two_shangxian_baojing === 1 && item.last_temperature02 >= item.baojingwendu_two_shangxian) || (item.baojingwendu_two_xiaxian_baojing === 1 && item.last_temperature02 <= item.baojingwendu_two_xiaxian)) ? '/images/temp-heigh@2x.png' : '/images/temp@2x.png'}}"></image>
+                <image style="display: block;width: 56rpx;height: 48rpx;" src="{{!item.is_line ? '/images/temp-off@2x.png' : ((item.baojingwendu_two_shangxian_baojing === 1 && item.last_temperature02 >= item.baojingwendu_two_shangxian) || (item.baojingwendu_two_xiaxian_baojing === 1 && item.last_temperature02 <= item.baojingwendu_two_xiaxian)) ? '/images/temp-heigh@2x.png' : '/images/temp@2x.png'}}"></image>
                 <text class="margin-top-xs">{{item.last_temperature02}}°C</text>
               </view>
               <view wx:else class="flex flex-direction align-center justify-center">
