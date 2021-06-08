@@ -1,0 +1,53 @@
+.user-container {
+  height: 400rpx;
+  background: url('http://www.ccsc58.cc/leng/little/image/userBar.png') no-repeat;
+  background-size:cover;
+  position: relative;
+}
+.userinfo {
+  display: flex;
+  align-items: center;
+}
+.userinfo-avatar {
+  position: absolute;
+  top: 120rpx;
+  left: 42%;
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.text-cut{
+  position: absolute;
+  top: 280rpx;
+  left: 42%;
+  color: #ffffff;
+}
+.content{
+  padding:0px 30rpx;
+  box-sizing: border-box;
+  background-color: var(--white);
+}
+.content .aline{
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  min-height: 100rpx;
+  justify-content: space-between;
+}
+.content .aline input {
+  text-align: right;
+  color: #555;
+}
+/* .content .lastline{
+  margin-top: 30rpx;
+} */
+.content .lastline button{
+  margin-top: 30rpx;
+}
+.bottom-btn {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 100
+}

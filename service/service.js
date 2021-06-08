@@ -423,3 +423,15 @@ export const reqWarningList = (admin_user,SheBeiBianHao,StartNo) => wxRequest({
     Length:20
   }
 })
+export const reqUserInfo = (admin_user) => wxRequest({
+  url: API.reqUserInfo,
+  method: 'post',
+  data: {
+    admin_user
+  }
+})
+export const reqUpdateUserInfo = (data) => wxRequest({
+  url: API.reqUpdateUserInfo,
+  method: 'post',
+  data
+})

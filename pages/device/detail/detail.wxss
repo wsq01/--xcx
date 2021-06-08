@@ -115,3 +115,13 @@ radio {
 .brack{
   color: #000;
 }
+.bottom-TPA-btn {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+}
+.navi-bar-view-IPX {
+  padding-bottom: 160rpx;
+  /* 其他样式值 */
+}

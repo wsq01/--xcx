@@ -1,0 +1,34 @@
+<view class="container">
+  <view class="boxList padding-lr">
+    <view class="deviceItem margin-tb padding-lr" bindtap="bindPay">
+      <view class="itemTop">
+        <view class="bigtxt">设备号：520439</view>
+        <view>套餐A ￥<text class="bigtxt">12.0</text></view>
+      </view>
+      <view class="itemButtom">
+        <text>到期日期：2021-05-21 16：22：35</text>
+        <text>￥30.0</text>
+      </view>
+    </view>
+    <view class="deviceItem margin-tb padding-lr">
+      <view class="itemTop">
+        <view class="bigtxt">设备号：520439</view>
+        <view>套餐A ￥<text class="bigtxt">12.0</text></view>
+      </view>
+      <view class="itemButtom">
+        <text>到期日期：2021-05-21 16：22：35</text>
+        <text>￥30.0</text>
+      </view>
+    </view>
+    <view class="deviceItem margin-tb padding-lr">
+      <view class="itemTop">
+        <view class="bigtxt">设备号：520439</view>
+        <view>套餐A ￥<text class="bigtxt">12.0</text></view>
+      </view>
+      <view class="itemButtom">
+        <text>到期日期：2021-05-21 16：22：35</text>
+        <text>￥30.0</text>
+      </view>
+    </view>
+  </view>
+</view>

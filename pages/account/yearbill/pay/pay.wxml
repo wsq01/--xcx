@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="boxList padding-lr">
+    <block wx:for="{{list}}" wx:key='index' wx:for-item="item">
+      <view class="deviceItem margin-tb padding-lr {{index==initIndex?'active':''}}" bindtap="bindchoose" data-info="{{item}}">
+        <view class="itemTop">
+          <view class="bigtxt">套餐名称：{{item.tittle}}</view>
+          <view>单价：<text class="bigtxt">{{item.price}}</text>元</view>
+        </view>
+        <view class="itemButtom">
+          <text>{{item.desc}}</text>
+        </view>
+      </view>
+    </block>
+    <view class="deviceItem margin-tb padding-lr">
+      <view class="itemTop">
+        <view class="bigtxt">续期年限：</view>
+        <view class='select_box'>
+          <view class='select' catchtap='selectTap'>
+            <text class='select_text'>{{selectData[index]}}</text>
+            <image class='select_img {{show&&"select_img_rotate"}}' src='../../../../images/sanjiao.png'></image>
+          </view>
+          <view class='option_box' style='height:{{show?(selectData.length>5?300:selectData.length*60):0}}rpx;'>
+            <text class='option' style='{{index==selectData.length-1&&"border:0;"}}' wx:for='{{selectData}}'
+              wx:key='this' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="itemButtom">
+        <text>续费单位年 最低1年起</text>
+      </view>
+    </view>
+  </view>
+  <view class="text-center bg-white bottom-btn flex justify-between align-center padding-lr">
+    <view class="padding-lr">待支付:<text class="money">￥{{total}}</text> </view>
+    <view><button class="bg-blue ">立即付款</button> </view>
+  </view>
+</view>

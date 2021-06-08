@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="boxList padding-lr">
+    <block wx:for="{{list}}" wx:key='index' wx:for-item="item">
+      <view class="deviceItem margin-tb padding-lr {{index==initIndex?'active':''}}" bindtap="bindchoose" data-info="{{item}}">
+        <view class="itemTop">
+          <view class="bigtxt">套餐名称：{{item.tittle}}</view>
+          <view>单价：<text class="bigtxt">{{item.price}}</text>元</view>
+        </view>
+        <view class="itemButtom">
+          <text>{{item.desc}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="text-center bg-white bottom-btn flex justify-between align-center padding-lr">
+    <view class="padding-lr">待支付:<text class="money">￥{{total}}</text> </view>
+    <view><button class="bg-blue ">立即付款</button> </view>
+  </view>
+</view>

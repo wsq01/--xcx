@@ -46,10 +46,16 @@ Page({
         page: '../bill/bill'
       },
       {
-        type: 'mobile',
-        icon: '/images/icon-mobile@2x.png',
-        text: '账户设置',
-        page: '../mobile/mobile'
+        type: 'account',
+        icon: '/images/icon-acount@2x.png',
+        text: '我的账户',
+        page: '../account/account'
+      },
+      {
+        type: 'setmeal',
+        icon: '/images/icon-bill@2x.png',
+        text: '我的套餐',
+        page: '../setmeal/setmeal'
       },
       {
         type: 'issue',
@@ -313,7 +319,7 @@ Page({
             tabList:this.data.tabList,
             'tabList[0]':'设备列表'
            });
-           let _menulist=this.data.menuList.slice(3);
+           let _menulist=this.data.menuList.slice(2);
             this.setData({
               menuList:_menulist
             });

@@ -1,0 +1,7 @@
+<view class="container">
+  <view class="content padding-lr">
+    <view class="boxItem" wx:for="{{mealList}}" wx:for-item="data" wx:key="index" bindtap="bindchoose" data-info="{{data}}">
+     <image src="{{data.src}}" class="itemImg" ></image>
+    </view>
+  </view>
+</view>

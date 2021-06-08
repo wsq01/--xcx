@@ -75,6 +75,10 @@
 			<switch class="blue" bindchange="bindChangeSwitch"></switch>
 		</view>
 		<view class="my-form-group">
+			<view class="title">打印表头</view>
+			<input type="text" placeholder="请输入打印表头" bindinput="updategsmc" class="nickname_input" placeholder-class="nickname_placeholder"  value="{{printsetData.gongsimingcheng}}"></input>
+		</view>
+		<view class="my-form-group">
 			<view class="title">车牌号</view>
 			<input type="text" placeholder="请输入车牌号" bindinput="updatecph" class="nickname_input" placeholder-class="nickname_placeholder" value="{{printsetData.chepaihao}}"></input>
 		</view>

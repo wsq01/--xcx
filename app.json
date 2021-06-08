@@ -1,5 +1,5 @@
 {
-  "pages": [  
+  "pages": [
     "pages/index/index",
     "pages/index/index_B",
     "pages/issue/issue",
@@ -25,7 +25,17 @@
     "pages/device/bluetoothDetail/bluetoothDetail",
     "pages/device/bluetoothDetailList/bluetoothDetailList",
     "pages/pdf/pdf",
-    "pages/login/login"
+    "pages/account/account",
+    "pages/login/login",
+    "pages/setmeal/setmeal",
+    "pages/account/yearbill/deviceList/deviceList",
+    "pages/account/yearbill/pay/pay",
+    "pages/account/flowmeal/deviceList/deviceList",
+    "pages/account/flowmeal/pay/pay",
+    "pages/account/messagemeal/messagemeal",
+    "pages/account/paybill/paybill",
+    "pages/account/voicemeal/voicemeal",
+    "pages/account/messagemeal/messagebuy/messagebuy"
   ],
   "window": {
     "backgroundTextStyle": "light",

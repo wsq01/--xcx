@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container" >
 	<scroll-view scroll-x class="bg-white nav v-nav radius">
 		<view class="flex text-center">
 			<view class="my-item flex-sub {{model_type=='TPA'?index+3==TabCur?'text-blue cur':'':index==TabCur?'text-blue cur':''}}" wx:for="{{tabList}}" wx:key="{{index}}" bindtap="tabSelect" data-id="{{model_type=='TPA'?index+3:index}}">
@@ -96,7 +96,7 @@
 		</swiper-item>
 		<swiper-item catchtouchmove="stopTouchMove" class="swiper-item margin-top-sm">
 			<scroll-view  refresher-enabled="{{true}}" refresher-triggered="{{isTriggered}}" scroll-y  style="height: calc(100vh - 100rpx);" scroll-with-animation="{{true}}">
-			<view class="form-group" wx:for="{{paramsList}}" wx:key="index">		
+			<view class="form-group {{isIPX & index==2 ? 'navi-bar-view-IPX':''}}" wx:for="{{paramsList}}" wx:key="index">		
 				<view class="bg-white padding text-bold text-lg text-black solid-top solid-bottom flex justify-between align-center" style="color: #333;">
 					<view>
 						<text class="myIcon-title text-blue"></text>
@@ -108,7 +108,7 @@
 					<view class="my-form-group" wx:for="{{item.content}}" wx:for-item="sItem" wx:for-index="sIndex" wx:key="sIndex">
 						<view class="title" wx:if="{{sItem.label}}">{{sItem.label}}</view>
 						<input class="text-right" wx:if="{{sItem.type === 'input'}}" disabled="{{isMaster === '0' ? true : sItem.disabled}}" bindchange="bindInputChange" data-key="{{sItem.value}}" type="{{sItem.value === 'beizhu' ? 'text' : 'number'}}" value="{{paramsData[sItem.value]}}" placeholder="{{sItem.placeholder}}"></input>
-						<input class="text-right" wx:if="{{sItem.type === 'digit'}}" disabled="{{isMaster === '0' ? true : sItem.disabled}}" bindchange="bindInputChange" data-key="{{sItem.value}}" type="{{sItem.value === 'beizhu' ? 'text' : 'number'}}" value="{{paramsData[sItem.value]}}" placeholder="{{sItem.placeholder}}"></input>
+						<input class="text-right" wx:if="{{sItem.type === 'digit'}}" disabled="{{isMaster === '0' ? true : sItem.disabled}}" bindchange="bindInputChange" data-key="{{sItem.value}}" type="{{sItem.value === 'beizhu' ? 'text' : 'text'}}" value="{{paramsData[sItem.value]}}" placeholder="{{sItem.placeholder}}"></input>
 						<switch class="blue" bindchange="bindSwitchChange" disabled="{{isMaster === '0' ? true : sItem.disabled}}" checked="{{paramsData[sItem.value] == '1' ? true : false}}" data-key="{{sItem.value}}" wx:elif="{{sItem.type === 'switch'}}" color="#82C6D3"></switch>
 						<view wx:elif="{{sItem.type === 'mulitPicker'}}">
 							<view class="my-form-group" wx:for="{{paramsData[sItem.value]}}" wx:for-item="ssItem" wx:for-index="ssIndex" wx:key="{{ssIndex}}">
@@ -124,7 +124,7 @@
 				</form>
 			</view>
 			<!-- <view wx:if="{{isMaster === '0' ? true : false}}" class="padding-tb bg-white"></view> -->		
-			<view class="text-center" wx:if="{{isMaster === '0' ? false : true||isutypeb}}">
+			<view class="text-center bg-white {{model_type=='TPA'?'bottom-TPA-btn':'bottom-btn'}}" wx:if="{{isMaster === '0' ? false : true||isutypeb}}" style="z-index:99;width:100%">
 				<button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSaveParams">保存</button>
 			</view>
 		</scroll-view>

@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="padding-lr">
+    <!--搜索框 -->
+    <view class="weui-search-bar margin-tb">
+      <view class="weui-search-bar__form">
+        <!--点击之后，出现input框 -->
+        <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+          <input type="text" class="weui-search-bar__input" placeholder="按公司名称搜索" value="{{inputVal}}"
+            focus="{{inputShowed}}" bindinput="inputTyping" />
+          <!--输入款字数大于0，则显示清除按钮 -->
+          <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+            <icon type="clear" size="14"></icon>
+          </view>
+        </view>
+      </view>
+      <!--动态出现的“取消”键 -->
+      <view class="weui-search-bar__cancel-btn" wx:if="{{inputVal.length > 0}}" bindtap="bindSearch">查询</view>
+    </view>
+    <view class="content">
+        <view class="yearfee bg-white padding-tb">
+          <view class="flex justify-between itemLine">
+            <view class="bigtxt">鲜盾管家</view>
+          </view>
+          <view class="flex justify-between itemLine">
+            <view>短信开通状态：未开通</view>
+            <view>开通短信报警：<switch class="blue" bindchange="bindSwitchChange" data-key="{{sItem.value}}"  color="#82C6D3"></switch></view>
+          </view>
+          <view class="flex justify-between itemLine">
+            <view>短信剩余条数：77</view>
+            <view>下级短信报警：<switch class="blue" bindchange="bindSwitchChange" data-key="{{sItem.value}}"  color="#82C6D3"></switch></view>
+          </view>
+        </view>
+      </view>
+      <view class="text-center bg-white boxbtn">
+				<button class="my-btn bg-blue margin-tb-lg round text-lg"  bindtap="bindpay">立即充值</button>
+			</view>
+  </view>
+</view>

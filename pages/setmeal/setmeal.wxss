@@ -1,0 +1,11 @@
+/* pages/setmeal/setmeal.wxss */
+.boxItem{
+  width: 100%;
+  height: 192rpx;
+  margin: 30rpx 0;
+}
+.boxItem image{
+  display: inline-block;
+  width: 100%;
+  height: 192rpx;
+}

@@ -1,0 +1,125 @@
+.weui-search-bar {
+  position: relative;
+  height: 64rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-sizing: border-box;
+  background: #F2F2F2;
+  border-radius: 30rpx;
+}
+
+.weui-icon-search {
+  margin-right: 8px;
+  font-size: 28rpx;
+  position: absolute;
+  top: 10rpx;
+  left: 200rpx;
+}
+
+.weui-icon-search_in-box {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+}
+
+.weui-search-bar__text {
+  display: inline-block;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.weui-search-bar__form {
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+  flex: auto;
+  border-radius: 30rpx;
+  background: #F2F2F2;
+}
+
+.weui-search-bar__box {
+  position: relative;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.weui-search-bar__input {
+  height: 28px;
+  line-height: 28px;
+  font-size: 14px;
+}
+
+.weui-icon-clear {
+  position: absolute;
+  top: 4rpx;
+  right: 120rpx;
+  z-index: 99;
+  padding: 7px 8px;
+  font-size: 0;
+}
+
+.weui-search-bar__cancel-btn {
+  padding: 0 20rpx;
+  /* background: #1B4CEF; */
+  margin-left: 10px;
+  line-height: 28px;
+  color: #1B4CEF;
+  white-space: nowrap;
+  font-size: 30rpx;
+  position: absolute;
+  top: 6rpx;
+  right: 10rpx;
+  border-radius: 30rpx;
+}
+.typebox{
+  display: flex;
+  height: 80rpx;
+  align-items: center;
+}
+.typebox .typeItem{
+  display: inline-block;
+  padding: 0px 30rpx;
+  box-sizing: border-box;
+  height: 64rpx;
+  line-height: 64rpx;
+  border-radius: 30rpx;
+  background: #FFFFFF;
+  border: 1px solid #CCCCCC;
+}
+.typebox .typeItemactive{
+  display: inline-block;
+  border:none;
+  background: url('http://www.ccsc58.cc/leng/little/image/paybillstate.png') no-repeat;
+  background-size: 100% 100%;
+
+}
+.itemLine{
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 15px;
+}
+.itemLine .bigtxt{
+  font-size: 30rpx;
+  font-weight: 550;
+}
+.itemLine .txt{
+  color: #999;
+}
+.boxbtn{
+  position:fixed;
+  bottom:0;
+  z-index:99;
+  width:100%
+}
+.boxbtn button{
+  display: inline-block;
+  width: 540rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+}

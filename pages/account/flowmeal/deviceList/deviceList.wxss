@@ -1,0 +1,31 @@
+/* pages/account/yearbill/yearbill.wxss */
+.boxList{
+  margin: 30rpx 0;
+}
+.boxList .deviceItem{
+  height: 132rpx;
+  width: 100%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10rpx;
+  
+}
+.boxList .deviceItem .itemTop{
+  height: 70rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.boxList .deviceItem .itemButtom{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.deviceItem .itemTop .bigtxt{
+  font-size: 30rpx;
+  font-weight: 550;
+}
+.itemButtom text{
+  color: #999;
+}

@@ -1,0 +1,37 @@
+<view class="container">
+    <view class="user-container padding-bottom-lg">
+			<view class="userinfo">
+				<open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
+        <open-data class="text-cut" type="userNickName"></open-data>
+			</view>
+		</view>
+    <view class="content">
+      <view class="aline">
+        <text>真实姓名：</text> <input class="weui-input" bindinput="bindrealname"  placeholder="请输入真实姓名" value='{{userInfo.admin_real_name}}'/>
+      </view>
+      <view class="aline">
+        <text>手机号码：</text> <input class="weui-input" bindinput="bindmobile" placeholder="请输入手机号码" value='{{userInfo.admin_mobile}}'/>
+      </view>
+      <view class="aline">
+        <text>原始密码：</text> <input class="weui-input" bindinput="bindpsd" type="password"  placeholder="请输入原始密码" value="{{userInfo.old_password}}"/>
+      </view>
+      <view class="aline">
+        <text>最新密码：</text> <input class="weui-input" bindinput="bindnewpsd" type="password"  placeholder="请输入最新密码" value="{{userInfo.new_password}}"/>
+      </view>
+      <view class="aline">
+        <text>邮箱地址：</text> <input class="weui-input" bindinput="bindmail"  placeholder="请输入邮箱地址" value='{{userInfo.admin_mailbox}}'/>
+      </view>
+      <view class="aline">
+        <text>公司名称：</text> <input class="weui-input" bindinput="bindcompany"  placeholder="请输入公司名称" value='{{userInfo.admin_company}}'/>
+      </view>
+      <view class="aline">
+        <text>公司地址：</text> <input class="weui-input" bindinput="bindaddress"  placeholder="请输入公司地址" value='{{userInfo.admin_company_address}}'/>
+      </view>
+      <view class="aline">
+        <text>公司电话：</text> <input class="weui-input" bindinput="bindcompanytel"  placeholder="请输入公司电话" value='{{userInfo.admin_company_tel}}'/>
+      </view>
+      <view class="lastline text-center bottom-btn">
+        <button class="my-btn bg-blue margin-tb-lg round text-lg" style="width: 540rpx;height: 90rpx" bindtap="bindSaveParams">提交信息</button>
+      </view>
+    </view>
+</view>

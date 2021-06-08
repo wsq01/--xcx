@@ -84,6 +84,11 @@ Page({
       devid:e.detail.value
     })
   },
+  updategsmc:function(e){
+    this.setData({
+      'printsetData.gongsimingcheng':e.detail.value
+    })
+  },
   updatecph: function (e) {
     this.setData({
       'printsetData.chepaihao':e.detail.value
@@ -543,7 +548,7 @@ Page({
     wx.showLoading({ title: '打印中...' })
     const now = formatTime(new Date())
     const mobile = wx.getStorageSync('mobile')
-    const strArr1 = ['println', 'setSize(2, 2)', this.data.printData.gongsimingcheng, 'setSize(1, 1)', '用户名:' + mobile, 'ID号:' + this.data.devid]
+    const strArr1 = ['println', 'setSize(2, 2)', this.data.printsetData.gongsimingcheng, 'setSize(1, 1)', '用户名:' + mobile, 'ID号:' + this.data.devid]
     if(this.data.printData.chepaihao.length>0){
       strArr1.push( '车牌号:' + this.data.printData.chepaihao)
     }

@@ -1,0 +1,32 @@
+<view class="container">
+  <view class="boxList padding-lr">
+    <block wx:for="{{list}}" wx:key='index' wx:for-item="item">
+      <view class="deviceItem margin-tb padding-lr {{index==initIndex?'active':''}}" bindtap="bindchoose" data-index="{{index}}">
+        <view class="itemTop">
+          <view class="bigtxt">套餐名称：{{item.tittle}}</view>
+          <view>费用合计</view>
+        </view>
+        <view class="itemButtom">
+          <text>{{item.desc}}</text>
+          <text class="bigtxt">{{item.price}}</text>
+        </view>
+      </view>
+    </block>
+    <view class="deviceItem margin-tb padding-lr {{initIndex==4?'active':''}}" bindtap="bindcustom">
+      <view class="itemTop">
+        <view class="bigtxt">自定义购买条数:</view>
+        <text>￥0.19/条，费用合计</text>
+      </view>
+      <view class="itemButtom">
+        <view class="flex align-center">
+          请手动输入购买条数： <input class="payNum" type="number" placeholder="短信数量"  bindinput='bindpayNum' value='{{paynum}}'/>条
+        </view>
+        <view class="bigtxt">{{total}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="text-center bg-white bottom-btn flex justify-between align-center padding-lr">
+    <view class="padding-lr">待支付:<text class="money">￥{{total}}</text> </view>
+    <view><button class="bg-blue ">立即付款</button> </view>
+  </view>
+</view>

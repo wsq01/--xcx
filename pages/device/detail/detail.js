@@ -18,18 +18,17 @@ Page({
       { 
         title: '基本信息', 
         content: [
-          { label: '设备类型', value: 'device_name', type: 'input', disabled: true },
+          // { label: '设备类型', value: 'device_name', type: 'input', disabled: true },
           { label: '设备编号', value: 'shebeibianhao', type: 'input', disabled: true },
-          { label: '到期日期', value: 'daoqishijian', type: 'input', disabled: true }
+          { label: '到期日期', value: 'daoqishijian', type: 'input', disabled: true },
+          { label: '设备排序', value: 'sort', type: 'input', placeholder: '请输入排序号' },
         ]
       },
       {
         title: '参数设置',
         content: [
           { label: '采集间隔', value: 'caiji_jiange_minute', type: 'input', placeholder: '单位：分钟' },
-          { label: '上传间隔', value: 'fasong_jiange_minute', type: 'input', placeholder: '单位：分钟' },
-          { label: '设备排序', value: 'sort', type: 'input', placeholder: '请输入排序号' },
-         
+          { label: '上传间隔', value: 'fasong_jiange_minute', type: 'input', placeholder: '单位：分钟' }         
         ]
       },
       // {
@@ -45,15 +44,15 @@ Page({
         title: '报警设置',
         content: [
           { label: '温度上限开关', value: 'baojingwendu_shangxian_baojing', type: 'switch', placeholder: '请输入' },
-          { label: '温度上限阈值', value: 'baojingwendu_shangxian', type: 'digit', placeholder: '请输入' },
+          { label: '温度上限阈值', value: 'baojingwendu_shangxian', type: 'digit', placeholder: '请输入数字' },
           { label: '温度下限开关', value: 'baojingwendu_xiaxian_baojing', type: 'switch', placeholder: '请输入' },        
-          { label: '温度下限阈值', value: 'baojingwendu_xiaxian', type: 'digit', placeholder: '请输入' },
+          { label: '温度下限阈值', value: 'baojingwendu_xiaxian', type: 'digit', placeholder: '请输入数字' },
           { label: '湿度上限开关', value: 'chaogaoshidubaojing', type: 'switch', placeholder: '请输入' },
-          { label: '湿度上限阈值', value: 'chaogaoshidubaojingfazhi', type: 'digit', placeholder: '请输入' },
+          { label: '湿度上限阈值', value: 'chaogaoshidubaojingfazhi', type: 'digit', placeholder: '请输入数字' },
           { label: '湿度下限开关', value: 'chaodishidubaojing', type: 'switch', placeholder: '请输入' },        
-          { label: '湿度下限阈值', value: 'chaodishidubaojingfazhi', type: 'digit', placeholder: '请输入' },
+          { label: '湿度下限阈值', value: 'chaodishidubaojingfazhi', type: 'digit', placeholder: '请输入数字' },
           { label: '电量下限开关', value: 'dianliang_xiaxian_baojing', type: 'switch', placeholder: '请输入' },
-          { label: '电量下限阈值', value: 'dianliang_xiaxian', type: 'input', placeholder: '请输入' },
+          { label: '电量下限阈值', value: 'dianliang_xiaxian', type: 'input', placeholder: '请输入数字' },
           { label: '微信报警', value: 'weixintuisong_baojing', type: 'switch', placeholder: '请输入' },
           { label: '电话报警', value: 'is_open', type: 'switch', placeholder: '请输入' }
         ]
@@ -98,6 +97,7 @@ Page({
     startwarnNo: 0,
     devid: '',
     model_type:'',
+    address:'',
     multiSelectorList: [],
     latitude: 24.4795100000,
     longitude: 118.0894800000,
@@ -127,15 +127,24 @@ Page({
     dateTime2: '',
     dateTimeArray1: [],
     dateTimeArray2: [],
+    isIPX:false
   },
   onLoad (options) {
     this.ecComponent = this.selectComponent('#mychart-dom-bar')
-    const {devid, isMaster,model_type } = options
+    const {devid, isMaster,model_type,address } = options
     console.log(options)
+    let curaddress=''
+    if(address==''||address==undefined){
+       curaddress=''
+
+    }else{
+      curaddress=address
+    }
     this.setData({
       devid,
       isMaster,
       model_type,
+      address:curaddress,
       multiSelectorList: multiSelectorList()
     })
     if(model_type=="TPA"){
@@ -159,6 +168,7 @@ Page({
     //   })
     // }
     this.initPicker()
+    this.checkIsIPhoneX()
   },
   initPicker() {
     const obj = datetimepickerUtil.dateTimePickerWithS(2010)
@@ -169,6 +179,25 @@ Page({
       dateTimeArray2: obj.dateTimeArray2
     })
   },
+  checkIsIPhoneX: function() {
+    const self = this
+    wx.getSystemInfo({
+      success: function (res) {
+        // 根据 model 进行判断
+        if (res.model.search('iPhone X') != -1) {
+          //self.globalData.isIPX = true
+          console.log('iphonex')
+          self.setData({
+            isIPX:true
+          })
+        }else{
+          console.log('非iphonex')
+        }
+       
+      }
+    })
+  },
+
   bindwarnscrolltolower(){
     const mobile = wx.getStorageSync('mobile')
     console.log(2)
@@ -286,32 +315,76 @@ Page({
     })
   },
   initMap(hisdata) {
+    console.log(hisdata)
+    
     var latitude1 = "markers[" + 0 + "].latitude"
     var longitude1 = "markers[" + 0 + "].longitude"
     var content = "markers[" + 0 + "].callout.content"
-    qqmapsdk.reverseGeocoder({
-      location: {
-        latitude: hisdata.weidu,
-        longitude: hisdata.jingdu
-      },
-      success:(res) => {
-        console.log(res)
-        let tempinfo = ''
-        if (this.data.model_type == "TT") {
-          tempinfo = res.result.address + '\n' + '温度1:' + hisdata.temperature01 + '℃ / 温度2:' + hisdata.temperature02 + '℃' + '\n' + '时间' + hisdata.time
-        } else {
-          tempinfo = res.result.address + '\n' + '温度:' + hisdata.temperature01 + '℃ / 湿度:' + hisdata.humidity + '%RH' + '\n' + '时间' + hisdata.time
-        }
-        this.setData({
-          latitude: hisdata.weidu,
-          longitude: hisdata.jingdu,
-          [latitude1]: hisdata.weidu,
-          [longitude1]: hisdata.jingdu,
-          [content]: tempinfo
-        })
-      }
+    // qqmapsdk.reverseGeocoder({
+    //   location: {
+    //     latitude: hisdata.weidu,
+    //     longitude: hisdata.jingdu
+    //   },
+    //   coord_type:3,
+    //   success:(res) => {
+    //     console.log(res)
 
+    //     this.setData({
+    //       latitude: hisdata.weidu,
+    //       longitude: hisdata.jingdu,
+    //       [latitude1]: hisdata.weidu,
+    //       [longitude1]: hisdata.jingdu,
+    //       [content]: tempinfo
+    //     })
+    //   }
+
+    // })
+    var _this = this;
+    //调用地址解析接口
+    qqmapsdk.geocoder({
+      //获取表单传入地址
+      address: this.data.address, //地址参数，例：固定地址，address: '北京市海淀区彩和坊路海淀西大街74号'
+      success: function(res) {//成功后的回调
+        console.log(res);
+        var res = res.result;
+        var latitude = res.location.lat;
+        var longitude = res.location.lng;
+        let tempinfo = ''
+        if (_this.data.model_type == "TT") {
+          tempinfo = _this.data.address+ '\n' + '温度1:' + hisdata.temperature01 + '℃ / 温度2:' + hisdata.temperature02 + '℃' + '\n' + '时间' + hisdata.time
+        } else {
+          tempinfo =_this.data.address + '\n' + '温度:' + hisdata.temperature01 + '℃ / 湿度:' + hisdata.humidity + '%RH' + '\n' + '时间' + hisdata.time
+        }
+        //根据地址解析在地图上标记解析地址位置
+        _this.setData({ // 获取返回结果，放到markers及poi中，并在地图展示
+          markers: [{
+            id: 0,
+            title: res.title,
+            latitude: latitude,
+            longitude: longitude,
+            // iconPath: '../../../images/warnaddress.png',//图标路径
+            width: 20,
+            height: 30,
+            callout: { //可根据需求是否展示经纬度
+              content:tempinfo,
+              color: '#000',
+              display: 'ALWAYS'
+            }
+          }],
+          poi: { //根据自己data数据设置相应的地图中心坐标变量名称
+            latitude: latitude,
+            longitude: longitude
+          }
+        });
+      },
+      fail: function(error) {
+        console.error(error);
+      },
+      complete: function(res) {
+        console.log(res);
+      }
     })
+
   },
   bindInputChange(e) {
     this.setData({
@@ -455,7 +528,10 @@ Page({
         const lastYear = res.data.resultCode[0].time.slice(0, 4)
         this.setData({ lastYear })
       }
-      this.initMap(res.data.resultCode[0] || {})
+      if(this.data.address!=''){
+        this.initMap(res.data.resultCode[0] || {})
+      }
+      
     }
   },
   async reqDevParams(mobile, devid) {
@@ -493,7 +569,8 @@ Page({
       // paramsList.splice(2, 0, ...this.data.paramsListTTItem)
       arr=paramsList.concat(this.data.TTItem)
     }else if(type === 'TPA') {
-      arr=this.data.TPAItem
+      arr=paramsList.concat(this.data.TPAItem)
+      arr.splice(1, 1)
     }
     this.setData({ paramsList:arr })
   },

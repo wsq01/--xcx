@@ -38,7 +38,7 @@
           <view class="text-center text-gray align-center flex " style="display:flex;justify-content: center;" wx:if="{{activeval==scrolls[0].number}}">当前绑定设备数:<text class="text-blue"> {{count1}} </text>台,待缴设备数:<navigator class="text-red" url="../bill/bill" hover-class="navigator-hover">{{daoqicount}}</navigator> 台</view>
         <view class="text-center text-gray  align-center flex" style="display:flex;justify-content: center;"  wx:else>当前账户设备数:<text class="text-blue"> {{count1}} </text>台 ,待缴设备数:<navigator class="text-red" url="../bill/bill" hover-class="navigator-hover">{{daoqicount}}</navigator> 台</view>
           <!-- style="height: calc(100vh - 350rpx);" -->
-        <view class="radius-lg shadow-box marginB animation-{{animation1 ? 'slide-bottom' : ''}}" wx:for="{{devList}}" wx:key="index" bindtap="toPage" data-type="redirect" data-page="../device/detail/detail?devid={{item.shebeibianhao}}&isMaster={{item.is_master}}&model_type={{item.model_type}}" >
+        <view class="radius-lg shadow-box marginB animation-{{animation1 ? 'slide-bottom' : ''}}" wx:for="{{devList}}" wx:key="index" bindtap="toPage" data-type="redirect" data-page="../device/detail/detail?devid={{item.shebeibianhao}}&isMaster={{item.is_master}}&model_type={{item.model_type}}&address={{item.address}}" >
           <view class="radius-lg bg-white padding-tb-sm padding-lr item-black">
 
             <view class="flex solids-bottom">
@@ -54,7 +54,7 @@
             </view>
             <view class="flex justify-between padding-tb-sm">
               <view class="flex flex-direction align-center justify-center">
-                <image style="display: block;width: 56rpx;height: 48rpx;" src="{{!item.is_line ? '/images/temp-off.png' : ((item.baojingwendu_shangxian_baojing === 1 && item.last_temperature01 >= item.baojingwendu_shangxian) || (item.baojingwendu_xiaxian_baojing === 1 && item.baojingwendu_xiaxian >= item.item.last_temperature01)) ? '/images/temp-high.png' : '/images/temp.png'}}"></image>
+                <image style="display: block;width: 56rpx;height: 48rpx;" src="{{!item.is_line ? '/images/temp-off@2x.png' : ((item.baojingwendu_shangxian_baojing === 1 && item.last_temperature01 >= item.baojingwendu_shangxian) || (item.baojingwendu_xiaxian_baojing === 1 && item.baojingwendu_xiaxian >= item.item.last_temperature01)) ? '/images/temp-high@2x.png' : '/images/temp@2x.png'}}"></image>
                 <text class="margin-top-xs">{{item.last_temperature01}}°C</text>
               </view>
               <view wx:if="{{item.model_type==='TT'}}" class="flex flex-direction align-center justify-center">

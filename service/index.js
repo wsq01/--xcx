@@ -37,7 +37,7 @@ export default {
   reqSetRemarks:httpUrl+'/index/device/updateDevice',
   reqDiagram: httpUrl + '/index/device/getDiagram',
   reqShowchart:httpUrl+'/index/device/getDiagram',
-  reqPrintInfo:httpUrl+'/index/device/deviceInfo',
+  reqPrintInfo:httpUrlback+'/index/device/deviceInfo',
   reqLogin:httpUrl+'/index/login/appletslogin',
   reqLogout:httpUrl+'/index/login/appletsLogout',
   reqForgetpwd:httpUrl+'/index/register/forget_pwd',
@@ -46,5 +46,7 @@ export default {
   reqEditSharemember:httpUrl+'/index/share/edit',
   reqDevListVb:httpUrl+'/index/device/device_list_v1',
   reqDertList:httpUrl+'/index/department/my_department',
-  reqWarningList:httpUrl+'/index/alarm/device_list'
+  reqWarningList:httpUrl+'/index/alarm/device_list',
+  reqUserInfo:httpUrl+'/index/admin/adminInfo',
+  reqUpdateUserInfo:httpUrlback+'/index/admin/adminUpdate',
 }
